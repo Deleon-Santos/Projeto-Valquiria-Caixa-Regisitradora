@@ -279,16 +279,13 @@ def novo_item():
             sg.popup("Informe valor numerico", title="Preço", font=("Any", 18))
     window.close()
 
-
 # ===========================================================================================================
 def limpar_saida():
     carrinho.clear()
-
     window["com"].update("")
     window["output"].update("")
     window["subtotal"].update("")
     window["descricao"].update("")
-
 
 # limpa os campos sempre que uma nova função e chamada
 
@@ -309,20 +306,14 @@ bloco_2=[   [sg.Text('Código do Produto', size=(25, 1), font=("Any", 18)),sg.Te
             [sg.InputText(size=(43, 2), key='descricao', font=("Any", 25))],]
 
 bloco_3=[   [sg.Button('OK', size=(30,2)), sg.Text("", size=(32, 1)),sg.Button('DELETE', size=(30, 2))],
-            [sg.Button('PAGAR', size=(30, 2)),sg.Text("", size=(32, 1)), sg.Button('VOLTAR', size=(30, 2))],
-            ]
+            [sg.Button('PAGAR', size=(30, 2)),sg.Text("", size=(32, 1)), sg.Button('VOLTAR', size=(30, 2))],]
 
-bloco_4=[   [sg.Image(filename="images.png",size=(780,210))],
-         ]
+bloco_4=[   [sg.Image(filename="images.png",size=(780,210))],]
 
 frame1=[   
             [sg.Frame("",bloco_2)],
             [sg.Frame("",bloco_3)],
-            [sg.Frame("",bloco_4)],
-            
-
-
-            ]
+            [sg.Frame("",bloco_4)],]
 
 frame2=[   [sg.Multiline(size=(85, 28), key='output', font=("Any", 12))],]
 
@@ -330,7 +321,7 @@ layout = [
             [sg.Menu(menu_layout)],
             [sg.Frame("",bloco_1)],
             [sg.Text(" ", size=(88, 1)), sg.Text(size=(23, 1), key="com", justification='right', font=("Any", 18))],
-            
+
             [sg.Col(frame1),sg.Col(frame2)],
             [sg.Text("12 de outubro de 1233", size=(25, 1), key='data', font=("Any", 12)),
             sg.Text("DESENVOLVIDO POR:", size=(18, 1), font=("Any", 10)),
@@ -485,4 +476,4 @@ while True:
         continue
 window.close()
 
-#
+                #
