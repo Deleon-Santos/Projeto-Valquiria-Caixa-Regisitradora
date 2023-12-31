@@ -112,5 +112,11 @@
         "ean": "7890000000119",
         "lanche": "Azeite de oliva andorinh 500ml",
         "preco": 31.9
+    },
+    {
+        "cod": "120",
+        "ean": "7890000000120",
+        "lanche": "khfjahfkjhkfhskjfhskjf",
+        "preco": 2.9
     }
 ]

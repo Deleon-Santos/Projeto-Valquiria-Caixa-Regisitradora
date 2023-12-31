@@ -1,3 +1,7 @@
+#SISTEMA DE COBRAÇA EM CAIXA DE SUPERMERCADOS E AFINS
+#Este sistema esta em desenvolvimento em carater academico e conta com colaboração de profissionais e estudantes 
+#da area de Tecnololgia e desenvolvimento de sistemas
+
 import PySimpleGUI as sg
 import json
 
@@ -295,40 +299,48 @@ sg.theme("LightBlue3")
 menu_layout = [["Novo", ["Nova Compra", "Novo Produto", "Pesquisar Produto"]],
                ["Totais", ["Venda Cupom", "Venda Total"]], ["Suporte", ["Ajuda", "Data"]]]
 
-bloco_1=[   [sg.Text("CAIXA FECHADO", size=(70, 1), key='caixa', justification='center', font=("Any", 55, "bold"))],
-             ]
-
-bloco_2=[   [sg.Text('Código do Produto', size=(25, 1), font=("Any", 18)),sg.Text("", size=(32, 1)),sg.Text('Quantidade', size=(10, 1), font=("Any", 18))],
+bloco_1=[   [sg.Multiline(size=(85, 33), key='output', font=("Any", 12),background_color=("lightYellow"))],
+            [sg.Text("Preço Unitário R$",size=(59,1),font=("Any",12)),sg.Text("SubTotal Item R$",size=(13,1),font=("Any",12))],
+            [sg.Input(key="unitario",size=(10,1),font=("Any",18),justification="right"),sg.Text("",size=(47,1)),sg.Input(key="preco",size=(10,1),font=("Any",18),justification="right")],
+            [sg.Text("TOTAL R$", size=(12, 1), font=("Any", 40)),
+            sg.Input(size=(13, 1), key="subtotal", font=("Any", 41), justification='right')],]
+             
+bloco_2=[   [sg.Text("     CAIXA FECHADO", size=(16, 1), key='caixa', font=("Any", 55, "bold"))],
+            [sg.Text("Numero do Cupom", size=(35, 1),font=("Any",17)), sg.Input(size=(17, 1), key="com", font=("Any", 25),justification="right")],
+            [sg.Text('Código do Produto', size=(25, 1), font=("Any", 12)),sg.Text("", size=(47, 1)),
+             sg.Text('Quantidade', size=(10, 1), font=("Any", 12))],
             [sg.InputText(background_color='White', size=(3,2 ), key='lanche1', font=("Any", 25)),
              sg.InputText(background_color='White', size=(14,2 ), key='ean', font=("Any", 25)),
-             sg.Text("", size=(35, 1)),sg.InputText("1", size=(8, 2), key='qtd', font=("Any", 25))],
-            [sg.Text('Código do Produto', size=(25, 1), font=("Any", 18))],
+             sg.Text("", size=(35, 1)),sg.InputText("1", size=(8, 2), key='qtd', font=("Any", 25),justification="right")],
+            [sg.Text('Descrição do Produto', size=(25, 1), font=("Any", 12))],
             [sg.InputText(size=(43, 2), key='descricao', font=("Any", 25))],]
 
-bloco_3=[   [sg.Button('OK', size=(30,2)), sg.Text("", size=(32, 1)),sg.Button('DELETE', size=(30, 2))],
-            [sg.Button('PAGAR', size=(30, 2)),sg.Text("", size=(32, 1)), sg.Button('VOLTAR', size=(30, 2))],]
+bloco_3=[   [sg.Button('OK', size=(15,1),font=("Any",25)), sg.Text("", size=(21, 1)),sg.Button('DELETE', size=(15, 1),font=("Any",25))],
+            [sg.Button('PAGAR', size=(15, 1),font=("Any",25)),sg.Text("", size=(21, 1)), sg.Button('VOLTAR', size=(15, 1),font=("Any",25))],]
 
 bloco_4=[   [sg.Image(filename="images.png",size=(780,210))],]
+bloco_5=[   [sg.Text("Operador de Caixa:",size=(17,1),font=("Any",18)),sg.Input("ADMINISTRADOR DO SISTEMA",key='LOG',size=(40, 1),font=("Any", 18))],
+            [sg.CalendarButton("Data",size=(5,1),close_when_date_chosen=True,target="data",location=(0,0),no_titlebar=False),
+            sg.Input(key="data",size=(17,1)),sg.Text("               Em Desenvolvimento", size=(28, 1), font=("Any", 10)),
+            sg.Text("                          linkedin.com/in/deleon-santos-1b835a290")],]
+            
+            
 
 frame1=[   
             [sg.Frame("",bloco_2)],
             [sg.Frame("",bloco_3)],
-            [sg.Frame("",bloco_4)],]
+            [sg.Frame("",bloco_4)],
+            [sg.Frame("",bloco_5)]]
 
-frame2=[   [sg.Multiline(size=(85, 28), key='output', font=("Any", 12))],]
+frame2=[    [sg.Frame("",bloco_1)] , ]
 
 layout = [  
-            [sg.Menu(menu_layout)],
-            [sg.Frame("",bloco_1)],
-            [sg.Text(" ", size=(88, 1)), sg.Text(size=(23, 1), key="com", justification='right', font=("Any", 18))],
+            [sg.Menu(menu_layout)],           
+            [sg.Col(frame1),sg.Col(frame2)],]
 
-            [sg.Col(frame1),sg.Col(frame2)],
-            [sg.Text("12 de outubro de 1233", size=(25, 1), key='data', font=("Any", 12)),
-            sg.Text("DESENVOLVIDO POR:", size=(18, 1), font=("Any", 10)),
-            sg.Text("linkedin.com/in/deleon-santos-1b835a290", size=(40, 1), key='LOG', font=("Any", 10)),
-            sg.Text("", size=(10, 1)), sg.Text("SubTotal", size=(12, 2), font=("Any", 40)),
-            sg.Text(size=(10, 2), key="subtotal", font=("Any", 40), justification='right')],]
-window = sg.Window("NOVO PEDIDO", layout, resizable=True)
+#====================================================================================================================================
+
+window = sg.Window("NOVO PEDIDO", layout,size=(800,800), resizable=True)
 while True:
     event, values = window.read()
     if event in (sg.WIN_CLOSED, "Fechar"):
@@ -336,8 +348,8 @@ while True:
         break
     elif event == "Nova Compra":
         com += 1
-        window['com'].update(f'CUPOM FISCAL N°{com}')
-        window['caixa'].update('CAIXA ABERTO')
+        window['com'].update(f'N°{com}')
+        window['caixa'].update('      CAIXA ABERTO')
         window['subtotal'].update(f'R$ {soma2:.2f}')
         window["output"].update("")
         # dentro deste bloco de eventos serão registrados apenas os botoes (OK,DELETE,PAGAR,VOLTAR)
@@ -364,6 +376,7 @@ while True:
                                     num += 1
                                     ean = item["ean"]
                                     lanche = item["lanche"]
+                                    p=item["preco"]
                                     preco = item['preco'] * qtd
                                     soma2 += preco
                             dicionario = {'Comanda': com, 'Item': num, "Cod": pro, "Ean": ean, 'Lanche': lanche,
@@ -375,10 +388,13 @@ while True:
                                 pre = lanche["Preco"]
                             window['output'].print(
                                 f'       N°{"":<7}{lanche["Item"]}{"":>15}{lanche["Cod"]} - {lanche["Ean"]} - {lanche["Lanche"]:<18}{"":>20} {lanche["Quantidade"]:<18}')
-                            window['output'].print(f'R$ {pre:.2f}'.rjust(156))
+                            window['output'].print(f'R$ {pre:.2f}'.rjust(153))
                             window["output"].print(
                                 "      ======================================================================")
-                            window['subtotal'].update(f"R$ {soma2:.2f}")
+                            window['subtotal'].update(f" {soma2:.2f}")
+                            window["ean"].update(f"{ean}")
+                            window["unitario"].update(f"{p:.2f}")
+                            window["preco"].update(f"{pre:.2f}")
                             window["descricao"].update(f" {lanche['Ean']} - {lanche['Lanche']}")
                             window["lanche1"].update("")
                             continue
@@ -424,7 +440,7 @@ while True:
         limpar_saida()
         total()
     elif event == "Pesquisar Produto":  # mostra todos os produtos cadastrados
-        window["com"].update("PESQUISAR PRODUTO")
+        window["com"].update("PESQUISAR ITEM")
         window["output"].print(
             f'{"      CÓDIGO" :<10}                      {"PRODUTO":<60}                      {"PRECO"}')
         for lanche in dic:
