@@ -5,7 +5,6 @@
 import PySimpleGUI as sg
 import json
 
-
 lista_produto = []
 carrinho = []
 com = int(0)
