@@ -294,14 +294,14 @@ def limpar_saida():
 
 # ===================================== Inicio do programa principal======================================================================
 sg.theme("darkBlue3")
-titulos = ["Cupom","Item", " Cod","   EAN    ", "Descrição do Produto ", "QTD", "Preço R$"]
+titulos = ["Item","Cod","    EAN    ","Descrição do Produto","QTD","PUni R$","Preço R$"]
 
 menu_layout = [["Novo", ["Nova Compra", "Novo Produto", "Pesquisar Produto"]],          
                ["Totais", ["Venda Cupom", "Venda Total"]], ["Suporte", ["Ajuda", "Data"]]]
 
 bloco_1=[   [sg.Text("Numero do Cupom", size=(35, 1),font=("Any",17)), sg.Input(size=(17, 1), key="com", font=("Any", 25),justification="right")],
-    [sg.Table(values=carrinho, headings=titulos, max_col_width=10, auto_size_columns=True,
-              display_row_numbers=True, justification="right",text_color="black",font=("Any",11),background_color="lightyellow", num_rows=25, key="-TABELA-", row_height=20)],
+            [sg.Table(values=carrinho, headings=titulos, max_col_width=10, auto_size_columns=True,
+            display_row_numbers=True, justification="right",text_color="black",font=("Any",11),background_color="lightyellow", num_rows=25, key="-TABELA-", row_height=20)],
             [sg.Text("Preço Unitário R$",size=(59,1),font=("Any",12)),sg.Text("SubTotal Item R$",size=(13,1),font=("Any",12))],
             [sg.Input(key="unitario",size=(10,1),font=("Any",18),justification="right"),sg.Text("",size=(47,1)),sg.Input(key="preco",size=(10,1),font=("Any",18),justification="right")],
             [sg.Text("TOTAL R$", size=(12, 1), font=("Any", 40)),
@@ -366,39 +366,42 @@ while True:
                         sg.popup("Erro em Produto!", title="Erro", font=("Any", 18))
                         continue
                     elif qtd > 0 and qtd < 100:
-                        pro = achar(material)
+                        plu_pro = achar(material)
                         # recebe o codigo e integra o produto ao dicionario e lista local
-                        if pro == False:
+                        if plu_pro == False:
                             #sg.popup("Erro em Produto", title="Erro", font=("Any", 18))
                             continue
                         else:
                             qtd = int(qtd)
                             for item in dic:
-                                if item["cod"] == pro:
+                                if item["cod"] == plu_pro:
                                     num += 1
                                     ean = item["ean"]
                                     lanche = item["lanche"]
-                                    p=item["preco"]
+                                    p_unitario=item["preco"]
                                     preco = item['preco'] * qtd
                                     soma2 += preco
-                            dicionario=[com, num ,pro,  ean,  lanche, qtd , preco]
+                            dicionario=[ num ,plu_pro,  ean,  lanche, qtd ,p_unitario, preco]
                                            
                             carrinho.append(dicionario)
                             window['-TABELA-'].update(values=carrinho)
+                            window["unitario"].update(f"{p_unitario:.2f}")
+                            window["preco"].update(f"{preco:.2f}")
+                            window['subtotal'].update(f" {soma2:.2f}")
                           
-                    else:
-                        sg.popup("Erro em Quantidade", title="Erro em Quan", font=("Any", 18))
-                elif event == 'DELETE':
-                    soma2 = remover(soma2)
-                    window['subtotal'].update(f"R$ {soma2:.2f}")
-                    condicao = len(cancela)
-                    # condição para mostra o valor estornado
-                    if condicao == 1:
-                        window['output'].print(f'-R$ {cancela[0]:.2f}'.rjust(140))
-                        window["output"].print(
-                            "      ======================================================================")
-                        cancela.clear()
-                    continue
+                #     else:
+                #         sg.popup("Erro em Quantidade", title="Erro em Quan", font=("Any", 18))
+                # elif event == 'DELETE':
+                #     soma2 = remover(soma2)
+                #     window['subtotal'].update(f"R$ {soma2:.2f}")
+                #     condicao = len(cancela)
+                #     # condição para mostra o valor estornado
+                #     if condicao == 1:
+                #         window['output'].print(f'-R$ {cancela[0]:.2f}'.rjust(140))
+                #         window["output"].print(
+                #             "      ======================================================================")
+                #         cancela.clear()
+                #     continue
 
                 elif event == 'PAGAR':
                     # condição para conciderar o cupom com "pago"
