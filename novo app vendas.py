@@ -293,19 +293,22 @@ def limpar_saida():
 # limpa os campos sempre que uma nova função e chamada
 
 # ===================================== Inicio do programa principal======================================================================
-sg.theme("LightBlue3")
+sg.theme("darkBlue3")
+titulos = ["Cupom","Item", " Cod","   EAN    ", "Descrição do Produto ", "QTD", "Preço R$"]
 
-menu_layout = [["Novo", ["Nova Compra", "Novo Produto", "Pesquisar Produto"]],
+menu_layout = [["Novo", ["Nova Compra", "Novo Produto", "Pesquisar Produto"]],          
                ["Totais", ["Venda Cupom", "Venda Total"]], ["Suporte", ["Ajuda", "Data"]]]
 
-bloco_1=[   [sg.Multiline(size=(85, 33), key='output', font=("Any", 12),background_color=("lightYellow"))],
+bloco_1=[   [sg.Text("Numero do Cupom", size=(35, 1),font=("Any",17)), sg.Input(size=(17, 1), key="com", font=("Any", 25),justification="right")],
+    [sg.Table(values=carrinho, headings=titulos, max_col_width=10, auto_size_columns=True,
+              display_row_numbers=True, justification="right",text_color="black",font=("Any",11),background_color="lightyellow", num_rows=25, key="-TABELA-", row_height=20)],
             [sg.Text("Preço Unitário R$",size=(59,1),font=("Any",12)),sg.Text("SubTotal Item R$",size=(13,1),font=("Any",12))],
             [sg.Input(key="unitario",size=(10,1),font=("Any",18),justification="right"),sg.Text("",size=(47,1)),sg.Input(key="preco",size=(10,1),font=("Any",18),justification="right")],
             [sg.Text("TOTAL R$", size=(12, 1), font=("Any", 40)),
             sg.Input(size=(13, 1), key="subtotal", font=("Any", 41), justification='right')],]
              
 bloco_2=[   [sg.Text("     CAIXA FECHADO", size=(16, 1), key='caixa', font=("Any", 55, "bold"))],
-            [sg.Text("Numero do Cupom", size=(35, 1),font=("Any",17)), sg.Input(size=(17, 1), key="com", font=("Any", 25),justification="right")],
+            
             [sg.Text('Código do Produto', size=(25, 1), font=("Any", 12)),sg.Text("", size=(47, 1)),
              sg.Text('Quantidade', size=(10, 1), font=("Any", 12))],
             [sg.InputText(background_color='White', size=(3,2 ), key='lanche1', font=("Any", 25)),
@@ -350,7 +353,7 @@ while True:
         window['com'].update(f'N°{com}')
         window['caixa'].update('      CAIXA ABERTO')
         window['subtotal'].update(f'R$ {soma2:.2f}')
-        window["output"].update("")
+        window["-TABELA-"].update("")
         # dentro deste bloco de eventos serão registrados apenas os botoes (OK,DELETE,PAGAR,VOLTAR)
         while True:
             try:
@@ -378,25 +381,11 @@ while True:
                                     p=item["preco"]
                                     preco = item['preco'] * qtd
                                     soma2 += preco
-                            dicionario = {'Comanda': com, 'Item': num, "Cod": pro, "Ean": ean, 'Lanche': lanche,
-                                          'Quantidade': qtd,
-                                          'Preco': preco}
-                            carrinho.append(dicionario.copy())
-                            # escreve os valores na tela de output
-                            for lanche in carrinho:
-                                pre = lanche["Preco"]
-                            window['output'].print(
-                                f'       N°{"":<7}{lanche["Item"]}{"":>15}{lanche["Cod"]} - {lanche["Ean"]} - {lanche["Lanche"]:<18}{"":>20} {lanche["Quantidade"]:<18}')
-                            window['output'].print(f'R$ {pre:.2f}'.rjust(153))
-                            window["output"].print(
-                                "      ======================================================================")
-                            window['subtotal'].update(f" {soma2:.2f}")
-                            window["ean"].update(f"{ean}")
-                            window["unitario"].update(f"{p:.2f}")
-                            window["preco"].update(f"{pre:.2f}")
-                            window["descricao"].update(f" {lanche['Ean']} - {lanche['Lanche']}")
-                            window["lanche1"].update("")
-                            continue
+                            dicionario=[com, num ,pro,  ean,  lanche, qtd , preco]
+                                           
+                            carrinho.append(dicionario)
+                            window['-TABELA-'].update(values=carrinho)
+                          
                     else:
                         sg.popup("Erro em Quantidade", title="Erro em Quan", font=("Any", 18))
                 elif event == 'DELETE':
