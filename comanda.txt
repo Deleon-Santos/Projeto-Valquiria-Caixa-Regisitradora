@@ -1,0 +1,122 @@
+[
+    {
+        "cod": "101",
+        "ean": "7890000000101",
+        "lanche": "Acucar refinado Caravela- 1kg",
+        "preco": 2.9
+    },
+    {
+        "cod": "102",
+        "ean": "7890000000102",
+        "lanche": "Cafe Melita estra forte-- 1kg",
+        "preco": 16.9
+    },
+    {
+        "cod": "103",
+        "ean": "7890000000103",
+        "lanche": "Leite integral parmalat- 1lt",
+        "preco": 5.9
+    },
+    {
+        "cod": "104",
+        "ean": "7890000000104",
+        "lanche": "Arroz solito premio poli 5kg",
+        "preco": 15.9
+    },
+    {
+        "cod": "105",
+        "ean": "7890000000105",
+        "lanche": "Feijao carioca kicaldo p 1kg",
+        "preco": 6.9
+    },
+    {
+        "cod": "106",
+        "ean": "7890000000106",
+        "lanche": "Macarrao spaguete adria 500g",
+        "preco": 3.9
+    },
+    {
+        "cod": "107",
+        "ean": "7890000000107",
+        "lanche": "Farinha de mandioc yoki 500g",
+        "preco": 4.9
+    },
+    {
+        "cod": "108",
+        "ean": "7890000000115",
+        "lanche": "Farinha de trigo don ben 1kg",
+        "preco": 3.9
+    },
+    {
+        "cod": "109",
+        "ean": "7890000000115",
+        "lanche": "Achocolatado toddy mais 500g",
+        "preco": 5.9
+    },
+    {
+        "cod": "110",
+        "ean": "7890000000115",
+        "lanche": "Oleo de soja liza l/pa 900ml",
+        "preco": 5.9
+    },
+    {
+        "cod": "111",
+        "ean": "7890000000115",
+        "lanche": "Biscoito recheado bono 350g",
+        "preco": 3.9
+    },
+    {
+        "cod": "112",
+        "ean": "7890000000115",
+        "lanche": "Chocolate barra garoto 100g",
+        "preco": 5.9
+    },
+    {
+        "cod": "113",
+        "ean": "7890000000113",
+        "lanche": "Coco ralado dudodo ado 100g",
+        "preco": 3.9
+    },
+    {
+        "cod": "114",
+        "ean": "7890000000114",
+        "lanche": "Molho de tomate quero -340g",
+        "preco": 2.9
+    },
+    {
+        "cod": "115",
+        "ean": "7890000000115",
+        "lanche": "Carne seca dianteir pct 1kg",
+        "preco": 28.9
+    },
+    {
+        "cod": "116",
+        "ean": "7890000000116",
+        "lanche": "Fiba de milho milharina 500g",
+        "preco": 2.9
+    },
+    {
+        "cod": "117",
+        "ean": "7890000000117",
+        "lanche": "Refrigerante coca-cola 2+250lt",
+        "preco": 8.9
+    },
+    {
+        "cod": "118",
+        "ean": "7890000000118",
+        "lanche": "Refresco tang de laranja 35g-",
+        "preco": 1.28
+    },
+    {
+        "cod": "119",
+        "ean": "7890000000119",
+        "lanche": "Azeite de oliva andorinh 500ml",
+        "preco": 31.9
+    },
+    {
+        "cod": "120",
+        "ean": "7890000000120",
+        "lanche": "khfjahfkjhkfhskjfhskjf",
+        "preco": 2.9
+    }
+]
