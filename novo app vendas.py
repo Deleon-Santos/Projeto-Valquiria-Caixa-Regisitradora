@@ -7,6 +7,7 @@ import json
 import modulo_pagar
 import modulo_funcao
 import pesquisa
+import novo_item
 
 lista_produto = []
 carrinho = []
@@ -43,7 +44,7 @@ user=["Administrador","Operador turno manha", "Operador turno tarde"]
 titulos = ["Item"," Cod ","    EAN    ","   Descrição do Produto  "," QTD "," PUni R$ ","Preço R$"]
 
 menu_layout = [
-    ["Novo", ["Nova Compra",'Nova Pesquisa']],
+    ["Novo", ["Nova Compra",'Nova Pesquisa','Novo Item']],
     ["Totais", ["Venda Cupom"]], 
     ["Suporte", ["Ajuda", "Data"]]]
 
@@ -194,9 +195,11 @@ while True:
         window['caixa'].update('CAIXA FECHADO')
         limpar_saida()
         continue
-
-    
-
+    elif event == "Nova Pesquisa" :
+        desc=pesquisa.pesquisar(dic)
+        continue
+    elif event == 'Novo Item':
+        i=novo_item.novo_item()
     elif event == "Ajuda":
         try:
             with open('ajuda.txt', 'r') as legenda:

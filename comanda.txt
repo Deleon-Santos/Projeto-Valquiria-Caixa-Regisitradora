@@ -118,5 +118,23 @@
         "ean": "7890000000120",
         "item": "Carne moida congelada Berna 500g",
         "preco": 2.9
+    },
+    {
+        "cod": "121",
+        "ean": "7890000000121",
+        "item": "Gelatina dr'otquer sabores 35g",
+        "preco": 1.9
+    },
+    {
+        "cod": "122",
+        "ean": "7890000000122",
+        "item": "Feijao de corda Carioquinha 1 kg",
+        "preco": 12.7
+    },
+    {
+        "cod": "123",
+        "ean": "7890000000123",
+        "item": "Farinha de mandioca Yoki 500g",
+        "preco": 7.3
     }
 ]
