@@ -16,7 +16,7 @@ def pagar(valor_pagar):
         [sg.Text("",size=(8,1)),sg.Image(filename="111.png",size=(400,100))],
         [sg.Text("", size=(10, 1))],
         [sg.Frame("",frame6)],
-        [sg.Text("",size=(20, 1)),sg.Button("SAIR" ,size=(20, 1), font=("Any", 12),button_color="red")],
+        [sg.Text("",size=(20, 1)),sg.Button("SAIR", font=("Any", 12),button_color="red")],
 
     ]
 

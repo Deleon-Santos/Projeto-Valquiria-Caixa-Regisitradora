@@ -6,6 +6,7 @@ import PySimpleGUI as sg
 import json
 import modulo_pagar
 import modulo_funcao
+import pesquisa
 
 lista_produto = []
 carrinho = []
@@ -14,14 +15,18 @@ item_cancelado = []
 valor_pagar = 0
 num_item = int(0)
 
+
 # ===========================================================================================================
 def achar(material):
     for item in dic:
-        if item["cod"] == material:
+        if material in (item["cod"],item["ean"]) :
             return item["cod"]  # busca o produto dentro do cadastro
     
     return False
 
+
+
+        
 # ===========================================================================================================
 def limpar_saida():
     carrinho.clear()
@@ -33,13 +38,18 @@ def limpar_saida():
 # ===================================== Inicio do programa principal======================================================================
 sg.theme("darkBlue3")
 
+user=["Administrador","Operador turno manha", "Operador turno tarde"]
+
 titulos = ["Item"," Cod ","    EAN    ","   Descrição do Produto  "," QTD "," PUni R$ ","Preço R$"]
 
-menu_layout = [["Novo", ["Nova Compra"]],["Totais", ["Venda Cupom"]], ["Suporte", ["Ajuda", "Data"]]]
+menu_layout = [
+    ["Novo", ["Nova Compra",'Nova Pesquisa']],
+    ["Totais", ["Venda Cupom"]], 
+    ["Suporte", ["Ajuda", "Data"]]]
 
 bloco_1=[   [sg.Text("Numero do Cupom", size=(35, 1),font=("Any",17)), sg.Input(size=(17, 1), key="-CUPOM-", font=("Any", 25),justification="right")],
             [sg.Table(values=carrinho, headings=titulos, max_col_width=10, auto_size_columns=True,
-            display_row_numbers=False, justification="right",text_color="black",font=("Any",11),background_color="lightyellow", num_rows=25, key="-TABELA-", row_height=20)],
+            display_row_numbers=False, justification="center",text_color="black",font=("Any",11),background_color="lightyellow", num_rows=25, key="-TABELA-", row_height=20)],
             [sg.Text(" Preço Unitário R$",size=(67,1),font=("Any",12)),sg.Text("SubTotal Item R$",size=(13,1),font=("Any",12))],
             [sg.Input(key="-VALORUNITARIO-",size=(10,1),font=("Any",18),justification="right"),sg.Text(" ",size=(57,1)),sg.Input(key="-PRECO-",size=(10,1),font=("Any",18),justification="right")],
             [sg.Text("TOTAL R$", size=(12, 1), font=("Any", 40)),
@@ -47,21 +57,21 @@ bloco_1=[   [sg.Text("Numero do Cupom", size=(35, 1),font=("Any",17)), sg.Input(
              
 bloco_2=[   [sg.Text(" CAIXA FECHADO", size=(15, 1), key='-CAIXA-', font=("Any", 56, "bold"))],
             
-            [sg.Text('Código do Produto', size=(25, 1), font=("Any", 12)),sg.Text("", size=(35, 1)),
+            [sg.Text('Código do Produto', size=(25, 1), font=("Any", 12)),sg.Text("", size=(43, 1)),
              sg.Text('  Quantidade', size=(10, 1), font=("Any", 12))],
-            [sg.InputText(background_color='White', size=(3,2 ), key='-MATERIAL-', font=("Any", 25)),
-             sg.InputText(background_color='White', size=(14,2 ), key='-EAN-', font=("Any", 25)),
-             sg.Text("", size=(24, 1)),sg.InputText("1", size=(8, 2), key='-QTD-', font=("Any", 25),justification="right")],
+            [sg.InputText(background_color='White', size=(14,2 ), key='-EAN-', font=("Any", 25)),
+             sg.Text("", size=(46, 1)),sg.InputText("1", size=(2, 2), key='-QTD-', font=("Any", 25),justification="right")],
             [sg.Text('Descrição do Produto', size=(25, 1), font=("Any", 12))],
-            [sg.InputText(size=(38, 2), key='-DESCRICAO-', font=("Any", 25))],]
+            
+            [sg.I(size=(34, 2), key='-DESCRICAO-', font=("Any", 26)), sg.Button(">",font=("Any", 18))],]
 
 bloco_3=[   [sg.Button('OK', size=(15,1),font=("Any",25)), sg.Text("", size=(10, 1)),sg.Button('DELETE', size=(15, 1),font=("Any",25))],
             [sg.Button('PAGAR', size=(15, 1),font=("Any",25)),sg.Text("", size=(10, 1)), sg.Button('VOLTAR', size=(15, 1),font=("Any",25))],]
 
-bloco_4=[   [sg.Image(filename="images.png",size=(695,210))],]
+bloco_4=[   [sg.Image(filename="tra.png",size=(695,210))],]
 
-bloco_5=[   [sg.Text("Operador de Caixa:",size=(17,1),font=("Any",18)),sg.Input("ADMINISTRADOR DO SISTEMA",key='-USUARIO-',size=(40, 1),font=("Any", 15))],
-            [sg.CalendarButton("Data",size=(5,1),close_when_date_chosen=True,target="data",location=(0,0),no_titlebar=False),
+bloco_5=[   [sg.Text("Operador de Caixa:",size=(17,1),font=("Any",18)),sg.DD(user,key='-USUARIO-',size=(39, 1),font=("Any", 15))],
+            [sg.CalendarButton("Data",size=(5,1),close_when_date_chosen=True,target="-DATA-",location=(0,0),no_titlebar=False),
             sg.Input(key="-DATA-",size=(17,1)),sg.Text("               Em Desenvolvimento", size=(28, 1), font=("Any", 10)),
             sg.Text("      linkedin.com/in/deleon-santos-1b835a290")],]
             
@@ -109,14 +119,19 @@ while True:
                 event, values = window.read()
                 if event =='OK': 
                     # verifica se ha valores nos campos de produto e quantidade
-                    material = values['-MATERIAL-']
+                    
+                    
+                    material = values['-EAN-']
+                    descricao= values["-DESCRICAO-"]
                     qtd = int(values['-QTD-'])
+                                            
                     if not material:
                         sg.popup("Erro no campo material!", title="Erro", font=("Any", 10),button_color="red")
                         continue
                     if qtd <1  or qtd > 99 or qtd == "none":
                         sg.popup("Erro no campo Quantidade!", title="Erro", font=("Any", 10),button_color="red")
-                        continue 
+                        continue
+                    
                     plu_pro = achar(material)
                     if plu_pro == False:
                         sg.popup("Erro no campo material", title="Erro", font=("Any", 110),button_color="red")
@@ -128,7 +143,7 @@ while True:
                             if item["cod"] == plu_pro:
                                 num_item += 1
                                 ean = item["ean"]
-                                material = item["lanche"]
+                                material = item["item"]
                                 preco_unitario=item["preco"]
                                 preco = item['preco'] * qtd
                                 valor_pagar += preco
@@ -139,8 +154,10 @@ while True:
                         window['-VALORUNITARIO-'].update(f"{preco_unitario:.2f}")
                         window['-PRECO-'].update(f"{preco:.2f}")
                         window['-SUBTOTAL-'].update(f" {valor_pagar:.2f}")
-                        print(carrinho)
-                            
+                        
+                elif event == ">" :
+                    desc=pesquisa.pesquisar(dic)
+                                    
                 elif event == 'DELETE':
                     valor_pagar = modulo_funcao.remover(valor_pagar,carrinho,window["-TABELA-"])
                     window['-SUBTOTAL-'].update(f"R$ {valor_pagar:.2f}")
@@ -178,10 +195,7 @@ while True:
         limpar_saida()
         continue
 
-    elif event == "Data":
-        data = sg.popup_get_text("Data", font=("Any", 18))
-        if data:  # permite inserir uma data atual ao sistema
-            window['-DATA-'].update(f'{data}')
+    
 
     elif event == "Ajuda":
         try:
