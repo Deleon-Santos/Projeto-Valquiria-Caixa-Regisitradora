@@ -15,8 +15,8 @@ def novo_item():
         [sg.Text("", size=(20, 1))],
         [sg.Text("CADASTRAR ITEM", size=(50, 1), justification='center', font=("Any", 18))],
         [sg.Text("", size=(20, 1))],
-        [sg.Text("Descrição:", size=(10, 1)),sg.InputText(background_color='White', key="produto", size=(25, 1), font=("Any", 18)),
-         sg.Text("Preço:", size=(10, 1)),sg.InputText(background_color='White', key="preco", size=(5, 1), font=("Any", 18))], 
+        [sg.Text("Descrição:", size=(10, 1)),sg.InputText(background_color='White', key="-PRODUTO-", size=(25, 1), font=("Any", 18)),
+         sg.Text("Preço:", size=(10, 1)),sg.InputText(background_color='White', key="-PRECO-", size=(5, 1), font=("Any", 18))], 
         [sg.Frame('',frame1)],
         [sg.Text("", size=(20, 1))],
         [sg.Text("", size=(23, 1)), sg.Button("CADASTRAR", size=(18, 1)), sg.Button("SAIR", size=(18, 1),button_color='red')],
@@ -30,15 +30,16 @@ def novo_item():
             if event in (sg.WINDOW_CLOSED, "SAIR"):
                 break
             if event == "CADASTRAR":
-                material = values["produto"]
+                material = values["-PRODUTO-"]
                 codigo = len(dic) + 101  # conta os itens e adiciona "101"
                 
                 ean = 7890000000000 + codigo
                 codigo = str(codigo)
                 ean = str(ean) 
-                prec = float(values["preco"])
+                prec = float(values["-PRECO-"])
                 carrinho.append([codigo, ean, material, prec])
-            
+                window['-PRODUTO-'].Update('')
+                window['-PRECO-'].Update('')
 
             cadastro_item = {"cod": codigo, "ean": ean, "item": material, "preco": prec}
             # Adicione o novo item ao dicionário

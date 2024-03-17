@@ -136,5 +136,23 @@
         "ean": "7890000000123",
         "item": "Farinha de mandioca Yoki 500g",
         "preco": 7.3
+    },
+    {
+        "cod": "124",
+        "ean": "7890000000124",
+        "item": "Sabao em po Omo multiacao 500g",
+        "preco": 12.9
+    },
+    {
+        "cod": "125",
+        "ean": "7890000000125",
+        "item": "Mortadela defumada Sadia 100g",
+        "preco": 3.9
+    },
+    {
+        "cod": "126",
+        "ean": "7890000000126",
+        "item": "Margarina Qualy 500g",
+        "preco": 12.9
     }
 ]

@@ -16,7 +16,7 @@ def pagar(valor_pagar):
         [sg.Text("",size=(8,1)),sg.Image(filename="111.png",size=(400,100))],
         [sg.Text("", size=(10, 1))],
         [sg.Frame("",frame6)],
-        [sg.Text("",size=(20, 1)),sg.Button("SAIR", font=("Any", 12),button_color="red")],
+        
 
     ]
 
@@ -31,9 +31,10 @@ def pagar(valor_pagar):
 
         if event in (sg.WIN_CLOSED, "SAIR"):
             sg.popup("Cancelar forma de Pagamento",size=(10,1), font=("Any", 12))
-            #return soma2
+            break
 
-
+        elif event =='VOLTAR':
+            break
         elif event in ("CARTAO", "PIX"):  # para cartão e pix o valor e descontado itegralmente
             if valor_pagar > 0:  # somente se o subtotal existir e for maior que "0"
                 valor_pagar = 0
