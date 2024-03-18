@@ -1,26 +1,27 @@
 import PySimpleGUI as sg
 def pagar(valor_pagar):
-    frame6=[[sg.Text("Valor Total da Compra ", size=(28, 1), font=("Any", 12)),
+    frame6=[[sg.Text("Valor da Compra ", size=(28, 1), font=("Any", 12)),
         sg.Text(f"R$ {valor_pagar:.2f}", size=(18, 1), justification='right', key="valor", font=("Any", 18))],
-        [sg.Text("Valor Recolhido ", size=(28, 1), font=("Any", 12)),
+        [sg.Text("Valor Recabido ", size=(28, 1), font=("Any", 12)),
         sg.Text(f'R$ 0.00', size=(18, 1), key="recebido", justification='right', font=("Any", 18))],
         [sg.Text("Troco Devolvido ", size=(28, 1), font=("Any", 12)),
         sg.Text(f'R$ 0.00', size=(18, 1), key="R$", justification='right', font=("Any", 18))],
         [sg.Text("", size=(10, 1))],
-        [sg.Button('CARTAO', size=(20, 1)), sg.Button('PIX', size=(20, 1)), sg.Button('DINHEIRO', size=(20, 1))],
+        [sg.Button('CARTAO', font=("Any", 18),size=(15, 1)), sg.Button('PIX',font=("Any", 18), size=(15, 1)), sg.Button('DINHEIRO',font=("Any", 18), size=(15, 1))],
         [sg.T("")],
 
     ]
     layout = [
         [sg.Text("CONDIÇÃO DE PAGAMENTO", size=(35, 1), justification='center', font=("Any", 18))],
-        [sg.Text("",size=(8,1)),sg.Image(filename="111.png",size=(400,100))],
+        [sg.Text("",size=(8,1)),sg.Image(filename="f_pagamentos.png",size=(404,197))],
         [sg.Text("", size=(10, 1))],
         [sg.Frame("",frame6)],
         
 
     ]
 
-    window = sg.Window("PAGAMENTO", layout, finalize=True)
+
+    window = sg.Window("PAGAMENTO", layout, finalize=False)
 
     while True:
         
@@ -29,9 +30,10 @@ def pagar(valor_pagar):
         troco = 0
         window["valor"].update(f"R$ {valor_pagar:.2f}")
 
-        if event in (sg.WIN_CLOSED, "SAIR"):
-            sg.popup("Cancelar forma de Pagamento",size=(10,1), font=("Any", 12))
-            break
+        if event == sg.WIN_CLOSED:
+            sg.popup("Cancelar forma de Pagamento", font=("Any", 18))
+            return valor_pagar
+            break 
 
         elif event =='VOLTAR':
             break
@@ -40,7 +42,7 @@ def pagar(valor_pagar):
                 valor_pagar = 0
                 window["valor"].update(f"R$ {valor_pagar:.2f}")
                 window["recebido"].update(f"R$ {pago:.2f}")
-                sg.popup("Pagamento Autorizado", font=("Any", 12))
+                sg.popup("Pagamento Autorizado", font=("Any", 18))
                 return valor_pagar
                 #break
 
@@ -67,6 +69,6 @@ def pagar(valor_pagar):
             except ValueError:
                 sg.popup("Insira um valor válido", font=("Any", 18))
                 continue
-        break
+        
     window.close()
 

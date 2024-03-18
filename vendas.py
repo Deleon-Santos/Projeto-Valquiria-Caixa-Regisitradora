@@ -37,7 +37,7 @@ def sistema(usuario,data):
         
         window['-VALORUNITARIO-'].update('')
         window['-PRECO-'].update('')
-        sg.popup("Operação Encerrada\n  Volte ao menu 'Nova Compra' para continua")
+        sg.popup("Operação Concluída\n Volte ao menu Nova Compra para continuar",font=('Any',18))
 
     # limpa os campos sempre que uma nova função e chamada
 
@@ -72,14 +72,14 @@ def sistema(usuario,data):
                 [sg.I(size=(34, 2), key='-DESCRICAO-', font=("Any", 26)), sg.Button(">",font=("Any", 18))],]
 
     bloco_3=[   [sg.Button('OK', size=(15,1),font=("Any",25)), sg.Text("", size=(10, 1)),sg.Button('DELETE', size=(15, 1),font=("Any",25))],
-                [sg.Button('PAGAR', size=(15, 1),font=("Any",25)),sg.Text("", size=(10, 1)), sg.Button('VOLTAR', size=(15, 1),font=("Any",25))],]
+                ]
 
-    bloco_4=[   [sg.Image(filename="tra.png",size=(695,210))],]
+    bloco_4=[   [sg.Image(filename="imagem_venda.png",size=(695,210))],]
 
-    bloco_5=[   [sg.Text("Operador de Caixa:",size=(17,1),font=("Any",18)),sg.DD(user,key='-USUARIO-',size=(39, 1),font=("Any", 15))],
-                [sg.CalendarButton("Data",size=(5,1),close_when_date_chosen=True,target="-DATA-",location=(0,0),no_titlebar=False),
-                sg.Input(key="-DATA-",size=(17,1)),sg.Text("               Em Desenvolvimento", size=(28, 1), font=("Any", 10)),
-                sg.Text("      linkedin.com/in/deleon-santos-1b835a290")],]
+    bloco_5=[  [sg.Button('PAGAR', size=(15, 1),font=("Any",25)),sg.Text("", size=(10, 1)), sg.Button('VOLTAR', size=(15, 1),font=("Any",25))],
+         
+                [sg.T("Data",font=('Any',12)),sg.Push(),sg.T('Operador',font=('Any',12))],
+                [sg.I(key="-DATA-",font=("Any",25),size=(18,1)),sg.P(),sg.I(key="-USUARIO-",font=("Any",25),size=(20,1))],]
                 
     frame1=[   
                 [sg.Frame("",bloco_2)],
@@ -91,7 +91,8 @@ def sistema(usuario,data):
 
     layout = [  
                 [sg.Menu(menu_layout)],           
-                [sg.Col(frame1),sg.Col(frame2)],]
+                [sg.Col(frame1),sg.Col(frame2)],
+                [sg.P(),sg.Text("      linkedin.com/in/deleon-santos-1b835a290"),sg.P()]]
 
     #====================================================================================================================================
     try:
@@ -159,9 +160,11 @@ def sistema(usuario,data):
                             window['-VALORUNITARIO-'].update(f"{preco_unitario:.2f}")
                             window['-PRECO-'].update(f"{preco:.2f}")
                             window['-SUBTOTAL-'].update(f" {valor_pagar:.2f}")
-
+                            window['-DESCRICAO-'].update(material)
                     elif event == ">" :
-                        desc=pesquisa.pesquisar(dic)
+                        desc,descricao=pesquisa.pesquisar(dic)
+                        window['-EAN-'].update(desc)
+                        window['-DESCRICAO-'].update(descricao)
                                         
                     elif event == 'DELETE':
                         valor_pagar = modulo_funcao.remover(valor_pagar,carrinho,window["-TABELA-"])
