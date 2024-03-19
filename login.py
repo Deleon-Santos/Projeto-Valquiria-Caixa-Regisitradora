@@ -1,19 +1,30 @@
 import PySimpleGUI as sg
 import vendas
-l=['Administrador','Operador1','Operador2']
-cadastro=[
+import json
+
+lista_operadores=['Administrador','Operador1','Operador2']
+
+try:
+
+    with open('dados/usuarios.txt', 'r') as bd:
+        dados_usuario = json.load(bd)
+
+    # Seu código para ler o arquivo
+except FileNotFoundError:
+        sg.popup("O arquivo 'badosdUsuario.txt' não foi encontrado. Verifique o caminho ou crie o arquivo.")
+"""dados_usuario=[
         {'nome':'Administrador','senha':'1234'},
         {'nome':'Operador1','senha':'1234'},
-        {'nome':'Operador2','senha':'1234'},]
+        {'nome':'Operador2','senha':'1234'},]"""
 
 col1=[
-    [sg.Image(filename="imagem_login.png",size=(392,267))],
+    [sg.Image(filename="imagem/imagem_login.png",size=(392,267))],
 ]
 col2=[
-    [sg.T("Usuario",font=('any',18)),sg.DD(values=l,size=(20,1),font=('any',18),key='-USUARIO-')],
+    [sg.T("Usuario",font=('any',18)),sg.DD(values=lista_operadores,size=(20,1),font=('any',18),key='-USUARIO-')],
     [sg.T("Senha  ",font=('any',18)),sg.I(key='-SENHA-',size=(20,1),font=('any',18),password_char='*')],
     [sg.Push(),sg.CalendarButton("Data",font=('any',12),size=(5,1),close_when_date_chosen=True,target="-DATA-",location=(0,0),no_titlebar=False),
-    sg.Input(key="-DATA-",font=('any',18),size=(17,1)),sg.Push()],
+    sg.Input(key="-DATA-",font=('any',20),size=(20,1))],
     
 ]
 layout=[
@@ -40,12 +51,18 @@ while True:
             sg.popup("Usuario, senha e Data não devem ser nulos")
             continue
         else:
-            for user in cadastro:
+            for user in dados_usuario:
                 if user['nome']==usuario  and user['senha']== senha:
                     sistema=vendas.sistema(usuario,data)
             sg.popup_error('Inserir Usuario e Senha para entrar')       
             continue
     elif event=='SUPORTE':
-        sg.popup_scrolled('USUARIO: Operador1\nSENHA: 1234',title="Senhas") 
+        try:
+            with open('dados/usuarios.txt', 'r') as legenda:
+                arquivo = legenda.read()
+                sg.popup_scrolled(arquivo, title="Suporte")
+        except FileNotFoundError:
+            sg.popup("O arquivo 'comanda.txt' não foi encontrado. Verifique o caminho ou crie o arquivo.")
+        continue 
         continue            
 window.close()

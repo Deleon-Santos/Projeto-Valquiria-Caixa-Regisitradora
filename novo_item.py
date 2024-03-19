@@ -4,7 +4,7 @@ carrinho=[]
 cadastro_item={}
 def novo_item():
     # abre os itens existentes do arquivo JSON
-    with open("comanda.txt", 'r') as arquivo:
+    with open("dados/bd.txt", 'r') as arquivo:
         dic = json.load(arquivo)
     
     titulos=[' cod ','     ean     ',"               Descrição           "," preço "]
@@ -44,12 +44,11 @@ def novo_item():
             cadastro_item = {"cod": codigo, "ean": ean, "item": material, "preco": prec}
             # Adicione o novo item ao dicionário
             dic.append(cadastro_item)
-            with open("comanda.txt", 'w') as arquivo:
+            with open("dados/bd.txt", 'w') as arquivo:
 
                 json.dump(dic, arquivo, indent=4)
                 window['-TABELA-'].update(values=carrinho)
-            
-            
+       
         except ValueError:
             sg.popup("Informe valor numerico", title="Preço", font=("Any", 18))
     window.close()

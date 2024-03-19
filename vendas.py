@@ -12,7 +12,6 @@ def sistema(usuario,data):
     lista_produto = []
     carrinho = []
     cupom = int(0)
-    item_cancelado = []
     valor_pagar = 0
     num_item = int(0)
 
@@ -22,29 +21,21 @@ def sistema(usuario,data):
         for item in dic:
             if material in (item["cod"],item["ean"]) :
                 return item["cod"]  # busca o produto dentro do cadastro
-        
         return False
-
-
-
-            
+  
     # ===========================================================================================================
     def limpar_saida():
         carrinho.clear()
         window["-CUPOM-"].update("")
         window["-SUBTOTAL-"].update("")
         window["-DESCRICAO-"].update("")
-        
         window['-VALORUNITARIO-'].update('')
         window['-PRECO-'].update('')
         sg.popup("Operação Concluída\n Volte ao menu Nova Compra para continuar",font=('Any',18))
-
     # limpa os campos sempre que uma nova função e chamada
 
     # ===================================== Inicio do programa principal======================================================================
     sg.theme("darkBlue3")
-
-    user=["Administrador","Operador turno manha", "Operador turno tarde"]
 
     titulos = ["Item"," Cod ","    EAN    ","   Descrição do Produto  "," QTD "," PUni R$ ","Preço R$"]
 
@@ -74,7 +65,7 @@ def sistema(usuario,data):
     bloco_3=[   [sg.Button('OK', size=(15,1),font=("Any",25)), sg.Text("", size=(10, 1)),sg.Button('DELETE', size=(15, 1),font=("Any",25))],
                 ]
 
-    bloco_4=[   [sg.Image(filename="imagem_venda.png",size=(695,210))],]
+    bloco_4=[   [sg.Image(filename="imagem/imagem_venda.png",size=(695,210))],]
 
     bloco_5=[  [sg.Button('PAGAR', size=(15, 1),font=("Any",25)),sg.Text("", size=(10, 1)), sg.Button('VOLTAR', size=(15, 1),font=("Any",25))],
          
@@ -96,7 +87,7 @@ def sistema(usuario,data):
 
     #====================================================================================================================================
     try:
-        with open('comanda.txt', 'r') as adic:
+        with open('dados/bd.txt', 'r') as adic:
             dic = json.load(adic)
 
         # Seu código para ler o arquivo
@@ -140,7 +131,7 @@ def sistema(usuario,data):
                         
                         plu_pro = achar(material)
                         if plu_pro == False:
-                            sg.popup("Erro no campo material", title="Erro", font=("Any", 110),button_color="red")
+                            sg.popup("Erro no campo material", title="Erro", font=("Any", 10),button_color="red")
                             continue
                             # recebe o codigo e integra o produto ao dicionario e lista local # recebe o codigo e integra o produto ao dicionario e lista local
                         else:
@@ -209,7 +200,7 @@ def sistema(usuario,data):
             i=novo_item.novo_item()
         elif event == "Ajuda":
             try:
-                with open('ajuda.txt', 'r') as legenda:
+                with open('dados/ajuda.txt', 'r') as legenda:
                     arquivo = legenda.read()
                     sg.popup_scrolled(arquivo, title="Ajuda")
                 # Seu código para ler o arquivo
