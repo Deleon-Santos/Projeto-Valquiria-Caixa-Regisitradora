@@ -154,5 +154,17 @@
         "ean": "7890000000126",
         "item": "Margarina Qualy 500g",
         "preco": 12.9
+    },
+    {
+        "cod": "127",
+        "ean": "7890000000127",
+        "item": "Farofa de milho Kitano 250g",
+        "preco": 6.9
+    },
+    {
+        "cod": "128",
+        "ean": "7890000000128",
+        "item": "Tempero caldo knor 60g",
+        "preco": 3.9
     }
 ]

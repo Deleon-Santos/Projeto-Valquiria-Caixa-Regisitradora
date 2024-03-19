@@ -64,5 +64,5 @@ while True:
         except FileNotFoundError:
             sg.popup("O arquivo 'comanda.txt' não foi encontrado. Verifique o caminho ou crie o arquivo.")
         continue 
-        continue            
+                    
 window.close()
