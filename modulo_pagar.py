@@ -30,20 +30,19 @@ def pagar(valor_pagar):
         window["valor"].update(f"R$ {valor_pagar:.2f}")
 
         if event == sg.WIN_CLOSED:
-            sg.popup("Cancelar forma de Pagamento", font=("Any", 18))
-            return valor_pagar
-            
-        elif event in ("CARTAO", "PIX"):  # para cartão e pix o valor e descontado itegralmente
+            break
+           
+        if event in ("CARTAO", "PIX"):  # para cartão e pix o valor e descontado itegralmente
             if valor_pagar > 0:  # somente se o subtotal existir e for maior que "0"
                 valor_pagar = 0
                 window["valor"].update(f"R$ {valor_pagar:.2f}")
                 window["recebido"].update(f"R$ {pago:.2f}")
                 sg.popup("Pagamento Autorizado", font=("Any", 18))
                 return valor_pagar
-   
+
         elif event == "DINHEIRO":
             try:
-                dinheiro = sg.popup_get_text("Valor Recebido", font=("Any", 12))
+                dinheiro = sg.popup_get_text("Valor Recebido", font=("Any", 18))
                 if dinheiro is not None:  # verifica se tem valores
                     dinheiro = float(dinheiro)
                     if dinheiro >= valor_pagar:

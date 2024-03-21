@@ -4,10 +4,12 @@
 def sistema(usuario,data):
     import PySimpleGUI as sg
     import json
-    import modulo_pagar
-    import modulo_funcao
-    import pesquisa
-    import novo_item
+    import modulo_pagar as pagar
+    import modulo_remover as remover
+    import modulo_pesquisar as pesquisar
+    import modulo_cadastrar as cadastrar
+    import modulo_limpar as limpar
+    import modulo_adicionar as adicionar
 
     lista_produto = []
     carrinho = []
@@ -16,26 +18,8 @@ def sistema(usuario,data):
     num_item = int(0)
 
 
-    # ===========================================================================================================
-    def achar(material):
-        for item in dic:
-            if material in (item["cod"],item["ean"]) :
-                return item["cod"]  # busca o produto dentro do cadastro
-        return False
-  
-    # ===========================================================================================================
-    def limpar_saida():
-        carrinho.clear()
-        window["-CUPOM-"].update("")
-        window["-SUBTOTAL-"].update("")
-        window["-DESCRICAO-"].update("")
-        window['-VALORUNITARIO-'].update('')
-        window['-PRECO-'].update('')
-        sg.popup("Operação Concluída\n Volte ao menu Nova Compra para continuar",font=('Any',18))
-    # limpa os campos sempre que uma nova função e chamada
-
-    # ===================================== Inicio do programa principal======================================================================
-    sg.theme("darkBlue3")
+    # ===================================== Inicio do programa principal=========================================
+    
 
     titulos = ["Item"," Cod ","    EAN    ","   Descrição do Produto  "," QTD "," PUni R$ ","Preço R$"]
 
@@ -70,7 +54,7 @@ def sistema(usuario,data):
     bloco_5=[  [sg.Button('PAGAR', size=(15, 1),font=("Any",25)),sg.Text("", size=(10, 1)), sg.Button('VOLTAR', size=(15, 1),font=("Any",25))],
          
                 [sg.T("Data",font=('Any',12)),sg.Push(),sg.T('Operador',font=('Any',12))],
-                [sg.I(key="-DATA-",font=("Any",25),size=(18,1)),sg.P(),sg.I(key="-USUARIO-",font=("Any",25),size=(20,1))],]
+                [sg.I(key="-DATA-",font=("Any",14),size=(18,1)),sg.P(),sg.I(key="-USUARIO-",font=("Any",14),size=(20,1))],]
                 
     frame1=[   
                 [sg.Frame("",bloco_2)],
@@ -94,17 +78,15 @@ def sistema(usuario,data):
     except FileNotFoundError:
         sg.popup("O arquivo 'comanda.txt' não foi encontrado. Verifique o caminho ou crie o arquivo.")
 
-    #with open('comanda.txt', 'r') as adic:  # comando para ler o Aquivo.txt com os dados dos produtos
-    #====================================================================================================================================  
-
     window = sg.Window("NOVO PEDIDO", layout,size=(800,800), resizable=True)
     
     while True:
         event, values = window.read()
         window['-DATA-'].update(data)
         window['-USUARIO-'].update(usuario)
-        if event in (sg.WIN_CLOSED, "Fechar"):
+        if event in (sg.WIN_CLOSED, "FECHAR"):
             break
+
         elif event == "Nova Compra":
             cupom += 1
             carrinho=[cupom]
@@ -117,87 +99,91 @@ def sistema(usuario,data):
             while True:
                 try:
                     event, values = window.read()
-                    if event =='OK': 
-                        # verifica se ha valores nos campos de produto e quantidade                  
+                    if event =='OK':                   
                         material = values['-EAN-']
                         descricao= values["-DESCRICAO-"]
-                        qtd = int(values['-QTD-'])                                               
+                        qtd = int(values['-QTD-']) 
+
                         if not material:
-                            sg.popup("Erro no campo material!", title="Erro", font=("Any", 10),button_color="red")
+                            sg.popup("Erro no campo material!", title="Erro", font=("Any", 18),button_color="red")
                             continue
+
                         if qtd <1  or qtd > 99 or qtd == "none":
-                            sg.popup("Erro no campo Quantidade!", title="Erro", font=("Any", 10),button_color="red")
+                            sg.popup("Erro no campo Quantidade!", title="Erro", font=("Any", 18),button_color="red")
                             continue
                         
-                        plu_pro = achar(material)
+                        plu_pro = adicionar.achar(material,dic)
                         if plu_pro == False:
-                            sg.popup("Erro no campo material", title="Erro", font=("Any", 10),button_color="red")
+                            sg.popup("Erro no campo material", title="Erro", font=("Any", 18),button_color="red")
                             continue
-                            # recebe o codigo e integra o produto ao dicionario e lista local # recebe o codigo e integra o produto ao dicionario e lista local
-                        else:
-                            qtd = int(qtd)
-                            for item in dic:
-                                if item["cod"] == plu_pro:
-                                    num_item += 1
-                                    ean = item["ean"]
-                                    material = item["item"]
-                                    preco_unitario=item["preco"]
-                                    preco = item['preco'] * qtd
-                                    valor_pagar += preco
-                            produto=[ num_item ,plu_pro,  ean,  material, qtd ,preco_unitario, preco]
-                                            
-                            carrinho.append(produto)
-                            window['-TABELA-'].update(values=carrinho)
-                            window['-VALORUNITARIO-'].update(f"{preco_unitario:.2f}")
-                            window['-PRECO-'].update(f"{preco:.2f}")
-                            window['-SUBTOTAL-'].update(f" {valor_pagar:.2f}")
-                            window['-DESCRICAO-'].update(material)
+                    
+                        for item in dic: # coleta os valores 
+                            if item["cod"] == plu_pro:
+                                num_item += 1
+                                ean = item["ean"]
+                                material = item["item"]
+                                preco_unitario=item["preco"]
+                                preco = item['preco'] * qtd
+                                valor_pagar += preco
+                        produto=[ num_item ,plu_pro,  ean,  material, qtd ,preco_unitario, preco]
+                                        
+                        carrinho.append(produto)
+                        window['-TABELA-'].update(values=carrinho)
+                        window['-VALORUNITARIO-'].update(f"{preco_unitario:.2f}")
+                        window['-PRECO-'].update(f"{preco:.2f}")
+                        window['-SUBTOTAL-'].update(f" {valor_pagar:.2f}")
+                        window['-DESCRICAO-'].update(material)
+                        
                     elif event == ">" :
-                        desc,descricao=pesquisa.pesquisar(dic)
+                        desc,descricao=pesquisar.pesquisar(dic)
                         window['-EAN-'].update(desc)
                         window['-DESCRICAO-'].update(descricao)
                                         
                     elif event == 'DELETE':
-                        valor_pagar = modulo_funcao.remover(valor_pagar,carrinho,window["-TABELA-"])
+                        valor_pagar = remover.remover(valor_pagar,carrinho,window["-TABELA-"])
                         window['-SUBTOTAL-'].update(f"R$ {valor_pagar:.2f}")
                         window["-TABELA-"].update(values=carrinho)
                         continue
 
                     elif event == 'PAGAR':
                         # condição para conciderar o cupom com "pago"
-                        valor_pagar = modulo_pagar.pagar(valor_pagar)
+                        valor_pagar = pagar.pagar(valor_pagar)
                         if valor_pagar == float(0):
-                            lista_produto.extend(carrinho)
-                            #limpar_saida()
-                            num_item = 0
-                            limpar_saida()
+                            lista_produto.extend(carrinho)   
+                            limpar.limpar_saida(carrinho,window,num_item)
+                            sg.popup("Operação Concluída\n Volte ao menu Nova Compra para continuar",title="Pagamento",font=('Any',18))
                             break
                         else:
                             continue
+
                     elif event == "VOLTAR":  # limpa todos os valores e lista local
-                        
-                        limpar_saida()
-                        num_item = 0
+                        limpar.limpar_saida(carrinho,window,num_item)
                         valor_pagar = 0
                         cupom -= 1
+                        break
+
+                    elif event == (sg.WIN_CLOSED):
+                        sg.popup_ok("ENCERRAR", font=("Any", 18))
                         
                         break
-                    elif event == (sg.WIN_CLOSED):
-                        sg.popup("ENCERRAR", font=("Any", 18))
-                        break
+                       
+
                 except ValueError:  # trata erro de valor não numerico
                     sg.popup('Erro na quantidade', title="Erro em Quantidade", font=("Any", 18))
                     continue
 
         elif event == "VOLTAR":
             window['-CAIXA-'].update('CAIXA FECHADO')
-            limpar_saida()
+            limpar.limpar_saida(carrinho,window,num_item)
             continue
+
         elif event == "Nova Pesquisa" :
-            desc=pesquisa.pesquisar(dic)
+            pesquisar.pesquisar(dic)
             continue
+
         elif event == 'Novo Item':
-            i=novo_item.novo_item()
+            cadastrar.novo_item()
+
         elif event == "Ajuda":
             try:
                 with open('dados/ajuda.txt', 'r') as legenda:
@@ -207,6 +193,7 @@ def sistema(usuario,data):
             except FileNotFoundError:
                 sg.popup("O arquivo 'comanda.txt' não foi encontrado. Verifique o caminho ou crie o arquivo.")
             continue
+
     window.close()
 
 
