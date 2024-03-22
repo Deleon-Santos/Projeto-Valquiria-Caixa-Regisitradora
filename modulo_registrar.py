@@ -10,12 +10,14 @@ def sistema(usuario,data):
     import modulo_cadastrar as cadastrar
     import modulo_limpar as limpar
     import modulo_adicionar as adicionar
+    import modulo_visualisar as visualizar
 
-    lista_produto = []
+    lista_cupom = []
     carrinho = []
     cupom = int(0)
     valor_pagar = 0
     num_item = int(0)
+    
 
 
     # ===================================== Inicio do programa principal=========================================
@@ -26,7 +28,8 @@ def sistema(usuario,data):
     menu_layout = [
         ["Novo", ["Nova Compra",'Nova Pesquisa','Novo Item']],
         ["Totais", ["Venda Cupom"]], 
-        ["Suporte", ["Ajuda", "Data"]]]
+        ["Suporte", ["Ajuda", "Data"]],
+        ["Fechar",["Fechar"]]]
 
     bloco_1=[   [sg.Text("Numero do Cupom", size=(35, 1),font=("Any",17)), sg.Input(size=(17, 1), key="-CUPOM-", font=("Any", 25),justification="right")],
                 [sg.Table(values=carrinho, headings=titulos, max_col_width=10, auto_size_columns=True,
@@ -65,7 +68,7 @@ def sistema(usuario,data):
     frame2=[    [sg.Frame("",bloco_1)] , ]
 
     layout = [  
-                [sg.Menu(menu_layout)],           
+                [sg.Menu(menu_layout,font=('Any',12))],           
                 [sg.Col(frame1),sg.Col(frame2)],
                 [sg.P(),sg.Text("      linkedin.com/in/deleon-santos-1b835a290"),sg.P()]]
 
@@ -78,20 +81,24 @@ def sistema(usuario,data):
     except FileNotFoundError:
         sg.popup("O arquivo 'comanda.txt' não foi encontrado. Verifique o caminho ou crie o arquivo.")
 
-    window = sg.Window("NOVO PEDIDO", layout,size=(800,800), resizable=True)
+    window = sg.Window("NOVO PEDIDO", layout,size=(800,800), resizable=True,finalize=True)
     
     while True:
         event, values = window.read()
         window['-DATA-'].update(data)
         window['-USUARIO-'].update(usuario)
-        if event in (sg.WIN_CLOSED, "FECHAR"):
-            break
+        if event in (sg.WIN_CLOSED, "Fechar"):
+            resposta=sg.popup_ok_cancel("  Se seguir com o evento,\nas configurações não salvas\nserão perdidas.",font=('Any',18))
+            if resposta=="OK":
+                break  
+            else:
+                continue  
 
         elif event == "Nova Compra":
             cupom += 1
             carrinho=[cupom]
-            window['-CUPOM-'].update(f'N°{cupom}')
-            window['-CAIXA-'].update('      CAIXA ABERTO')
+            window['-CUPOM-'].update(f'{cupom}')
+            window['-CAIXA-'].update('   CAIXA ABERTO')
             window['-SUBTOTAL-'].update(f'R$ {valor_pagar:.2f}')
             window["-TABELA-"].update("")
             
@@ -138,6 +145,7 @@ def sistema(usuario,data):
                         desc,descricao=pesquisar.pesquisar(dic)
                         window['-EAN-'].update(desc)
                         window['-DESCRICAO-'].update(descricao)
+                    
                                         
                     elif event == 'DELETE':
                         valor_pagar = remover.remover(valor_pagar,carrinho,window["-TABELA-"])
@@ -149,7 +157,7 @@ def sistema(usuario,data):
                         # condição para conciderar o cupom com "pago"
                         valor_pagar = pagar.pagar(valor_pagar)
                         if valor_pagar == float(0):
-                            lista_produto.extend(carrinho)   
+                            lista_cupom.extend(carrinho)   
                             limpar.limpar_saida(carrinho,window,num_item)
                             sg.popup("Operação Concluída\n Volte ao menu Nova Compra para continuar",title="Pagamento",font=('Any',18))
                             break
@@ -171,6 +179,9 @@ def sistema(usuario,data):
                 except ValueError:  # trata erro de valor não numerico
                     sg.popup('Erro na quantidade', title="Erro em Quantidade", font=("Any", 18))
                     continue
+        elif event == "Venda Cupom":
+            visualizar.venda_cupom(lista_cupom)
+            continue
 
         elif event == "VOLTAR":
             window['-CAIXA-'].update('CAIXA FECHADO')

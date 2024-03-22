@@ -10,7 +10,7 @@ try:
 except FileNotFoundError:
     sg.popup("O arquivo 'badosdUsuario.txt' não foi encontrado. Verifique o caminho ou crie o arquivo.")
 
-sg.LOOK_AND_FEEL_TABLE['MyCreatedTheme'] = {'BACKGROUND': '#A9A9A9', 
+sg.LOOK_AND_FEEL_TABLE['MyCreatedTheme'] = {'BACKGROUND': '#778899', 
                                         'TEXT': '#000000', 
                                         'INPUT': '#DCDCDC', 
                                         'TEXT_INPUT': '#000000', 
@@ -25,21 +25,21 @@ col1=[
     [sg.Image(filename="imagem/imagem_login.png",size=(392,267))],
 ]
 col2=[
-    [sg.T("Usuario",font=('any',18)),sg.DD(values=lista_operadores,size=(20,1),font=('any',18),key='-USUARIO-')],
-    [sg.T("Senha  ",font=('any',18)),sg.I(key='-SENHA-',size=(20,1),font=('any',18),password_char='*')],
+    [sg.T("Usuario",font=('any',18)),sg.DD(default_value="Administrador",values=lista_operadores,size=(20,1),font=('any',18),key='-USUARIO-')],
+    [sg.T("Senha  ",font=('any',18)),sg.I('1234',key='-SENHA-',size=(20,1),font=('any',18),password_char='*')],
     [sg.Push(),sg.CalendarButton("Data",font=('Any',12),size=(5,1),close_when_date_chosen=True,target="-DATA-",location=(900,500),no_titlebar=False),
-    sg.Input(key="-DATA-",font=('any',20),size=(20,1))],   
+    sg.Input('2024-03-21 17:41:22',key="-DATA-",font=('any',20),size=(20,1))],   
 ]
 
 layout=[
-    [sg.Push(),sg.T('ENTRAR EM VENDAS',font=('Any',30)),sg.P()],
+    [sg.Push(),sg.T('ENTRAR EM VENDAS',font=('Any',30,'bold')),sg.P()],
     [sg.Col(col1),sg.VerticalSeparator(),sg.Col(col2)],
-    [sg.P(),sg.B("OK",font=('any',10),size=(10,1)),sg.P()],
+    [sg.P(),sg.B("OK",font=('any',10),size=(10,2)),sg.P()],
     [sg.HorizontalSeparator()],
-    [sg.P(),sg.B('SAIR',font=('any',10),size=(10,2),button_color='red'),sg.P(),sg.B('SUPORTE',font=('any',10),size=(10,2)),sg.P()]
+    [sg.P(),sg.B('SAIR',font=('any',10),size=(10,1),button_color='red'),sg.P(),sg.B('SUPORTE',font=('any',10),size=(10,1)),sg.P()]
 ]
 
-window = sg.Window("NOVO PEDIDO", layout,size=(800,450))
+window = sg.Window("NOVO PEDIDO", layout,size=(800,450),finalize=True,titlebar_icon="imagem/favicon.png")
 while True:
     event, values = window.read()
     if event in (sg.WIN_CLOSED, "SAIR"):
@@ -59,7 +59,7 @@ while True:
                     vendas.sistema(usuario,data)
             sg.popup_error('Inserir Usuario e Senha para entrar',font=('Any',18))       
             continue
-        
+    
     elif event=='SUPORTE':
         try:
             with open('dados/usuarios.txt', 'r') as legenda:
