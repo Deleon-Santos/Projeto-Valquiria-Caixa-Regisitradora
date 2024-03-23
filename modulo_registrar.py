@@ -17,27 +17,30 @@ def sistema(usuario,data):
     cupom = int(0)
     valor_pagar = 0
     num_item = int(0)
-    
-
+    empresa='TEM DE TUDO ME'
+    cnpj="45.123.0001-40"
+    cpf=""
+    linha=["*","*","*","*","*","*","*"]
+    lista_dados=[]
 
     # ===================================== Inicio do programa principal=========================================
     
 
-    titulos = ["Item"," Cod ","    EAN    ","   Descrição do Produto  "," QTD "," PUni R$ ","Preço R$"]
+    titulos = ["Item","Cod","   EAN   ","Descrição do Produto"," QTD ","PUni R$","Preço R$"]
 
     menu_layout = [
         ["Novo", ["Nova Compra",'Nova Pesquisa','Novo Item']],
         ["Totais", ["Venda Cupom"]], 
-        ["Suporte", ["Ajuda", "Data"]],
+        ["Suporte", ["Ajuda"]],
         ["Fechar",["Fechar"]]]
 
-    bloco_1=[   [sg.Text("Numero do Cupom", size=(35, 1),font=("Any",17)), sg.Input(size=(17, 1), key="-CUPOM-", font=("Any", 25),justification="right")],
+    bloco_1=[   [sg.Text("Numero do Cupom", size=(35, 1),font=("Any",18,'bold')), sg.Input(size=(17, 1), key="-CUPOM-", font=("Any", 20),justification="right")],
                 [sg.Table(values=carrinho, headings=titulos, max_col_width=10, auto_size_columns=True,
-                display_row_numbers=False, justification="center",text_color="black",font=("Any",11),background_color="lightyellow", num_rows=25, key="-TABELA-", row_height=20)],
-                [sg.Text(" Preço Unitário R$",size=(67,1),font=("Any",12)),sg.Text("SubTotal Item R$",size=(13,1),font=("Any",12))],
-                [sg.Input(key="-VALORUNITARIO-",size=(10,1),font=("Any",18),justification="right"),sg.Text(" ",size=(57,1)),sg.Input(key="-PRECO-",size=(10,1),font=("Any",18),justification="right")],
-                [sg.Text("TOTAL R$", size=(12, 1), font=("Any", 40)),
-                sg.Input(size=(13, 1), key="-SUBTOTAL-", font=("Any", 41), justification='right')],]
+                display_row_numbers=False, justification="center",text_color="black",font=("Any",11),background_color="lightyellow", num_rows=24, key="-TABELA-", row_height=20)],
+                [sg.Text(" Preço Unitário R$",size=(65,1),font=("Any",12)),sg.Text("SubTotal Item R$",size=(13,1),font=("Any",12))],
+                [sg.Input(key="-VALORUNITARIO-",size=(10,1),font=("Any",18),justification="right"),sg.Text(" ",size=(54,1)),sg.Input(key="-PRECO-",size=(10,1),font=("Any",18),justification="right")],
+                [sg.Text("TOTAL R$", size=(12, 1), font=("Any", 40,'bold')),
+                sg.Input(size=(13, 1), key="-SUBTOTAL-", font=("Any", 40,'bold'), justification='right')],]
                 
     bloco_2=[   [sg.Text(" CAIXA FECHADO", size=(15, 1), key='-CAIXA-', font=("Any", 56, "bold"))],
                 
@@ -49,12 +52,12 @@ def sistema(usuario,data):
                 
                 [sg.I(size=(34, 2), key='-DESCRICAO-', font=("Any", 26)), sg.Button(">",font=("Any", 18))],]
 
-    bloco_3=[   [sg.Button('OK', size=(15,1),font=("Any",25)), sg.Text("", size=(10, 1)),sg.Button('DELETE', size=(15, 1),font=("Any",25))],
+    bloco_3=[   [sg.Button('OK', size=(12,1),font=("Any",20,'bold')),sg.T('',size=(30,1)),sg.Button('DELETE', size=(12, 1),font=("Any",20,'bold'))],
                 ]
 
-    bloco_4=[   [sg.Image(filename="imagem/imagem_venda.png",size=(695,210))],]
+    bloco_4=[   [sg.Image(filename="imagem/imagem_venda.png",size=(704,190))],]
 
-    bloco_5=[  [sg.Button('PAGAR', size=(15, 1),font=("Any",25)),sg.Text("", size=(10, 1)), sg.Button('VOLTAR', size=(15, 1),font=("Any",25))],
+    bloco_5=[  [sg.Button('PAGAR', size=(12, 1),font=("Any",20,'bold')),sg.T('',size=(30,1)), sg.Button('VOLTAR', size=(12, 1),font=("Any",20,'bold'))],
          
                 [sg.T("Data",font=('Any',12)),sg.Push(),sg.T('Operador',font=('Any',12))],
                 [sg.I(key="-DATA-",font=("Any",14),size=(18,1)),sg.P(),sg.I(key="-USUARIO-",font=("Any",14),size=(20,1))],]
@@ -70,7 +73,7 @@ def sistema(usuario,data):
     layout = [  
                 [sg.Menu(menu_layout,font=('Any',12))],           
                 [sg.Col(frame1),sg.Col(frame2)],
-                [sg.P(),sg.Text("      linkedin.com/in/deleon-santos-1b835a290"),sg.P()]]
+                [sg.P(),sg.Text("linkedin.com/in/deleon-santos-1b835a290"),sg.P()]]
 
     #====================================================================================================================================
     try:
@@ -96,7 +99,7 @@ def sistema(usuario,data):
 
         elif event == "Nova Compra":
             cupom += 1
-            carrinho=[cupom]
+            carrinho=[linha]
             window['-CUPOM-'].update(f'{cupom}')
             window['-CAIXA-'].update('   CAIXA ABERTO')
             window['-SUBTOTAL-'].update(f'R$ {valor_pagar:.2f}')
@@ -132,7 +135,7 @@ def sistema(usuario,data):
                                 preco_unitario=item["preco"]
                                 preco = item['preco'] * qtd
                                 valor_pagar += preco
-                        produto=[ num_item ,plu_pro,  ean,  material, qtd ,preco_unitario, preco]
+                        produto=[ num_item , plu_pro ,  ean ,  material , qtd , preco_unitario , preco ]
                                         
                         carrinho.append(produto)
                         window['-TABELA-'].update(values=carrinho)
@@ -157,8 +160,13 @@ def sistema(usuario,data):
                         # condição para conciderar o cupom com "pago"
                         valor_pagar = pagar.pagar(valor_pagar)
                         if valor_pagar == float(0):
-                            lista_cupom.extend(carrinho)   
+                            
+                            
+                            lista_cupom.extend([data , usuario , empresa , cnpj , cpf ])
+                            lista_cupom.extend([carrinho])
+                            print(lista_cupom)
                             limpar.limpar_saida(carrinho,window,num_item)
+                            num_item=0
                             sg.popup("Operação Concluída\n Volte ao menu Nova Compra para continuar",title="Pagamento",font=('Any',18))
                             break
                         else:

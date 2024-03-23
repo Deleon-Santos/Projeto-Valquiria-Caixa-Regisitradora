@@ -30,6 +30,7 @@ def venda_cupom(lista_cupom):
                 
                 print(f"o numero do cupos{cupom}")
                 
+                        
                 for indice,compra in enumerate(lista_cupom):
                     if indice  == int(cupom):
                         pesquisa_cupom.append(compra)

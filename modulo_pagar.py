@@ -2,22 +2,22 @@ import PySimpleGUI as sg
 
 def pagar(valor_pagar):
 
-    frame6=[[sg.Text("Valor da Compra ", size=(28, 1), font=("Any", 12)),
-        sg.Text(f"R$ {valor_pagar:.2f}", size=(18, 1), justification='right', key="valor", font=("Any", 18))],
-        [sg.Text("Valor Recabido ", size=(28, 1), font=("Any", 12)),
-        sg.Text(f'R$ 0.00', size=(18, 1), key="recebido", justification='right', font=("Any", 18))],
-        [sg.Text("Troco Devolvido ", size=(28, 1), font=("Any", 12)),
-        sg.Text(f'R$ 0.00', size=(18, 1), key="R$", justification='right', font=("Any", 18))],
-        [sg.Text("", size=(10, 1))],
-        [sg.Button('CARTAO', font=("Any", 18),size=(15, 1)), sg.Button('PIX',font=("Any", 18), size=(15, 1)), sg.Button('DINHEIRO',font=("Any", 18), size=(15, 1))],
-        [sg.T("")],
+    frame6=[[sg.P(),sg.T("Valor da Compra ", size=(23, 1), font=("Any", 12)),
+             sg.I(f" {valor_pagar:.2f}", size=(18, 1), justification='right', key="valor", font=("Any", 18)),sg.P()],
+            [sg.P(),sg.T("Valor Recabido  ", size=(23, 1), font=("Any", 12)),
+            sg.I(f' 0.00', size=(18, 1), key="recebido", justification='right', font=("Any", 18)),sg.P()],
+            [sg.P(),sg.T("Troco Devolvido ", size=(23, 1), font=("Any", 12)),
+            sg.I(f' 0.00', size=(18, 1), key="R$", justification='right', font=("Any", 18)),sg.P()],
+        [sg.T("", size=(10, 1))],
+        [sg.P(),sg.B('CARTAO', font=("Any", 12),size=(15, 1)), sg.B('PIX',font=("Any", 12), size=(15, 1)), sg.B('DINHEIRO',font=("Any", 12), size=(15, 1)),sg.P(),],
+        
     ]
 
     layout = [
-        [sg.Text("CONDIÇÃO DE PAGAMENTO", size=(35, 1), justification='center', font=("Any", 18))],
-        [sg.Text("",size=(8,1)),sg.Image(filename="imagem/f_pagamentos.png",size=(404,197))],
-        [sg.Text("", size=(10, 1))],
-        [sg.Frame("",frame6)],
+        [sg.T("CONDIÇÃO DE PAGAMENTO", size=(35, 1), justification='center', font=("Any", 18,'bold'))],
+        [sg.P(),sg.Image(filename="imagem/f_pagamento.png",size=(504,145)),sg.P()],
+        [sg.T("", size=(10, 1))],
+        [sg.P(),sg.Frame("",frame6),sg.P()],
        ]
     
     window = sg.Window("PAGAMENTO", layout, finalize=False)
