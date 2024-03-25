@@ -11,16 +11,18 @@ def sistema(usuario,data):
     import modulo_limpar as limpar
     import modulo_adicionar as adicionar
     import modulo_visualisar as visualizar
+    import modulo_gravar as gravar
 
     lista_cupom = []
     carrinho = []
     cupom = int(0)
     valor_pagar = 0
     num_item = int(0)
+    
     empresa='TEM DE TUDO ME'
-    cnpj="45.123.0001-40"
-    cpf=""
-    linha=["*","*","*","*","*","*","*"]
+    cnpj="45.123.0001/40"
+    cpf="45.123.441-40"
+    
     lista_dados=[]
 
     # ===================================== Inicio do programa principal=========================================
@@ -99,7 +101,7 @@ def sistema(usuario,data):
 
         elif event == "Nova Compra":
             cupom += 1
-            carrinho=[linha]
+            
             window['-CUPOM-'].update(f'{cupom}')
             window['-CAIXA-'].update('   CAIXA ABERTO')
             window['-SUBTOTAL-'].update(f'R$ {valor_pagar:.2f}')
@@ -144,7 +146,7 @@ def sistema(usuario,data):
                         window['-SUBTOTAL-'].update(f" {valor_pagar:.2f}")
                         window['-DESCRICAO-'].update(material)
                         
-                    elif event == ">" :
+                    elif event == '>' :
                         desc,descricao=pesquisar.pesquisar(dic)
                         window['-EAN-'].update(desc)
                         window['-DESCRICAO-'].update(descricao)
@@ -157,15 +159,19 @@ def sistema(usuario,data):
                         continue
 
                     elif event == 'PAGAR':
+                        v_pago=valor_pagar
                         # condição para conciderar o cupom com "pago"
                         valor_pagar = pagar.pagar(valor_pagar)
                         if valor_pagar == float(0):
                             
                             
-                            lista_cupom.extend([data , usuario , empresa , cnpj , cpf ])
-                            lista_cupom.extend([carrinho])
+                            lista_dados.append([cupom,data , usuario , empresa , cnpj , cpf ,v_pago ])
+                            lista_cupom.append(carrinho)
+                            print(lista_dados)
+                            #gravar.gravar(lista_cupom)
                             print(lista_cupom)
                             limpar.limpar_saida(carrinho,window,num_item)
+                            
                             num_item=0
                             sg.popup("Operação Concluída\n Volte ao menu Nova Compra para continuar",title="Pagamento",font=('Any',18))
                             break

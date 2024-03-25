@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 def remover(valor_pagar,carrinho,window):
     try:  # leia a lista1 e encontre o item informado
         remove_item = int(sg.popup_get_text('Remover o Item',size=(10,1), font=("Any", 18),button_color="red"))
-        
+        remove_item-=1
         for indice, material in enumerate(carrinho):
             if indice == remove_item:
                 valor_pagar -= material[6]
