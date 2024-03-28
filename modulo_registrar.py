@@ -18,7 +18,7 @@ def sistema(usuario,data):
     cupom = int(0)
     valor_pagar = 0
     num_item = int(0)
-    
+    lista=[]
     empresa='TEM DE TUDO ME'
     cnpj="45.123.0001/40"
     cpf="45.123.441-40"
@@ -150,8 +150,7 @@ def sistema(usuario,data):
                         desc,descricao=pesquisar.pesquisar(dic)
                         window['-EAN-'].update(desc)
                         window['-DESCRICAO-'].update(descricao)
-                    
-                                        
+                                       
                     elif event == 'DELETE':
                         valor_pagar = remover.remover(valor_pagar,carrinho,window["-TABELA-"])
                         window['-SUBTOTAL-'].update(f"R$ {valor_pagar:.2f}")
@@ -162,18 +161,16 @@ def sistema(usuario,data):
                         v_pago=valor_pagar
                         # condição para conciderar o cupom com "pago"
                         valor_pagar = pagar.pagar(valor_pagar)
-                        if valor_pagar == float(0):
-                            
-                            
-                            lista_dados.append([cupom,data , usuario , empresa , cnpj , cpf ,v_pago ])
-                            lista_cupom.append(carrinho)
-                            print(lista_dados)
-                            #gravar.gravar(lista_cupom)
-                            print(lista_cupom)
-                            limpar.limpar_saida(carrinho,window,num_item)
-                            
+                        if valor_pagar == float(0):                           
+                            lista_dados.append([cupom,data , usuario ,  cnpj , cpf ,v_pago ,empresa])                           
+                            lista.append(cupom)
+                            lista.extend(carrinho)
+                            lista_cupom.extend([lista.copy()])
+                            lista.clear()
+                            limpar.limpar_saida(carrinho,window,num_item)                           
                             num_item=0
-                            sg.popup("Operação Concluída\n Volte ao menu Nova Compra para continuar",title="Pagamento",font=('Any',18))
+                            window['-CAIXA-'].update(' CAIXA FECHADO')
+                            sg.popup("Operação Encerrada",title="Pagamento",font=('Any',18))
                             break
                         else:
                             continue
@@ -185,16 +182,14 @@ def sistema(usuario,data):
                         break
 
                     elif event == (sg.WIN_CLOSED):
-                        sg.popup_ok("ENCERRAR", font=("Any", 18))
-                        
+                        sg.popup_ok("ENCERRAR", font=("Any", 18))   
                         break
                        
-
                 except ValueError:  # trata erro de valor não numerico
                     sg.popup('Erro na quantidade', title="Erro em Quantidade", font=("Any", 18))
                     continue
         elif event == "Venda Cupom":
-            visualizar.venda_cupom(lista_cupom)
+            visualizar.venda_cupom(lista_cupom,lista_dados)
             continue
 
         elif event == "VOLTAR":
