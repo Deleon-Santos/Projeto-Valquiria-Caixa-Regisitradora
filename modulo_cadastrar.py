@@ -8,19 +8,21 @@ def novo_item():
         dic = json.load(arquivo)
     
     titulos=[' cod ','     ean     ',"               Descrição           "," preço "]
-    frame1=[sg.Table(values=carrinho, headings=titulos, max_col_width=10, auto_size_columns=True,
+    frame1=[[sg.Text("Descrição:", size=(50, 1)),sg.Text("Preço:", size=(10, 1))],
+        [sg.InputText(background_color='White', key="-PRODUTO-", size=(25, 1), font=("Any", 18)),sg.P(),
+         sg.InputText(background_color='White', key="-PRECO-", size=(5, 1), font=("Any", 18)),sg.P(),sg.Button("CADASTRAR", size=(12, 1))],
+        [sg.Table(values=carrinho, headings=titulos, max_col_width=10, auto_size_columns=True,
             display_row_numbers=False, justification="center",text_color="black",font=("Any",11),background_color="lightyellow", num_rows=10, key="-TABELA-", row_height=20)],
-            
+            ]
     layout = [
         [sg.Text("", size=(20, 1))],
-        [sg.Text("CADASTRAR ITEM", size=(50, 1), justification='center', font=("Any", 18))],
-        [sg.Text("", size=(20, 1))],
-        [sg.Text("Descrição:", size=(10, 1)),sg.InputText(background_color='White', key="-PRODUTO-", size=(25, 1), font=("Any", 18)),
-         sg.Text("Preço:", size=(10, 1)),sg.InputText(background_color='White', key="-PRECO-", size=(5, 1), font=("Any", 18))], 
+        [sg.P(),sg.Text("CADASTRAR ITEM", size=(20, 1), justification='center', font=("Any", 18,'bold')),sg.P()],
+        [sg.Text("", size=(10, 1))],
+         
         [sg.Frame('',frame1)],
-        [sg.Text("", size=(20, 1))],
-        [sg.Text("", size=(23, 1)), sg.Button("CADASTRAR", size=(18, 1)), sg.Button("SAIR", size=(18, 1),button_color='red')],
-        [sg.Text("", size=(20, 1))],
+        [sg.Text("", size=(10, 1))],
+        [sg.P(),  sg.Button("SAIR", size=(10, 1),button_color='red'),sg.P()],
+        [sg.Text("", size=(10, 1))],
     ]
 
     window = sg.Window("Cadastro de Itens", layout)
