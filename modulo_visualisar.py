@@ -16,37 +16,56 @@ def venda_cupom(lista_cupom,lista_dados):
     ]  
     window = sg.Window("VENDA CUPOM",layout,finalize=True)                                                      
     while True:
-        try:
-            event,values = window.read()
-            if event in (sg.WIN_CLOSED,"SAIR"):
+        #try:
+        event,values = window.read()
+        if event in (sg.WIN_CLOSED,"SAIR"):
 
-                break
-            cupom=values["-CUPOM-"]
-            if not cupom:
-                sg.popup("Digite o valor da pesquisa")     
-                continue
+            break
+        cupom=values["-CUPOM-"]
+        if not cupom:
+            sg.popup("Digite o valor da pesquisa")     
+            continue
 
-            if event == "PESQUISAR":
-                for dado in (lista_dados):
-                    if dado[0] == int(cupom):
-                        d=dado                       
-                        window["-DATA-"].update(d[1])
-                        window["-USUARIO-"].update(d[2])
-                        window["-CNPJ-"].update(d[3])
-                        window["-CPF-"].update(d[4])
-                        window["-VALOR-"].update(d[5])
-                        
-                        for compra in lista_cupom:
-                            if compra[0] == int(cupom):
-                                pesquisa_cupom.clear()
-                                pesquisa_cupom.extend(compra[1:])
-                                window["-TABELA-"].update(values=pesquisa_cupom)
-                                break
-            elif event == 'IMPRIMIR':
-                imprimir.lista_combinada(d,pesquisa_cupom)
-        except Exception as e:
+        if event == "PESQUISAR":
+            for dado in (lista_dados):
+                if dado[0] == int(cupom):
+                    d=dado 
+                    window["-CUPOM-"].update(d[0])                      
+                    window["-DATA-"].update(d[1])
+                    window["-USUARIO-"].update(d[2])
+                    window["-CNPJ-"].update(d[3])
+                    window["-CPF-"].update(d[4])
+                    window["-VALOR-"].update(d[5])
+                    
+                    for compra in lista_cupom:
+                        if compra[0] == int(cupom):
+                            pesquisa_cupom.clear()
+                            pesquisa_cupom.extend(compra[1:])
+                            window["-TABELA-"].update(values=pesquisa_cupom)
+                            break
+        elif event == 'IMPRIMIR':
+            cnpj = values["-CNPJ-"]
+            data = values["-DATA-"]
+            cupom = values["-CUPOM-"]
+            cpf = values["-CPF-"]
+            valor = values["-VALOR-"]
+
+            informacao = f"Razão Social: .........................................TEM DE TUDO ME\n"
+            informacao += f"END: ..........................AV. Boa Vista n-1012 Santa Rosa/SP\n\n"
+            informacao += f"CNPJ: .....................{cnpj} IE : 07.112.888/000-00\n"
+            informacao += f"Data: {data}                Cliente: {cpf}\n"
+            informacao += f"CUPOM: 000{cupom}\n"                
+            informacao += f"Valor: {valor}\n\n"
+            print(informacao)
+            
+            resp=imprimir.imprimir(informacao,pesquisa_cupom)
+            if resp ==True:
+                sg.popup("PDF Salvo")
+            else:
+                sg.popup("erro ao imprimir")
+        '''except Exception as e:
             print(f"Erro: {e}")
             sg.popup("houve um erro e o resultaado não foi exibido.")
-            continue
+            continue'''
 
     window.close()

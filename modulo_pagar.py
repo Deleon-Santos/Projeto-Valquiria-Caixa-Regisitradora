@@ -39,26 +39,33 @@ def pagar(valor_pagar):
                 window["recebido"].update(f"R$ {pago:.2f}")
                 sg.popup("Pagamento Autorizado", font=("Any", 18))
                 return valor_pagar
+            break
 
         elif event == "DINHEIRO":
             try:
                 dinheiro = sg.popup_get_text("Valor Recebido", font=("Any", 18))
                 if dinheiro is not None:  # verifica se tem valores
                     dinheiro = float(dinheiro)
-                    if dinheiro >= valor_pagar:
-                        sg.popup("Pagamento efetuado com sucesso", font=("Any", 18))
+                    if dinheiro < valor_pagar:
+                        sg.popup("Valor Insuficiente", font=("Any", 18))
+                        continue
+                        
+                    else:
+                        
                         troco = dinheiro - valor_pagar
                         valor_pagar = 0
                         window["valor"].update(f"R$ {valor_pagar:.2f}")
                         window["recebido"].update(f"R$ {dinheiro:.2f}")
                         window["R$"].update(f"R$ {troco:.2f}")
+                        sg.popup("Pagamento efetuado com sucesso", font=("Any", 18))
                         return valor_pagar  # desconta o subtotal e retorna o troco
-                        
-                    else:
-                        sg.popup("Valor Insuficiente", font=("Any", 18))
-                        continue
+                    break
                 else:
-                    continue
+                    sg.popup("Informe o valor recebido")
+                    
+                        
+                
+
             except ValueError:
                 sg.popup("Insira um valor válido", font=("Any", 18))
                 continue

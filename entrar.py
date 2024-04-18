@@ -42,7 +42,8 @@ col2=[
 layout=[
     [sg.Push(),sg.T('ENTRAR EM VENDAS',font=('Any',30,'bold')),sg.P()],
     [sg.HorizontalSeparator()],
-    [sg.Col(col1),sg.VerticalSeparator(),sg.Col(col2)],   
+    [sg.Col(col1),sg.VerticalSeparator(),sg.Col(col2)],
+       
 ]
 
 window = sg.Window("NOVO PEDIDO", layout,size=(740,400),finalize=True)
