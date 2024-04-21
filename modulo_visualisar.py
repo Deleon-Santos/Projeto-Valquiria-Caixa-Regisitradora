@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 import modulo_gravar as imprimir
 
 pesquisa_cupom=[]
-def venda_cupom(lista_cupom,lista_dados):
+def venda_cupom(lista_cupom,lista_dados,usuario,valor_pagar):
 
     titulos = ["Item", "COD","    EAN    "," Descrição do Produto","QTD","PUni R$","Preço R$"]
     layout=[[sg.Push(),sg.T("VENDA CUPOM",font=("any",20,'bold')),sg.Push()],
@@ -35,7 +35,7 @@ def venda_cupom(lista_cupom,lista_dados):
                     window["-USUARIO-"].update(d[2])
                     window["-CNPJ-"].update(d[3])
                     window["-CPF-"].update(d[4])
-                    window["-VALOR-"].update(d[5])
+                    window["-VALOR-"].update(f"{valor_pagar:.2f}")
                     
                     for compra in lista_cupom:
                         if compra[0] == int(cupom):
@@ -49,13 +49,15 @@ def venda_cupom(lista_cupom,lista_dados):
             cupom = values["-CUPOM-"]
             cpf = values["-CPF-"]
             valor = values["-VALOR-"]
-
-            informacao = f"Razão Social: .........................................TEM DE TUDO ME\n"
+            informacao =f"=============================================\n"
+            informacao += f"Razão Social: .........................................TEM DE TUDO ME\n"
             informacao += f"END: ..........................AV. Boa Vista n-1012 Santa Rosa/SP\n\n"
             informacao += f"CNPJ: .....................{cnpj} IE : 07.112.888/000-00\n"
             informacao += f"Data: {data}                Cliente: {cpf}\n"
             informacao += f"CUPOM: 000{cupom}\n"                
-            informacao += f"Valor: {valor}\n\n"
+            informacao += f"Valor: {valor}\n"
+            informacao += f"Operador : {usuario}\n"
+            informacao+=f"==============================================\n"
             print(informacao)
             
             resp=imprimir.imprimir(informacao,pesquisa_cupom)

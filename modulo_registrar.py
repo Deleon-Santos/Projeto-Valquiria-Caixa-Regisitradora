@@ -170,9 +170,10 @@ def sistema(usuario,data):
                             limpar.limpar_saida(carrinho,window,num_item)                           
                             num_item=0
                             window['-CAIXA-'].update(' CAIXA FECHADO')
-                            sg.popup("Operação Encerrada",title="Pagamento",font=('Any',18))
+                            sg.popup("Voltar",title="Pagamento",font=('Any',18))
                             break
                         else:
+                            valor_pagar=v_pago
                             continue
 
                     elif event == "VOLTAR":  # limpa todos os valores e lista local
@@ -189,7 +190,7 @@ def sistema(usuario,data):
                     sg.popup('Erro na quantidade', title="Erro em Quantidade", font=("Any", 18))
                     continue
         elif event == "Venda Cupom":
-            visualizar.venda_cupom(lista_cupom,lista_dados)
+            visualizar.venda_cupom(lista_cupom,lista_dados,usuario,valor_pagar)
             continue
 
         elif event == "VOLTAR":

@@ -29,20 +29,20 @@ def imprimir(informacao, pesquisa_cupom):
     def criar_pdf(content, table_data, filename):
         pdf_filename = filename
         c = canvas.Canvas(pdf_filename, pagesize=letter)
-        c.setFont("Helvetica-Bold", 18)
+        c.setFont("Helvetica-Bold", 10)
         title_text = "CUPOM FISCAL"
-        title_width = c.stringWidth(title_text, "Helvetica-Bold", 18)
+        title_width = c.stringWidth(title_text, "Helvetica-Bold", 10)
         c.drawString((letter[0] - title_width) / 2, 750, title_text)
 
         c.setFont("Helvetica", 12)
         # Drawing content text
-        text_object = c.beginText(120, 700)
+        text_object = c.beginText(130, 730)
         text_object.textLines(content)
         c.drawText(text_object)
 
         # Drawing table
         table = Table(table_data)
-        table.wrapOn(c, 400, 200)  # Wrap table within specified width and height
+        table.wrapOn(c, 300, 800)  # Wrap table within specified width and height
         table.drawOn(c, 120, 500)  # Draw table on canvas
 
         c.save()
