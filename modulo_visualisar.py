@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 import modulo_gravar as imprimir
 
 pesquisa_cupom=[]
-def venda_cupom(lista_cupom,lista_dados,usuario,valor_pagar):
+def venda_cupom(lista_cupom,lista_dados,usuario):
 
     titulos = ["Item", "COD","    EAN    "," Descrição do Produto","QTD","PUni R$","Preço R$"]
     layout=[[sg.Push(),sg.T("VENDA CUPOM",font=("any",20,'bold')),sg.Push()],
@@ -30,12 +30,13 @@ def venda_cupom(lista_cupom,lista_dados,usuario,valor_pagar):
             for dado in (lista_dados):
                 if dado[0] == int(cupom):
                     d=dado 
+                    
                     window["-CUPOM-"].update(d[0])                      
                     window["-DATA-"].update(d[1])
                     window["-USUARIO-"].update(d[2])
                     window["-CNPJ-"].update(d[3])
                     window["-CPF-"].update(d[4])
-                    window["-VALOR-"].update(f"{valor_pagar:.2f}")
+                    window["-VALOR-"].update(d[5])
                     
                     for compra in lista_cupom:
                         if compra[0] == int(cupom):

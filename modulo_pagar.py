@@ -9,7 +9,7 @@ def pagar(valor_pagar):
             [sg.P(),sg.T("Troco Devolvido ", size=(23, 1), font=("Any", 12)),
             sg.I(f' 0.00', size=(18, 1), key="R$", justification='right', font=("Any", 18)),sg.P()],
             [sg.T("", size=(10, 1))],
-            [sg.P(),sg.B('CARTAO', font=("Any", 12),size=(15, 1)), sg.B('PIX',font=("Any", 12), size=(15, 1)), sg.B('DINHEIRO',font=("Any", 12), size=(15, 1)),sg.P(),sg.B("SAIR",font=("Any", 12), size=(15, 1)),sg.P()],
+            [sg.P(),sg.B("CARTAO",tooltip='Ctrl+c', font=("Any", 12),size=(15, 1)), sg.B('PIX',tooltip='Ctrl+p',font=("Any", 12), size=(15, 1)), sg.B('DINHEIRO',font=("Any", 12), size=(15, 1)),sg.P(),sg.B("SAIR",font=("Any", 12), size=(15, 1)),sg.P()],
         
     ]
 
@@ -34,7 +34,7 @@ def pagar(valor_pagar):
             break
             
            
-        if event in ("CARTAO", "PIX"):  # para cartão e pix o valor e descontado itegralmente
+        if event in ("Ctrl+p", "Ctrl+p"):  # para cartão e pix o valor e descontado itegralmente
             if valor_pagar > 0:  # somente se o subtotal existir e for maior que "0"
                 valor_pagar = 0
                 window["valor"].update(f"R$ {valor_pagar:.2f}")

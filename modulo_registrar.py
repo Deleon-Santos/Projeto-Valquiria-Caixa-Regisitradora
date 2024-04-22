@@ -52,7 +52,7 @@ def sistema(usuario,data):
                 sg.Text("", size=(46, 1)),sg.InputText("1", size=(2, 2), key='-QTD-', font=("Any", 25),justification="right")],
                 [sg.Text('Descrição do Produto', size=(25, 1), font=("Any", 12))],
                 
-                [sg.I(size=(34, 2), key='-DESCRICAO-', font=("Any", 26)), sg.Button(">",font=("Any", 18))],]
+                [sg.I(size=(34, 2), key='-DESCRICAO-', font=("Any", 26)), sg.Button(">",tooltip='F1:112',font=("Any", 18))],]
 
     bloco_3=[   [sg.Button('OK', size=(12,1),font=("Any",20,'bold')),sg.T('',size=(30,1)),sg.Button('DELETE', size=(12, 1),font=("Any",20,'bold'))],
                 ]
@@ -99,7 +99,7 @@ def sistema(usuario,data):
             else:
                 continue  
 
-        elif event == "Nova Compra":
+        elif event in ("Nova Compra", 'n:78'):
             cupom += 1
             
             window['-CUPOM-'].update(f'{cupom}')
@@ -111,7 +111,7 @@ def sistema(usuario,data):
             while True:
                 try:
                     event, values = window.read()
-                    if event =='OK':                   
+                    if event in('OK','o:79'):                   
                         material = values['-EAN-']
                         descricao= values["-DESCRICAO-"]
                         qtd = int(values['-QTD-']) 
@@ -146,19 +146,19 @@ def sistema(usuario,data):
                         window['-SUBTOTAL-'].update(f" {valor_pagar:.2f}")
                         window['-DESCRICAO-'].update(material)
                         
-                    elif event == '>' :
+                    elif event in ('>','F1:112') :
                         desc,descricao=pesquisar.pesquisar(dic)
                         window['-EAN-'].update(desc)
                         window['-DESCRICAO-'].update(descricao)
                                        
-                    elif event == 'DELETE':
+                    elif event in ('DELETE','d:68'):
                         valor_pagar = remover.remover(valor_pagar,carrinho,window["-TABELA-"])
                         window['-SUBTOTAL-'].update(f"R$ {valor_pagar:.2f}")
                         window["-TABELA-"].update(values=carrinho)
                         continue
 
-                    elif event == 'PAGAR':
-                        v_pago=valor_pagar
+                    elif event in ('PAGAR','p:80'):
+                        v_pago=f"{valor_pagar:.2f}"
                         # condição para conciderar o cupom com "pago"
                         valor_pagar = pagar.pagar(valor_pagar)
                         if valor_pagar == float(0):                           
@@ -176,7 +176,7 @@ def sistema(usuario,data):
                             valor_pagar=v_pago
                             continue
 
-                    elif event == "VOLTAR":  # limpa todos os valores e lista local
+                    elif event in ("VOLTAR",'Escape:27'):  # limpa todos os valores e lista local
                         limpar.limpar_saida(carrinho,window,num_item)
                         valor_pagar = 0
                         cupom -= 1
@@ -190,10 +190,10 @@ def sistema(usuario,data):
                     sg.popup('Erro na quantidade', title="Erro em Quantidade", font=("Any", 18))
                     continue
         elif event == "Venda Cupom":
-            visualizar.venda_cupom(lista_cupom,lista_dados,usuario,valor_pagar)
+            visualizar.venda_cupom(lista_cupom,lista_dados,usuario)
             continue
 
-        elif event == "VOLTAR":
+        elif event in ("VOLTAR",'Escape:27'):
             window['-CAIXA-'].update('CAIXA FECHADO')
             limpar.limpar_saida(carrinho,window,num_item)
             continue

@@ -24,6 +24,7 @@ def imprimir(informacao, pesquisa_cupom):
         
         elements.append(table)  # Add table to elements list
         doc.build(elements)  # Build the PDF with elements
+        print(table)
         
 
     def criar_pdf(content, table_data, filename):

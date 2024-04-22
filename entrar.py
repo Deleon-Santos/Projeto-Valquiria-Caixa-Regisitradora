@@ -35,8 +35,8 @@ col2=[
     [sg.CalendarButton("Data",font=('Any',12),size=(4,1),close_when_date_chosen=True,target="-DATA-",location=(900,500),no_titlebar=False),
     sg.Input('2024-03-21 17:41:22',key="-DATA-",font=('any',16),size=(18,1))],
     [sg.T("",font=('Ani',1))],
-    [sg.B("OK",font=('any',10,'bold'),size=(8,1)),sg.P(),sg.B('SAIR',font=('any',10,'bold'),size=(8,1),button_color='red'),
-     sg.P(),sg.B('SUPORTE',font=('any',10,'bold'),size=(8,1))]   
+    [sg.B("OK", tooltip='o:79',font=('any',10,'bold'),size=(8,1)),sg.P(),sg.B('SAIR',tooltip='Escape:27',font=('any',10,'bold'),size=(8,1),button_color='red'),
+     sg.P(),sg.B('SUPORTE',tooltip='s:83',font=('any',10,'bold'),size=(8,1))]   
 ]
 
 layout=[
@@ -46,13 +46,14 @@ layout=[
        
 ]
 
-window = sg.Window("NOVO PEDIDO", layout,size=(740,400),finalize=True)
+window = sg.Window("NOVO PEDIDO", layout,size=(740,400),finalize=True,return_keyboard_events=True)
 while True:
     event, values = window.read()
-    if event in (sg.WIN_CLOSED, "SAIR"):
+    if event in (sg.WIN_CLOSED, "SAIR",'Escape:27'):
         break
 
-    if event =='OK':
+    if event =='OK' or event =='o:79':      
+        print(event)
         usuario=values['-USUARIO-']
         senha=values['-SENHA-']
         data=str(values['-DATA-'])
@@ -67,7 +68,7 @@ while True:
             sg.popup_error('Inserir Usuario e Senha para entrar',font=('Any',18))       
             continue
     
-    elif event=='SUPORTE':
+    elif event in ('SUPORTE','s:83'):
         try:
             with open('dados/usuarios.txt', 'r') as legenda:
                 arquivo = legenda.read()
@@ -75,5 +76,7 @@ while True:
         except FileNotFoundError:
             sg.popup("O arquivo 'comanda.txt' não foi encontrado.\n  Verifique o caminho ou crie o arquivo.",font=('Any',18))
         continue 
+    else:
+        print(event)
                     
 window.close()

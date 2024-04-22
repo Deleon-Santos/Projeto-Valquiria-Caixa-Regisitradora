@@ -1,4 +1,4 @@
-[	
+[
     {
         "cod": "101",
         "ean": "7890000000101",
@@ -166,5 +166,17 @@
         "ean": "7890000000128",
         "item": "Tempero caldo knor 60g",
         "preco": 3.9
+    },
+    {
+        "cod": "129",
+        "ean": "7890000000129",
+        "item": "batata palha tradicional Yoki 90 g",
+        "preco": 3.9
+    },
+    {
+        "cod": "130",
+        "ean": "7890000000130",
+        "item": "queijo mussarela boafala 100g",
+        "preco": 5.6
     }
 ]
