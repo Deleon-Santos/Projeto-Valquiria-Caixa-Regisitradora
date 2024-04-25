@@ -1,7 +1,7 @@
     #SISTEMA DE COBRAÇA EM CAIXA DE SUPERMERCADOS E AFINS
     #Este sistema esta em desenvolvimento em carater academico e conta com colaboração de profissionais e estudantes 
     #da area de Tecnololgia e desenvolvimento de sistemas
-def sistema(usuario,data):
+def sistema(usuario,data,empresa):
     import PySimpleGUI as sg
     import json
     import modulo_pagar as pagar
@@ -15,14 +15,14 @@ def sistema(usuario,data):
 
     lista_cupom = []
     carrinho = []
-    cupom = int(0)
+    cupom = int(1000)
     valor_pagar = 0
     num_item = int(0)
     lista=[]
-    empresa='TEM DE TUDO ME'
-    cnpj="45.123.0001/40"
-    cpf="45.123.441-40"
     
+    
+    cpf="***.***.***-**"
+    cnpj='45.333.0001/45'
     lista_dados=[]
 
     # ===================================== Inicio do programa principal=========================================
@@ -36,7 +36,7 @@ def sistema(usuario,data):
         ["Suporte", ["Ajuda"]],
         ["Fechar",["Fechar"]]]
 
-    bloco_1=[   [sg.Text("Numero do Cupom", size=(35, 1),font=("Any",18,'bold')), sg.Input(size=(17, 1), key="-CUPOM-", font=("Any", 20),justification="right")],
+    bloco_1=[   [sg.Text('CAIXA FECHADO',key='-CAIXA-', size=(25, 1),font=("Any",18,'bold')),sg.T("Cupom",font=("Any",18,'bold')), sg.Input(size=(17, 1), key="-CUPOM-", font=("Any", 20),justification="right")],
                 [sg.Table(values=carrinho, headings=titulos, max_col_width=10, auto_size_columns=True,
                 display_row_numbers=False, justification="center",text_color="black",font=("Any",11),background_color="lightyellow", num_rows=24, key="-TABELA-", row_height=20)],
                 [sg.Text(" Preço Unitário R$",size=(65,1),font=("Any",12)),sg.Text("SubTotal Item R$",size=(13,1),font=("Any",12))],
@@ -44,7 +44,7 @@ def sistema(usuario,data):
                 [sg.Text("TOTAL R$", size=(12, 1), font=("Any", 40,'bold')),
                 sg.Input(size=(13, 1), key="-SUBTOTAL-", font=("Any", 40,'bold'), justification='right')],]
                 
-    bloco_2=[   [sg.Text(" CAIXA FECHADO", size=(15, 1), key='-CAIXA-', font=("Any", 56, "bold"))],
+    bloco_2=[   [sg.Text(" TEM DE TUDO ME", size=(15, 1),  font=("Any", 56, "bold"),text_color='DarkBlue')],
                 
                 [sg.Text('Código do Produto', size=(25, 1), font=("Any", 12)),sg.Text("", size=(43, 1)),
                 sg.Text('  Quantidade', size=(10, 1), font=("Any", 12))],
@@ -98,7 +98,8 @@ def sistema(usuario,data):
                 break  
             else:
                 continue  
-
+        
+                  
         elif event in ("Nova Compra", 'n:78'):
             cupom += 1
             
@@ -106,7 +107,10 @@ def sistema(usuario,data):
             window['-CAIXA-'].update('   CAIXA ABERTO')
             window['-SUBTOTAL-'].update(f'R$ {valor_pagar:.2f}')
             window["-TABELA-"].update("")
-            
+            cpf=sg.popup_get_text("Deseja adicionar um CPF na nota?")
+            if not cpf:
+                cpf ="***.***.***-**"
+
             # dentro deste bloco de eventos serão registrados apenas os botoes (OK,DELETE,PAGAR,VOLTAR)
             while True:
                 try:
@@ -162,7 +166,7 @@ def sistema(usuario,data):
                         # condição para conciderar o cupom com "pago"
                         valor_pagar = pagar.pagar(valor_pagar)
                         if valor_pagar == float(0):                           
-                            lista_dados.append([cupom,data , usuario ,  cnpj , cpf ,v_pago ,empresa])                           
+                            lista_dados.append([cupom, data , usuario ,  cnpj , cpf, v_pago, empresa])                           
                             lista.append(cupom)
                             lista.extend(carrinho)
                             lista_cupom.extend([lista.copy()])
@@ -173,7 +177,7 @@ def sistema(usuario,data):
                             sg.popup("Voltar",title="Pagamento",font=('Any',18))
                             break
                         else:
-                            valor_pagar=v_pago
+                            valor_pagar=float(v_pago)
                             continue
 
                     elif event in ("VOLTAR",'Escape:27'):  # limpa todos os valores e lista local

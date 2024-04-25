@@ -9,7 +9,7 @@ def pagar(valor_pagar):
             [sg.P(),sg.T("Troco Devolvido ", size=(23, 1), font=("Any", 12)),
             sg.I(f' 0.00', size=(18, 1), key="R$", justification='right', font=("Any", 18)),sg.P()],
             [sg.T("", size=(10, 1))],
-            [sg.P(),sg.B("CARTAO",tooltip='Ctrl+c', font=("Any", 12),size=(15, 1)), sg.B('PIX',tooltip='Ctrl+p',font=("Any", 12), size=(15, 1)), sg.B('DINHEIRO',font=("Any", 12), size=(15, 1)),sg.P(),sg.B("SAIR",font=("Any", 12), size=(15, 1)),sg.P()],
+            [sg.P(),sg.B("CARTAO", font=("Any", 12),size=(15, 1)), sg.B('PIX',font=("Any", 12), size=(15, 1)), sg.B('DINHEIRO',font=("Any", 12), size=(15, 1)),sg.P(),sg.B("SAIR",font=("Any", 12), size=(15, 1)),sg.P()],
         
     ]
 
@@ -30,26 +30,27 @@ def pagar(valor_pagar):
         #window["valor"].update(f"R$ {valor_pagar:.2f}")
 
         if event in (sg.WIN_CLOSED , "SAIR"):
-            sg.popup("Continuar registrando")
+            sg.popup("Continuar ")
+            
             break
             
            
-        if event in ("Ctrl+p", "Ctrl+p"):  # para cartão e pix o valor e descontado itegralmente
+        if event in ('PIX', "CARTAO"):  # para cartão e pix o valor e descontado itegralmente
             if valor_pagar > 0:  # somente se o subtotal existir e for maior que "0"
                 valor_pagar = 0
                 window["valor"].update(f"R$ {valor_pagar:.2f}")
                 window["recebido"].update(f"R$ {pago:.2f}")
-                sg.popup("Pagamento Autorizado", font=("Any", 18))
+                sg.popup("Autorizado", font=("Any", 18))
                 return valor_pagar
-            break
+            
 
         elif event == "DINHEIRO":
             try:
-                dinheiro = sg.popup_get_text("Valor Recebido", font=("Any", 18))
+                dinheiro = sg.popup_get_text("Valor Recebido", font=("Any", 18),default_text='0,00')
                 if dinheiro is not None:  # verifica se tem valores
                     dinheiro = float(dinheiro)
                     if dinheiro < valor_pagar:
-                        sg.popup("Valor Insuficiente", font=("Any", 18))
+                        sg.popup("Insuficiente", font=("Any", 18))
                         continue
                         
                     else:
@@ -59,9 +60,9 @@ def pagar(valor_pagar):
                         window["valor"].update(f"R$ {valor_pagar:.2f}")
                         window["recebido"].update(f"R$ {dinheiro:.2f}")
                         window["R$"].update(f"R$ {troco:.2f}")
-                        sg.popup("Pagamento efetuado com sucesso", font=("Any", 18))
+                        sg.popup("Autorizado", font=("Any", 18))
                           # desconta o subtotal e retorna o troco
-                    break
+                        return valor_pagar
                 else:
                     sg.popup("Informe o valor recebido")
                     

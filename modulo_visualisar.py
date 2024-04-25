@@ -6,8 +6,8 @@ def venda_cupom(lista_cupom,lista_dados,usuario):
 
     titulos = ["Item", "COD","    EAN    "," Descrição do Produto","QTD","PUni R$","Preço R$"]
     layout=[[sg.Push(),sg.T("VENDA CUPOM",font=("any",20,'bold')),sg.Push()],
-            [sg.T("CNPJ Empresa",size=(42,1)),sg.T("CPF Cliente",size=(42,1)),sg.T("N° Cupom")],
-            [sg.I(key="-CNPJ-",size=(15,1),font=("Any",18),justification='right'),sg.P(),sg.I(key="-CPF-",size=(15,1),font=("Any",18),justification='right'),sg.P(),sg.I("1",key="-CUPOM-",size=(6,1),font=("Any",18),justification='right')],
+            [sg.T("CNPJ ",size=(26,1)),sg.T("Empresa ",size=(24,1)),sg.T("Cliente",size=(26,1)),sg.T("N° Cupom")],
+            [sg.I(key="-CNPJ-",size=(15,1),font=("Any",18),justification='right'),sg.P(),sg.I(key="-EMPRESA-",size=(15,1),font=("Any",18),justification='right'),sg.I(key="-CPF-",size=(15,1),font=("Any",18),justification='right'),sg.P(),sg.I("1001",key="-CUPOM-",size=(6,1),font=("Any",18),justification='right')],
             [sg.T("Valor da Compra",size=(16,1)),sg.T("Data da Compra",size=(29,1)),sg.T("Operador")],
             [sg.I(key="-VALOR-",size=(10,1),font=("Any",18),justification='right'),sg.I(key="-DATA-",size=(18,1),font=("Any",18),justification='right'),sg.I(key="-USUARIO-",size=(18,1),font=("Any",19),justification='right')],
             [sg.Table(values=pesquisa_cupom, headings=titulos, max_col_width=10, auto_size_columns=True,
@@ -37,7 +37,7 @@ def venda_cupom(lista_cupom,lista_dados,usuario):
                     window["-CNPJ-"].update(d[3])
                     window["-CPF-"].update(d[4])
                     window["-VALOR-"].update(d[5])
-                    
+                    window["-EMPRESA-"].update(d[6])
                     for compra in lista_cupom:
                         if compra[0] == int(cupom):
                             pesquisa_cupom.clear()

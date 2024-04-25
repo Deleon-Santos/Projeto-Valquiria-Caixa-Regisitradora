@@ -3,6 +3,7 @@ import modulo_registrar as vendas
 import json
 
 lista_operadores=['Administrador','Operador1','Operador2']
+lista_empresas=['TEM DE TUDO ME']
 
 try:
     with open('dados/usuarios.txt', 'r') as bd:
@@ -27,6 +28,8 @@ col1=[
     [sg.Image(filename="imagem/imagem_login.png",size=(392,267))],
 ]
 col2=[
+    [sg.T("Empresa",font=('any',12))],
+    [sg.DD(default_value="TEM DE TUDO ME",values=lista_empresas,size=(21,1),font=('any',17,'bold'),key='-EMPRESA-')],
     [sg.T("Usuario",font=('any',12))],
     [sg.DD(default_value="Administrador",values=lista_operadores,size=(21,1),font=('any',18),key='-USUARIO-')],
     [sg.T("Senha  ",font=('any',12))],
@@ -35,18 +38,19 @@ col2=[
     [sg.CalendarButton("Data",font=('Any',12),size=(4,1),close_when_date_chosen=True,target="-DATA-",location=(900,500),no_titlebar=False),
     sg.Input('2024-03-21 17:41:22',key="-DATA-",font=('any',16),size=(18,1))],
     [sg.T("",font=('Ani',1))],
-    [sg.B("OK", tooltip='o:79',font=('any',10,'bold'),size=(8,1)),sg.P(),sg.B('SAIR',tooltip='Escape:27',font=('any',10,'bold'),size=(8,1),button_color='red'),
-     sg.P(),sg.B('SUPORTE',tooltip='s:83',font=('any',10,'bold'),size=(8,1))]   
+      
 ]
 
 layout=[
     [sg.Push(),sg.T('ENTRAR EM VENDAS',font=('Any',30,'bold')),sg.P()],
     [sg.HorizontalSeparator()],
     [sg.Col(col1),sg.VerticalSeparator(),sg.Col(col2)],
+    [ sg.P(),sg.B("OK", tooltip='o:79',font=('any',10,'bold'),size=(8,1)),sg.P(),sg.B('SAIR',tooltip='Escape:27',font=('any',10,'bold'),size=(8,1),button_color='red'),
+     sg.P(),sg.B('SUPORTE',tooltip='s:83',font=('any',10,'bold'),size=(8,1)), sg.P()] 
        
 ]
 
-window = sg.Window("NOVO PEDIDO", layout,size=(740,400),finalize=True,return_keyboard_events=True)
+window = sg.Window("NOVO PEDIDO", layout,size=(740,450),finalize=True,return_keyboard_events=True)
 while True:
     event, values = window.read()
     if event in (sg.WIN_CLOSED, "SAIR",'Escape:27'):
@@ -57,14 +61,14 @@ while True:
         usuario=values['-USUARIO-']
         senha=values['-SENHA-']
         data=str(values['-DATA-'])
-        
+        empresa=values['-EMPRESA-']
         if not usuario or not senha or not data:
             sg.popup("Usuario, Senha ou Data\nnão devem ser nulos",font=('Any',18))
             continue
         else:
             for user in dados_usuario:
                 if user['nome']==usuario  and user['senha']== senha:
-                    vendas.sistema(usuario,data)
+                    vendas.sistema(usuario,data,empresa)
             sg.popup_error('Inserir Usuario e Senha para entrar',font=('Any',18))       
             continue
     
