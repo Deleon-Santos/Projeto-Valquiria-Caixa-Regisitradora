@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-import modulo_gravar as imprimir
+import modulo_imprimir as imprimir
 
 pesquisa_cupom=[]
 def venda_cupom(lista_cupom,lista_dados,usuario):
@@ -16,9 +16,10 @@ def venda_cupom(lista_cupom,lista_dados,usuario):
     ]  
     window = sg.Window("VENDA CUPOM",layout,finalize=True)                                                      
     while True:
-        #try:
+        
         event,values = window.read()
         if event in (sg.WIN_CLOSED,"SAIR"):
+            pesquisa_cupom.clear()
 
             break
         cupom=values["-CUPOM-"]
@@ -50,15 +51,15 @@ def venda_cupom(lista_cupom,lista_dados,usuario):
             cupom = values["-CUPOM-"]
             cpf = values["-CPF-"]
             valor = values["-VALOR-"]
-            informacao =f"=============================================\n"
-            informacao += f"Razão Social: .........................................TEM DE TUDO ME\n"
-            informacao += f"END: ..........................AV. Boa Vista n-1012 Santa Rosa/SP\n\n"
-            informacao += f"CNPJ: .....................{cnpj} IE : 07.112.888/000-00\n"
-            informacao += f"Data: {data}                Cliente: {cpf}\n"
-            informacao += f"CUPOM: 000{cupom}\n"                
-            informacao += f"Valor: {valor}\n"
-            informacao += f"Operador : {usuario}\n"
-            informacao+=f"==============================================\n"
+            informacao =f"================================================\n"
+            informacao += f"Razão Social:   ...........................................TEM DE TUDO ME\n"
+            informacao += f"END:   ............................AV. Boa Vista n-1012 Santa Rosa/SP\n\n"
+            informacao += f"CNPJ:   .......................{cnpj}  IE : 07.112.888/000-00\n"
+            informacao += f"Data:  {data}                 Cliente:  {cpf}\n"
+            informacao += f"CUPOM:  000{cupom}"                
+            informacao += f"Valor:  {valor}\n"
+            informacao += f"Operador: {usuario}\n"
+            informacao+=f"================================================\n"
             print(informacao)
             
             resp=imprimir.imprimir(informacao,pesquisa_cupom)

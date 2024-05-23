@@ -42,11 +42,14 @@ col2=[
 ]
 
 layout=[
+    
     [sg.Push(),sg.T('ENTRAR EM VENDAS',font=('Any',30,'bold')),sg.P()],
     [sg.HorizontalSeparator()],
     [sg.Col(col1),sg.VerticalSeparator(),sg.Col(col2)],
-    [ sg.P(),sg.B("OK", tooltip='o:79',font=('any',10,'bold'),size=(8,1)),sg.P(),sg.B('SAIR',tooltip='Escape:27',font=('any',10,'bold'),size=(8,1),button_color='red'),
-     sg.P(),sg.B('SUPORTE',tooltip='s:83',font=('any',10,'bold'),size=(8,1)), sg.P()] 
+    [ sg.P(),sg.B("OK", tooltip='o:79',font=('any',10,'bold'),size=(8,1)),
+     sg.B('SAIR',tooltip='Escape:27',font=('any',10,'bold'),size=(8,1),button_color='red'),
+     sg.B('SUPORTE',tooltip='s:83',font=('any',10,'bold'),size=(8,1)), sg.P()] 
+    
        
 ]
 

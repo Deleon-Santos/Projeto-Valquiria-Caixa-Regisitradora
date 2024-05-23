@@ -1,6 +1,6 @@
     #SISTEMA DE COBRAÇA EM CAIXA DE SUPERMERCADOS E AFINS
-    #Este sistema esta em desenvolvimento em carater academico e conta com colaboração de profissionais e estudantes 
-    #da area de Tecnololgia e desenvolvimento de sistemas
+    #Este sistema esta em desenvolvimento em carater academico 
+    
 def sistema(usuario,data,empresa):
     import PySimpleGUI as sg
     import json
@@ -11,7 +11,7 @@ def sistema(usuario,data,empresa):
     import modulo_limpar as limpar
     import modulo_adicionar as adicionar
     import modulo_visualisar as visualizar
-    import modulo_gravar as gravar
+    import modulo_imprimir as gravar
 
     lista_cupom = []
     carrinho = []
@@ -21,7 +21,7 @@ def sistema(usuario,data,empresa):
     lista=[]
     
     
-    cpf="***.***.***-**"
+    cpf="000.000.000-00"
     cnpj='45.333.0001/45'
     lista_dados=[]
 
@@ -109,7 +109,7 @@ def sistema(usuario,data,empresa):
             window["-TABELA-"].update("")
             cpf=sg.popup_get_text("Deseja adicionar um CPF na nota?")
             if not cpf:
-                cpf ="***.***.***-**"
+                cpf ="000.000.000-00"
 
             # dentro deste bloco de eventos serão registrados apenas os botoes (OK,DELETE,PAGAR,VOLTAR)
             while True:
