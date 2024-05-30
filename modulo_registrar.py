@@ -33,7 +33,8 @@ def sistema(usuario,data,empresa):
         ["Suporte", ["Ajuda"]],
         ["Fechar",["Fechar"]]]
 
-    bloco_1=[   [sg.T('CAIXA FECHADO',key='-CAIXA-', size=(25, 1),font=("Any",18,'bold')),sg.T("Cupom",font=("Any",18,'bold')), sg.I(size=(17, 1), key="-CUPOM-", font=("Any", 20),justification="right")],
+    bloco_1=[   
+                [sg.T('CAIXA FECHADO',key='-CAIXA-', size=(25, 1),font=("Any",18,'bold')),sg.T("Cupom",font=("Any",18,'bold')), sg.I(size=(17, 1), key="-CUPOM-", font=("Any", 20),justification="right")],
                 [sg.Table(values=carrinho, headings=titulos, max_col_width=10, auto_size_columns=True,
                 display_row_numbers=False, justification="center",text_color="black",font=("Any",11),background_color="lightyellow", num_rows=24, key="-TABELA-", row_height=20)],
                 [sg.T(" Preço Unitário R$",size=(65,1),font=("Any",12)),sg.T("SubTotal Item R$",size=(13,1),font=("Any",12))],
@@ -41,29 +42,31 @@ def sistema(usuario,data,empresa):
                 [sg.T("TOTAL R$", size=(12, 1), font=("Any", 40,'bold')),
                 sg.I(size=(13, 1), key="-SUBTOTAL-", font=("Any", 40,'bold'), justification='right')],]
                 
-    bloco_2=[   [sg.T(" TEM DE TUDO ME", size=(15, 1),  font=("Any", 56, "bold"))],
+    bloco_2=[   
+        
                 
-                [sg.T('Código do Produto', size=(25, 1), font=("Any", 12)),sg.T("", size=(43, 1)),
+                [sg.T('Código do Produto', size=(25, 1), font=("Any", 12)),sg.P(),
                 sg.T('  Quantidade', size=(10, 1), font=("Any", 12))],
                 [sg.InputText(background_color='White', size=(14,2 ), key='-EAN-', font=("Any", 25)),
                 sg.T("", size=(46, 1)),sg.InputText("1", size=(2, 2), key='-QTD-', font=("Any", 25),justification="right")],
                 [sg.T('Descrição do Produto', size=(25, 1), font=("Any", 12))],
                 
                 [sg.I(size=(34, 2), key='-DESCRICAO-', font=("Any", 26)), sg.Button(">",tooltip='F1:112',font=("Any", 18))],]
-
-    bloco_3=[   [sg.Button('ADICIONAR', size=(12,1),font=("Any",20,'bold')),sg.T('',size=(30,1)),sg.Button('DELETE', size=(12, 1),font=("Any",20,'bold'))],
+    bloco_4=[   ]
+    bloco_3=[ [sg.Image(filename="imagem/tdt.png",size=(706,297))],  
                 ]
 
-    bloco_4=[   [sg.Image(filename="imagem/imagem_venda.png",size=(704,190))],]
+    
 
-    bloco_5=[  [sg.Button('PAGAR', size=(12, 1),font=("Any",20,'bold')),sg.T('',size=(30,1)), sg.Button('VOLTAR', size=(12, 1),font=("Any",20,'bold'))],
+    bloco_5=[  [sg.Button('ADICIONAR', size=(12,1),font=("Any",20,'bold')),sg.T('',size=(30,1)),sg.Button('DELETE', size=(12, 1),font=("Any",20,'bold'))],
+        [sg.Button('PAGAR', size=(12, 1),font=("Any",20,'bold')),sg.T('',size=(30,1)), sg.Button('VOLTAR', size=(12, 1),font=("Any",20,'bold'))],
          
                 [sg.T("Data",font=('Any',12)),sg.P(),sg.T('Operador',font=('Any',12))],
                 [sg.I(key="-DATA-",font=("Any",14),size=(18,1)),sg.P(),sg.I(key="-USUARIO-",font=("Any",14),size=(20,1))],]
                 
-    frame1=[   
+    frame1=[   [sg.Frame("",bloco_3)],
                 [sg.Frame("",bloco_2)],
-                [sg.Frame("",bloco_3)],
+                
                 [sg.Frame("",bloco_4)],
                 [sg.Frame("",bloco_5)]]
 

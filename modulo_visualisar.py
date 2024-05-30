@@ -65,15 +65,15 @@ def venda_cupom(lista_cupom,lista_dados,usuario):
                 cupom = values["-CUPOM-"]
                 cpf = values["-CPF-"]
                 valor = values["-VALOR-"]
-                informacao =f"===================================================\n"
-                informacao += f"Razão Social:      ...........................................TEM DE TUDO ME\n"
-                informacao += f"END:      ............................AV. Boa Vista n-1012 Santa Rosa/SP\n\n"
-                informacao += f"CNPJ:      .......................{cnpj}  IE : 07.112.888/000-00\n"
-                informacao += f"Data:     {data}                 Cliente:  {cpf}\n"
+                informacao =f"========================================================\n"
+                informacao += f"Razão Social:      ........................................................ TEM DE TUDO ME\n"
+                informacao += f"END:      ......................................... AV. Boa Vista n-1012 Santa Rosa/SP\n\n"
+                informacao += f"CNPJ:         ................................ {cnpj}  IE : 07.112.888/000-00\n"
+                informacao += f"Data:     {data}                              Cliente:  {cpf}\n"
                 informacao += f"CUPOM:  000{cupom}"                
                 informacao += f"Valor:  {valor}\n"
                 informacao += f"Operador: {usuario}\n"
-                informacao+=f"===================================================\n"
+                informacao+=f"========================================================\n"
                 print(informacao)
                 
                 gerar_pdf=imprimir.pdf(informacao,pesquisa_cupom)
