@@ -1,5 +1,5 @@
 # APP VENDAS
-[!App Vendas](imagen/imagem_login.png)
+[App Vendas](imagen/imagem_login.png)
 
 ## Sistema de Cobrança em Caixa de Supermercados
 
