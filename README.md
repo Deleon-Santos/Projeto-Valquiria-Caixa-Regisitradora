@@ -40,7 +40,6 @@ Este projeto é um sistema de registro do tipo 'Caixa Registradora'. Utiliza a b
 - **Visualização de Vendas Realizadas**: Exibe um histórico das vendas efetuadas a partir do numero do cupom.
 
 ### Geração de PDFs
-![App Vendas](Cupom_impresso.pdf)
 - **Impressão de Compras em PDF**: Gera um recibo da compra em formato PDF para impressão .
 
 ## Estrutura do Projeto
