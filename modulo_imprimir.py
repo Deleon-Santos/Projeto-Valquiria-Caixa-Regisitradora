@@ -1,13 +1,13 @@
-from reportlab.lib.pagesizes import letter
+from reportlab.lib.pagesizes import letter,A6
 from reportlab.lib import colors
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
 
-def imprimir(informacao, pesquisa_cupom):
+def pdf(informacao, pesquisa_cupom):
   # Função para criar e estilizar a tabela
   def create_table(data, filename):
-    doc = SimpleDocTemplate(filename, pagesize=letter)
+    doc = SimpleDocTemplate(filename, pagesize=A6)
     elements = []
 
     style = TableStyle([
@@ -53,10 +53,11 @@ def imprimir(informacao, pesquisa_cupom):
     print('documento impresso')
 
     c.save()
-
+  
   # Gera o PDF final com a tabela alinhada à esquerda
+  
   create_table(informacao, "informacao.pdf")
   create_pdf(informacao, pesquisa_cupom, "Cupom_Impresso.pdf")
+  
   return True
-
 

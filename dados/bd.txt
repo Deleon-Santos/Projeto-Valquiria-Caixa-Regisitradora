@@ -178,5 +178,29 @@
         "ean": "7890000000130",
         "item": "queijo mussarela boafala 100g",
         "preco": 5.6
+    },
+    {
+        "cod": "131",
+        "ean": "7892320006122",
+        "item": "Moargarina Doriana com sal 500g",
+        "preco": 12.95
+    },
+    {
+        "cod": "132",
+        "ean": "7894545010102",
+        "item": "Feijao carioca BoaSafra 1kg",
+        "preco": 13.9
+    },
+    {
+        "cod": "133",
+        "ean": "7891515232126",
+        "item": "Margarina Doriana com sal 500G",
+        "preco": 12.96
+    },
+    {
+        "cod": "134",
+        "ean": "7894546202021",
+        "item": "Pao de hamburgue Panco 6 uni",
+        "preco": 10.9
     }
 ]
