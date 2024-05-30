@@ -1,4 +1,5 @@
 # APP VENDAS
+[!App Vendas](imagen/imagem_login.png)
 
 ## Sistema de Cobrança em Caixa de Supermercados
 
@@ -56,10 +57,9 @@ Este projeto é um sistema de registro do tipo 'Caixa Registradora'. Utiliza a b
     └── imagem_venda.png
 ```
 ## Desenvolvedor
-- **Deleon Santos
-  **Este é um projeto autoral para fins academico, esta em desenvolvimento e segue conforme aprendo novas tecnologias ou maneiras de resolver problemas.
+- **Deleon Santos**: Este é um projeto autoral para fins academico, esta em desenvolvimento e segue conforme aprendo novas tecnologias ou maneiras de resolver problemas.
 
 ## Versão
-- **v2.1.1
+- **v2.1.1**
 
 
