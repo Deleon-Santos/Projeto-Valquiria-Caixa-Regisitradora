@@ -11,6 +11,7 @@ def sistema(usuario,data,empresa):
     import modulo_limpar as limpar
     import modulo_adicionar as adicionar
     import modulo_visualisar as visualizar
+    import modulo_arquivar as arquivar
     
     lista_cupom = []
     carrinho = []
@@ -164,7 +165,6 @@ def sistema(usuario,data,empresa):
                             lista.append(cupom)
                             lista.extend(carrinho)
                             lista_cupom.extend([lista.copy()])
-                            
                             lista.clear()
                             limpar.limpar_saida(carrinho,window,num_item)                           
                             num_item=0
