@@ -202,5 +202,17 @@
         "ean": "7894546202021",
         "item": "Pao de hamburgue Panco 6 uni",
         "preco": 10.9
+    },
+    {
+        "cod": "135",
+        "ean": "7894561230123",
+        "item": "Detergente em po Omo Multi 2kg",
+        "preco": 10.45
+    },
+    {
+        "cod": "136",
+        "ean": "7891000325131",
+        "item": "Bombom Nestle 251g com 12 uni",
+        "preco": 12.95
     }
 ]

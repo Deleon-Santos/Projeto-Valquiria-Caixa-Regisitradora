@@ -32,8 +32,9 @@ def novo_item():
             if event == "CADASTRAR":
                 if not values['-PRODUTO-'] or not values['-PRECO-'] or not values['-EAN-']:
                     sg.popup_error('Preencha os campos necessarios!',font=('Any',12),title='ERRO CADASTRO')
-
-                preco_material, descricao_material, ean_material = float(values["-PRECO-"]), values["-PRODUTO-"], int(values['-EAN-'])
+                
+                preco_material, descricao_material, ean_material =str (values["-PRECO-"]), values["-PRODUTO-"], int(values['-EAN-'])
+                preco_material = float(preco_material.replace(',','.'))
                 ean_material=str(ean_material) 
                 codigo_material = str(len(dic) + 101)  # conta os itens e adiciona "101"      
                 carrinho.append([codigo_material, ean_material, descricao_material, preco_material])

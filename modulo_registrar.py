@@ -99,6 +99,8 @@ def sistema(usuario,data,empresa):
         elif event in('ADICIONAR','DELETAR','PAGAR','VOLTAR'):
             sg.popup_ok('Selecione uma Opção na barra de "Menu"',font=('Any',12),title='REGISTRAR')           
         elif event in ("Nova Compra", 'n:78'):
+
+            
             cupom += 1           
             window['-CUPOM-'].update(f'{cupom}')
             window['-CAIXA-'].update('   CAIXA ABERTO')
@@ -162,12 +164,14 @@ def sistema(usuario,data,empresa):
                             lista.append(cupom)
                             lista.extend(carrinho)
                             lista_cupom.extend([lista.copy()])
+                            
                             lista.clear()
                             limpar.limpar_saida(carrinho,window,num_item)                           
                             num_item=0
                             window['-CAIXA-'].update(' CAIXA FECHADO')
                             sg.popup("Voltar",title="Pagamento",font=('Any',18))
                             break
+                            
                         else:
                             valor_pagar=float(v_pago)
                             continue
