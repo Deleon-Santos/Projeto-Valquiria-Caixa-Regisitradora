@@ -22,4 +22,7 @@
                           -Suporte>
                              -Ajuda: Retorna um menu minimalista com as principais funcionalidades de app
                              -Data: permite alterar a data no sistema"
+
+                           - Diretorio e biblioteca do App>
+                              https://github.com/Deleon-Santos/APP-vendas-V2.1.1
                           }

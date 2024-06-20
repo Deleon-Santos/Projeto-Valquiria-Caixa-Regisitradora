@@ -169,7 +169,7 @@ def sistema(usuario,data,empresa):
                             limpar.limpar_saida(carrinho,window,num_item)                           
                             num_item=0
                             window['-CAIXA-'].update(' CAIXA FECHADO')
-                            sg.popup("Voltar",title="Pagamento",font=('Any',18))
+                            sg.popup("Voltar",title="ORDEM DE PAGAMENTO",font=('Any',12))
                             break
                             
                         else:
@@ -183,7 +183,7 @@ def sistema(usuario,data,empresa):
                         break
 
                     elif event == (sg.WIN_CLOSED):
-                        sg.popup_ok("ENCERRAR", font=("Any", 12),title='FEICHAR E SAIR')   
+                        sg.popup_ok("ENCERRAR", font=("Any", 12),title='FECHAR E SAIR')   
                         break
                        
                 except ValueError:  # trata erro de valor não numerico
@@ -218,5 +218,3 @@ def sistema(usuario,data,empresa):
             continue
 
     window.close()
-
-

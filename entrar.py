@@ -16,7 +16,7 @@ sg.LOOK_AND_FEEL_TABLE['MyCreatedTheme'] = {
     'INPUT': '#DCDCDC', 
     'TEXT_INPUT': '#000000', 
     'SCROLL': '#99CC99', 
-    'BUTTON': ('#1C1C1C', '#6A5ACD'), 
+    'BUTTON': ('#ffffff', '#6A5ACD'), 
     'PROGRESS': ('#D1826B', '#CC8019'), 
     'BORDER': 4, 
     'SLIDER_DEPTH': 4,  
@@ -31,7 +31,7 @@ col1=[
 
 col2=[
     [sg.T("Empresa",font=('any',12))],
-    [sg.DD(default_value="TEM DE TUDO ME",values=lista_empresas,size=(21,1),font=('any',17,'bold'),key='-EMPRESA-')],
+    [sg.DD(default_value="TEM DE TUDO ME",values=lista_empresas,size=(21,1),font=('any',17),key='-EMPRESA-')],
     [sg.T("Usuario",font=('any',12))],
     [sg.DD(default_value="Administrador",values=lista_operadores,size=(21,1),font=('any',18),key='-USUARIO-')],
     [sg.T("Senha  ",font=('any',12))],
