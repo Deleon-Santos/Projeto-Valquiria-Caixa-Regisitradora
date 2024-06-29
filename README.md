@@ -7,10 +7,11 @@ Este projeto é um sistema de registro do tipo 'Caixa Registradora'. Utiliza a b
 
 ## Tecnologias Usadas
 
-- **Python 3.7+**
-- **PySimpleGUI**: Para a criação da interface gráfica.
-- **json**: Para manipulação de dados persistentes.
-- **ReportLab**: Para geração de PDFs (se necessário implementar).
+- ![Python](https://img.shields.io/badge/Python-3.7+-blue?style=for-the-badge&logo=python&logoColor=white) **Python 3.7+**
+- ![PySimpleGUI](https://img.shields.io/badge/PySimpleGUI-4.0+-brightgreen?style=for-the-badge&logo=pysimplegui&logoColor=white) **PySimpleGUI**: Para a criação da interface gráfica.
+- ![JSON](https://img.shields.io/badge/JSON-Data-blue?style=for-the-badge&logo=json&logoColor=white) **json**: Para manipulação de dados persistentes.
+- ![ReportLab](https://img.shields.io/badge/ReportLab-PDF-red?style=for-the-badge&logo=pdf&logoColor=white) **ReportLab**: Para geração de PDFs (se necessário implementar).
+
 
 ## Funcionalidades
 
@@ -61,6 +62,11 @@ Este projeto é um sistema de registro do tipo 'Caixa Registradora'. Utiliza a b
 └── imagem
     └── imagem_venda.png
 ```
+## Instalação
+- **Downloader**: Faza o downloader de todos os modulos em uma pasta e execute com um editor da sua preferencia(obs: Tenha python 3 instalado)
+- **Dependecias**: Crie uma pasta "dados" e cole os aquivos "bd.txt" e "ajuda.txt".
+- **Imagens**: Crie uma pasta "imagem" e cole as "imagens" usadas no sistema.
+
 ## Desenvolvedor
 - **Deleon Santos**: Este é um projeto autoral para fins academico, esta em desenvolvimento e segue conforme aprendo novas tecnologias ou maneiras de resolver problemas.
 
