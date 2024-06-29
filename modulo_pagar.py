@@ -5,7 +5,7 @@ condicao_pagamento=['Dinheiro', 'Cartão á Vista', 'Cartão á Prazo', 'Pix' ]
 def pagar(valor_pagar):
     
     frame6=[
-            [sg.T("Valor da Compra R$:  ", size=(23, 1), font=("Any", 12))],
+            [sg.T("Valor da Compra R$  ", size=(23, 1), font=("Any", 12))],
             [sg.I(f" {valor_pagar:.2f}", size=(10, 1), justification='right', key="valor", font=("Any", 30)),sg.P()],
             [sg.T("Valor Recabido R$: ", size=(23, 1), font=("Any", 12))],
             [sg.I(f' 0.00', size=(10, 1), key="recebido", justification='right', font=("Any", 30)),sg.P()],
@@ -16,7 +16,7 @@ def pagar(valor_pagar):
     col2=[[sg.Image(filename="imagem/imagem_login.png",size=(340,240))]]
 
     layout = [
-        [sg.T("Forma de pagamento")]
+        [sg.T("Forma de pagamento", font=("Any", 12))],
         [sg.DD(default_value="",values=condicao_pagamento,size=(21,1),font=('any',22),key='-CONDICAO-'),
         sg.P(),sg.B("PAGAR", font=("Any", 13),size=(14, 1))],
         [sg.Col(col2),sg.Col(frame6)],
@@ -38,7 +38,8 @@ def pagar(valor_pagar):
                 valor_pagar = 0
                 window["valor"].update(f"R$ {valor_pagar:.2f}")
                 window["recebido"].update(f"R$ {pago:.2f}")
-                sg.popup("Autorizado", font=("Any", 12),title='ORDEM DE PAGAMENTO')
+                sg.popup("Pagamento Autorizado", font=("Any", 12),title='ORDEM DE PAGAMENTO')
+                window.close()
                 return valor_pagar
             else:
                 sg.popup('Informe o Valor da Compra',font=('Any',12),title='ORDEM DE PAGAMENTO')
@@ -59,7 +60,8 @@ def pagar(valor_pagar):
                         window["valor"].update(f"R$ {valor_pagar:.2f}")
                         window["recebido"].update(f"R$ {dinheiro:.2f}")
                         window["R$"].update(f"R$ {troco:.2f}")
-                        sg.popup("Autorizado",font=('Any',12),title='ORDEM DE PAGAMENTO')  
+                        sg.popup("Pagamento Autorizado",font=('Any',12),title='ORDEM DE PAGAMENTO')  
+                        window.close()
                         return valor_pagar
                 else:
                     sg.popup("Informe o valor recebido",font=('Any',12),title='ORDEM DE PAGAMENTO')

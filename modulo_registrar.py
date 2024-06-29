@@ -99,7 +99,7 @@ def sistema(usuario,data,empresa):
                 continue  
         elif event in('ADICIONAR','DELETAR','PAGAR','VOLTAR'):
             sg.popup_ok('Selecione uma Opção na barra de "Menu"',font=('Any',12),title='REGISTRAR')           
-        elif event in ("Nova Compra", 'n:78'):
+        elif event in ("Nova Compra"):
 
             
             cupom += 1           
@@ -107,7 +107,7 @@ def sistema(usuario,data,empresa):
             window['-CAIXA-'].update('   CAIXA ABERTO')
             window['-SUBTOTAL-'].update(f'R$ {valor_pagar:.2f}')
             window["-TABELA-"].update("")
-            cpf=sg.popup_get_text("Deseja adicionar um CPF na nota?",size=(15,1),font=('Any',18),title='CPF')
+            cpf=sg.popup_get_text("Adicione um CPF?",size=(15,1),font=('Any',18),title='CPF')
             if not cpf:
                 cpf ="000.000.000-00"
 
@@ -169,7 +169,6 @@ def sistema(usuario,data,empresa):
                             limpar.limpar_saida(carrinho,window,num_item)                           
                             num_item=0
                             window['-CAIXA-'].update(' CAIXA FECHADO')
-                            sg.popup("Voltar",title="ORDEM DE PAGAMENTO",font=('Any',12))
                             break
                             
                         else:
@@ -183,8 +182,14 @@ def sistema(usuario,data,empresa):
                         break
 
                     elif event == (sg.WIN_CLOSED):
-                        sg.popup_ok("ENCERRAR", font=("Any", 12),title='FECHAR E SAIR')   
-                        break
+                        resposta=sg.popup_ok_cancel("  Se seguir com o evento,\nas configurações não salvas\nserão perdidas.",font=('Any',12),title='FECHAR E SAIR')
+                        if resposta=="OK":
+                            break  
+                        else:
+                            continue
+                        
+
+                        
                        
                 except ValueError:  # trata erro de valor não numerico
                     sg.popup_error('Erro na quantidade', title="ERROR", font=("Any", 12))

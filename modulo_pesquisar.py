@@ -26,12 +26,15 @@ def pesquisar(dic):
     while True:
         event, values = window.read()
         if event in (sg.WIN_CLOSED,'SAIR'):
+            window.close()  
             return defaut[0],defaut[1]
         
         if event =="CONCLUIR":
             if values['-TABELA-']:
                 linha_selecionada = values['-TABELA-'][0]               
-                escolha = pesquisa[linha_selecionada]               
-                return escolha[1],escolha[2]
+                escolha = pesquisa[linha_selecionada]    
+                window.close()             
+                return escolha[1],escolha[2]    
+               
                 
-        window.close()  
+        
