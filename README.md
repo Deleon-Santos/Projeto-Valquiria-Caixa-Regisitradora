@@ -47,28 +47,29 @@ Este projeto é um sistema de registro do tipo 'Caixa Registradora'. Utiliza a b
 
 ```plaintext
 ├── modulo_entra.py
-├── modulo_registra.py
-├── modulo_pagar.py
-├── modulo_remover.py
-├── modulo_pesquisar.py
-├── modulo_cadastro.py
-├── modulo_limpar.py
-├── modulo_adicionar.py
-├── modulo_visualisar.py
-├── modulo_imprimir.py
-├── dados
-│   ├── bd.txt
-│   ├── ajuda.txt
-└── imagem
-    └── imagem_venda.png
+    ├── dados
+    │   ├── bd.txt
+    |   ├── ajuda.txt
+    ├── modulo_registra.py
+    │   ├── modulo_pagar.py
+    │   ├── modulo_remover.py
+    ├── ├── modulo_pesquisar.py
+    │   ├── modulo_limpar.py
+    │   ├── modulo_adicionar.py
+    ├── modulo_visualisar.py
+    │   ├── modulo_imprimir.py
+    ├── modulo_cadastro.py
+    │
+    └── imagem
+        └── imagem_venda.png
 ```
 ## Instalação
-- **Downloader**: Faza o downloader de todos os modulos em uma pasta e execute com um editor da sua preferencia(obs: Tenha python 3 instalado)
+- **Download**: Faça o download de todos os modulos em uma pasta e execute com o editor da sua preferencia(obs: Tenha python 3 instalado)
 - **Dependecias**: Crie uma pasta "dados" e cole os aquivos "bd.txt" e "ajuda.txt".
 - **Imagens**: Crie uma pasta "imagem" e cole as "imagens" usadas no sistema.
 
 ## Desenvolvedor
-- **Deleon Santos**: Este é um projeto autoral para fins academico, esta em desenvolvimento e segue conforme aprendo novas tecnologias ou maneiras de resolver problemas.
+- **Deleon Santos**: Este é um projeto autoral para fins academico e segue conforme aprendo novas tecnologias ou maneiras de resolver problemas.
 
 ## Versão
 - **v2.1.1**

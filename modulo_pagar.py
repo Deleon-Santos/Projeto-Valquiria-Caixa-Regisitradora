@@ -18,7 +18,7 @@ def pagar(valor_pagar):
     layout = [
         [sg.T("Forma de pagamento", font=("Any", 12))],
         [sg.DD(default_value="",values=condicao_pagamento,size=(21,1),font=('any',22),key='-CONDICAO-'),
-        sg.P(),sg.B("PAGAR", font=("Any", 13),size=(14, 1))],
+        sg.P(),sg.B("PAGAR", font=("Any", 13),size=(14, 1)),],#sg.B("SAIR",  button_color="red",font=("Any", 13),size=(14, 1))
         [sg.Col(col2),sg.Col(frame6)],
         ]
 
@@ -29,8 +29,9 @@ def pagar(valor_pagar):
         pago = valor_pagar
         troco = 0
         
-        if event in (sg.WIN_CLOSED,"CONCLUIR"):
+        if event in (sg.WIN_CLOSED,"SAIR"):
             sg.popup("Continuar Comprando ",font=('Any',12),title='CONTINUAR')
+            
             break
             
         if event == 'PAGAR' and values['-CONDICAO-'] in ('Cartão á Vista', 'Cartão á Prazo', 'Pix'):  # para cartão e pix o valor e descontado itegralmente
@@ -41,6 +42,7 @@ def pagar(valor_pagar):
                 sg.popup("Pagamento Autorizado", font=("Any", 12),title='ORDEM DE PAGAMENTO')
                 window.close()
                 return valor_pagar
+                
             else:
                 sg.popup('Informe o Valor da Compra',font=('Any',12),title='ORDEM DE PAGAMENTO')
         
@@ -67,7 +69,7 @@ def pagar(valor_pagar):
                     sg.popup("Informe o valor recebido",font=('Any',12),title='ORDEM DE PAGAMENTO')
 
             except Exception as erro:
-                sg.popup_error(f"Erro Inesperado: {erro}", )
+                sg.popup_error("Informe o valor recebido ",font=('Any',12),title='ORDEM DE PAGAMENTO' )
                 continue
 
         else:

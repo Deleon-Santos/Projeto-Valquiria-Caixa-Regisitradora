@@ -23,7 +23,7 @@ sg.LOOK_AND_FEEL_TABLE['MyCreatedTheme'] = {
     'PROGRESS_DEPTH': 1, } 
 sg.theme('MyCreatedTheme') # Prsonaliza a interface grafica com um tema especifico
 
-lista_operadores=['Administrador','Operador do primeiro turno','Operador do segundo turno']
+lista_operadores=['Administrador','Operador do Turno 1','Operador do Turno 2']
 lista_empresas=['TEM DE TUDO ME']
 
 col1=[
@@ -31,7 +31,7 @@ col1=[
 
 col2=[
     [sg.T("Empresa",font=('any',12))],
-    [sg.DD(default_value="TEM DE TUDO ME",values=lista_empresas,size=(21,1),font=('any',17),key='-EMPRESA-')],
+    [sg.DD(default_value="Tem De Tudo ME",values=lista_empresas,size=(21,1),font=('any',17),key='-EMPRESA-')],
     [sg.T("Usuario",font=('any',12))],
     [sg.DD(default_value="Administrador",values=lista_operadores,size=(21,1),font=('any',18),key='-USUARIO-')],
     [sg.T("Senha  ",font=('any',12))],
@@ -42,14 +42,15 @@ col2=[
     [sg.T("",font=('Ani',1))],     ]
 
 layout=[
-       
+    
    [sg.Frame('',[ 
        [sg.Col(col1),sg.VerticalSeparator(),sg.Col(col2)]])],
     [sg.P(),sg.B("OK", tooltip='o:79',font=('any',10,'bold'),size=(9,1)),
         sg.B('SAIR',tooltip='Escape:27',font=('any',10,'bold'),size=(9,1),button_color='red'),
         sg.B('SUPORTE',tooltip='s:83',font=('any',10,'bold'),size=(10,1))] ,     ]
 
-window = sg.Window("LOGIN VENDAS", layout,size=(740,365),finalize=True,return_keyboard_events=True)
+window = sg.Window("LOGIN VENDAS", layout,size=(740,365),finalize=True,return_keyboard_events=True,)
+ 
 while True:
     event, values = window.read()
     if event in (sg.WIN_CLOSED, "SAIR",'Escape:27'):
@@ -57,27 +58,27 @@ while True:
 
     if event =='OK' or event =='o:79':      
         print(event)
-        usuario,senha,data,empresa=values['-USUARIO-'],values['-SENHA-'],str(values['-DATA-']),values['-EMPRESA-']
+        usuario,senha,data,empresa = values['-USUARIO-'],values['-SENHA-'],str(values['-DATA-']),values['-EMPRESA-']
         
         if not usuario or not senha or not data or not empresa :
-            sg.popup_error("Usuario, Senha ou Data\nnão devem ser nulos",font=('Any',12),title='LOGIN ERRO')
+            sg.popup_error("Usuario, Senha ou Data\nnão devem ser nulos",font=('Any',12))
             continue
         else:
             for user in dados_usuario:
                 if user['nome']==usuario  and user['senha']== senha:
                     window.close()
                     vendas.sistema(usuario,data,empresa)
-                    
-            sg.popup_error('Inserir Usuario e Senha para entrar',font=('Any',12),title='LOGIN ERRO')       
+                    continue
+            sg.popup_error('Inserir Usuario e Senha para entrar',font=('Any',12),no_titlebar=True)       
             continue
     
     elif event in ('SUPORTE','s:83'):
         try:
             with open('dados/usuarios.txt', 'r') as legenda:# Leitura das informações de suporte ao usuario
                 arquivo = legenda.read()
-                sg.popup_scrolled(arquivo, title="SUPORTE")
+                sg.popup_scrolled(arquivo, title="AJUDA")
         except FileNotFoundError:
-            sg.popup("O arquivo 'comanda.txt' não foi encontrado.\n  Verifique o caminho ou crie o arquivo.",font=('Any',12),title='LOGIN ERRO')
+            sg.popup("O arquivo 'comanda.txt' não foi encontrado.\n  Verifique o caminho ou crie o arquivo.",font=('Any',12),no_titlebar=True)
         continue 
     else:
         print(event)

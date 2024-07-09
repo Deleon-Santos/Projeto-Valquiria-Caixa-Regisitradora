@@ -74,6 +74,7 @@ def sistema(usuario,data,empresa):
     frame2=[    [sg.Frame("",bloco_1)] , ]
 
     layout = [  
+        
                 [sg.Menu(menu_layout,font=('Any',12))],           
                 [sg.Col(frame1),sg.Col(frame2)],
                 [sg.P(),sg.Text("linkedin.com/in/deleon-santos-1b835a290"),sg.P()]]
@@ -86,19 +87,21 @@ def sistema(usuario,data,empresa):
         sg.popup_error("O arquivo 'comanda.txt' não foi encontrado.\n Verifique o caminho ou crie o arquivo.",font=('Any',12),title='ERRO DE CARREGAMENTO')
 
     window = sg.Window("NOVO PEDIDO", layout,size=(800,800), resizable=True,finalize=True)
-    
+    window.maximize()
     while True:
         event, values = window.read()
         window['-DATA-'].update(data)
         window['-USUARIO-'].update(usuario)
         if event in (sg.WIN_CLOSED, "Fechar"):
-            resposta=sg.popup_ok_cancel("  Se seguir com o evento,\nas configurações não salvas\nserão perdidas.",font=('Any',12),title='FECHAR E SAIR')
+        
+            resposta=sg.popup_ok_cancel("  Se seguir com o evento,\nas configurações não salvas\nserão perdidas.",font=('Any',12))
             if resposta=="OK":
                 break  
             else:
-                continue  
+                continue
+             
         elif event in('ADICIONAR','DELETAR','PAGAR','VOLTAR'):
-            sg.popup_ok('Selecione uma Opção na barra de "Menu"',font=('Any',12),title='REGISTRAR')           
+            sg.popup_ok('Selecione uma Opção na barra de "Menu"',font=('Any',12),no_titlebar=True)           
         elif event in ("Nova Compra"):
 
             
@@ -107,7 +110,7 @@ def sistema(usuario,data,empresa):
             window['-CAIXA-'].update('   CAIXA ABERTO')
             window['-SUBTOTAL-'].update(f'R$ {valor_pagar:.2f}')
             window["-TABELA-"].update("")
-            cpf=sg.popup_get_text("Adicione um CPF?",size=(15,1),font=('Any',18),title='CPF')
+            cpf=sg.popup_get_text("Adicione um CPF?",size=(15,1),font=('Any',18),no_titlebar=True)
             if not cpf:
                 cpf ="000.000.000-00"
 
@@ -120,11 +123,11 @@ def sistema(usuario,data,empresa):
                             sg.popup_error("Erro no campo material!", title="ERRO", font=("Any", 12))
                             continue
                         if qtd <1  or qtd > 99 or qtd == "none":
-                            sg.popup_error("Erro no campo Quantidade!", title="ERRO", font=("Any", 12),)
+                            sg.popup_error("Erro no campo Quantidade!", title="ERRO", font=("Any", 12),no_titlebar=True)
                             continue                       
                         plu_pro = adicionar.achar(material,dic)
                         if plu_pro == False:
-                            sg.popup_error("Erro no campo material", title="ERRO", font=("Any", 12))
+                            sg.popup_error("Erro no campo material", title="ERRO", font=("Any", 12),no_titlebar=True)
                             continue
                     
                         for item in dic: # coleta os valores 
@@ -182,7 +185,7 @@ def sistema(usuario,data,empresa):
                         break
 
                     elif event == (sg.WIN_CLOSED):
-                        resposta=sg.popup_ok_cancel("  Se seguir com o evento,\nas configurações não salvas\nserão perdidas.",font=('Any',12),title='FECHAR E SAIR')
+                        resposta=sg.popup_ok_cancel("  Se seguir com o evento,\nas configurações não salvas\nserão perdidas.",font=('Any',12),title='FECHAR E SAIR',no_titlebar=True)
                         if resposta=="OK":
                             break  
                         else:
@@ -192,7 +195,7 @@ def sistema(usuario,data,empresa):
                         
                        
                 except ValueError:  # trata erro de valor não numerico
-                    sg.popup_error('Erro na quantidade', title="ERROR", font=("Any", 12))
+                    sg.popup_error('Erro na quantidade', title="ERROR", font=("Any", 12),no_titlebar=True)
                     continue
         elif event == "Venda Cupom":
             visualizar.venda_cupom(lista_cupom,lista_dados,usuario)
@@ -219,7 +222,7 @@ def sistema(usuario,data,empresa):
                     sg.popup_scrolled(arquivo, title="Ajuda")
                 # Seu código para ler o arquivo
             except FileNotFoundError:
-                sg.popup_error("O arquivo 'SUPORTE' não foi encontrado.\n Verifique o caminho ou crie o arquivo.",font=('Any',12),title='ERRO')
+                sg.popup_error("O arquivo 'SUPORTE' não foi encontrado.\n Verifique o caminho ou crie o arquivo.",font=('Any',12),title='ERRO',no_titlebar=True)
             continue
 
     window.close()
