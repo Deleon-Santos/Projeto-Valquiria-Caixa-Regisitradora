@@ -100,18 +100,18 @@ def venda_cupom(lista_cupom, lista_dados, usuario):
                 cupom = values["-CUPOM-"]
                 cpf = values["-CPF-"]
                 valor = values["-VALOR-"]
-                informacao = f"========================================================\n"
-                informacao += f"Razão Social:      ........................................................ TEM DE TUDO ME\n"
-                informacao += f"END:      ......................................... AV. Boa Vista n-1012 Santa Rosa/SP\n\n"
-                informacao += f"CNPJ:         ................................ {cnpj}  IE : 07.112.888/000-00\n"
-                informacao += f"Data:     {data}                              Cliente:  {cpf}\n"
-                informacao += f"CUPOM:  000{cupom}\n"                
-                informacao += f"Valor:  {valor}\n"
+                informacao = f"==\n"
+                informacao += f"Razão Social: Tem De Tudo ME\n"
+                informacao += f"END: AV. Boa Vista n-1012 Santa Rosa/SP\n\n"
+                informacao += f"CNPJ: {cnpj}  IE : 07.112.888/000-00\n"
+                informacao += f"Data: {data}Cliente: {cpf}\n"
+                informacao += f"CUPOM: 000{cupom}\n"                
+                informacao += f"Valor: {valor}\n"
                 informacao += f"Operador: {usuario}\n"
-                informacao += f"========================================================\n"
+                informacao += f"==\n"
                 print(informacao)
                 
-                gerar_pdf = imprimir.pdf(informacao, pesquisa_cupom)
+                gerar_pdf = imprimir.create_pdf(informacao, pesquisa_cupom,"impressora.pdf")
                 if gerar_pdf:
                     sg.popup("PDF Salvo", font=('Any', 12), title='IMPRIMIR PDF')
                 else:
@@ -119,7 +119,3 @@ def venda_cupom(lista_cupom, lista_dados, usuario):
 
     window.close()
 
-# Exemplo de chamada à função venda_cupom
-# lista_cupom = ...  # Substitua pelo seu código para carregar a lista de cupons
-# lista_dados = ...  # Substitua pelo seu código para carregar a lista de dados
-# venda_cupom(lista_cupom, lista_dados, "Operador Exemplo")

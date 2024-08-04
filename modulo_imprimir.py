@@ -1,63 +1,60 @@
-from reportlab.lib.pagesizes import letter,A6
+from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.pdfgen import canvas
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import Table, TableStyle
 
-def pdf(informacao, pesquisa_cupom):
-  # Função para criar e estilizar a tabela
-  def create_table(data, filename):
-    doc = SimpleDocTemplate(filename, pagesize=A6)
-    elements = []
+'''pesquisa_cupom = [
+    ['Fabiana', 18, "cea@modaas.com.br"],
+    ['Fabiana', 18, "cea@modaas.com.br"],
+    ['Fabiana', 18, "cea@modaas.com.br"],
+    ['Fabiana', 18, "cea@modaas.com.br"]
+]
 
-    style = TableStyle([
-      ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-      ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-      ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
-      ('BOX', (0, 0), (-1, -1), 0.25, colors.black)
-    ])
+informacao = """Razão Social: Empresa Exemplo Ltda
+Número de Cupom: 123456
+CNPJ: 12.345.678/0001-90
+CPF: 123.456.789-10
+Inscrição Municipal: 987654321
+Valor: 1500.75zsddfsdfsdfsdfdsf"""'''
 
-    # Formatação dos dados
-    formatacao = [[str(item) for item in row] for row in data]
-    table = Table(formatacao)
-    table.setStyle(style)
-    
-    elements.append(table)
-    doc.build(elements)
-
-  # Função para criar o PDF com cabeçalho e tabela
-  def create_pdf(content, table_data, filename):
+def create_pdf(content, table_data, filename):
     pdf_filename = filename
     c = canvas.Canvas(pdf_filename, pagesize=letter)
 
     # Cabeçalho centralizado
     c.setFont("Helvetica-Bold", 12)
     title_text = "CUPOM FISCAL"
-    title_width = c.stringWidth(title_text,"Helvetica", 12)
-    
-    c.drawCentredString(letter[0] / 2, 750, title_text)
+    c.drawCentredString(letter[0] / 2, letter[1] - 30, title_text)
 
-    c.setFont("Helvetica", 12)
-    # Texto de conteúdo
-    text_object = c.beginText(50, 720)  # Ajuste a margem esquerda
-    text_object.textLines(content)
+    # Conteúdo centralizado
+    c.setFont("Helvetica", 10)
+    text_object = c.beginText(50, letter[1] - 50)
+    for line in content.split('\n'):
+        text_object.textLine(line)
     c.drawText(text_object)
 
-    # Desenhando a tabela alinhada à esquerda
-    available_width, available_height = letter[0] - 2 * 50, letter[1] - 30  # Margem de 50
+    # Calculando a altura total do conteúdo e posicionando a tabela
+    content_height = len(content.split('\n')) * 14  # Altura aproximada do conteúdo (ajuste conforme necessário)
+    table_y = letter[1] - 100 - content_height
+
+    # Tabela com ajuste de largura e quebra de página
+    available_width, available_height = letter[0] - 2 * 50, table_y - 50  # Margem de 50mm
     table = Table(table_data)
     table.wrapOn(c, available_width, available_height)
-    table.drawOn(c, 50, 50)  # Margem esquerda e superior
-
-    # Verificação de paginação (opcional)
-    print('documento impresso')
-
+    table.setStyle(get_table_style())
+    table.drawOn(c, 50, table_y - len(table_data) * 14)
+    print("ok, impresso")
     c.save()
-  
-  # Gera o PDF final com a tabela alinhada à esquerda
-  
-  create_table(informacao, "informacao.pdf")
-  create_pdf(informacao, pesquisa_cupom, "Cupom_Impresso.pdf")
-  
-  return True
+    return True
 
+def get_table_style():
+    return TableStyle([
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),  # Centralizar todas as células
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
+        ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
+        ('FONT', (0, 0), (-1, -1), 'Helvetica', 10),  # Try using Helvetica if available
+        ('BOTTOMMARGIN', (0, 0), (-1, -1), 5),
+    ])
+
+#create_pdf(informacao, pesquisa_cupom, "impressora.pdf")

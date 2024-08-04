@@ -67,6 +67,7 @@ while True:
             for user in dados_usuario:
                 if user['nome']==usuario  and user['senha']== senha:
                     window.close()
+                    
                     vendas.sistema(usuario,data,empresa)
                     continue
             sg.popup_error('Inserir Usuario e Senha para entrar',font=('Any',12),no_titlebar=True)       
