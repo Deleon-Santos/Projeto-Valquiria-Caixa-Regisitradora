@@ -195,7 +195,7 @@
         "cod": "133",
         "ean": "7891515232126",
         "item": "Margarina Doriana com sal 500G",
-        "preco": 12.96
+        "preco": 12.95
     },
     {
         "cod": "134",

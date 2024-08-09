@@ -13,6 +13,8 @@ def sistema(usuario,data,empresa):
     import modulo_visualisar as visualizar
     import modulo_arquivar as arquivar
     
+
+
     lista_cupom = []
     carrinho = []
     cupom = int(1000)
@@ -77,7 +79,7 @@ def sistema(usuario,data,empresa):
         
                 [sg.Menu(menu_layout,font=('Any',12))],           
                 [sg.Col(frame1),sg.Col(frame2)],
-                [sg.P(),sg.Text("linkedin.com/in/deleon-santos-1b835a290"),sg.P()]]
+                [sg.P(),sg.Text("VALQUIRA.com linkedin.com/in/deleon-santos-1b835a290"),sg.P()]]
 
     #====================================================================================================================================
     try:
@@ -167,6 +169,7 @@ def sistema(usuario,data,empresa):
                             lista_dados.append([cupom, data , usuario ,  cnpj , cpf, v_pago, empresa])                           
                             lista.append(cupom)
                             lista.extend(carrinho)
+                            arquivar.arquivo(cupom,data,usuario,cnpj,cpf,v_pago,empresa,carrinho)
                             lista_cupom.extend([lista.copy()])
                             lista.clear()
                             limpar.limpar_saida(carrinho,window,num_item)                           

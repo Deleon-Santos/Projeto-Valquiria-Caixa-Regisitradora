@@ -1,9 +1,9 @@
-# APP VENDAS
+# VALQUIRIA APP VENDAS
 ![App Vendas](imagem/tdt.png)
 
 ## Sistema de Cobrança em Caixa de Supermercados
 
-Este projeto é um sistema de registro do tipo 'Caixa Registradora'. Utiliza a biblioteca PySimpleGUI para criar uma interface gráfica que facilita a gestão de vendas em supermercados e estabelecimentos similares.
+O projeto VALQUÍRIA é um sistema de registro do tipo 'Caixa Registradora'. Utiliza a biblioteca PySimpleGUI para criar uma interface gráfica que facilita a gestão de vendas em supermercados e estabelecimentos similares.
 
 ## Tecnologias Usadas
 

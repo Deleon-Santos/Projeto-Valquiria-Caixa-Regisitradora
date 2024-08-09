@@ -1,5 +1,6 @@
                          {
-                             "Sistema em desenvolvimento, algumas funcionalidades podem  apresentar erros
+                             "VALQUIRIA APP_VENDAS
+                             Sistema em desenvolvimento, algumas funcionalidades podem  apresentar erros
                           e falhas inesperadas, caso ocorram problemas reportem ao desenvolvedor  atraves
                           do contato disponivel pra que as correções seja incorporadas ao codigo.Em brevo
                           apresentaremos uma bibliotca. Aguardem!
@@ -24,5 +25,5 @@
                              -Data: permite alterar a data no sistema"
 
                            - Diretorio e biblioteca do App>
-                              https://github.com/Deleon-Santos/APP-vendas-V2.1.1
+                              https://github.com/Deleon-Santos/VALQUIRIA-APP-vendas-V2.1.1
                           }

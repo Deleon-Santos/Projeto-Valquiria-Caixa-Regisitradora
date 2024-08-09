@@ -17,7 +17,7 @@ def pagar(valor_pagar):
 
     layout = [
         [sg.T("Forma de pagamento", font=("Any", 12))],
-        [sg.DD(default_value="",values=condicao_pagamento,size=(21,1),font=('any',22),key='-CONDICAO-'),
+        [sg.DD(default_value="Pix",values=condicao_pagamento,size=(21,1),font=('any',22),key='-CONDICAO-'),
         sg.P(),sg.B("PAGAR", font=("Any", 13),size=(14, 1)),],#sg.B("SAIR",  button_color="red",font=("Any", 13),size=(14, 1))
         [sg.Col(col2),sg.Col(frame6)],
         ]

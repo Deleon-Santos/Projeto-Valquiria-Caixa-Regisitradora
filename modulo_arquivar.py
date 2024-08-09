@@ -1,21 +1,63 @@
+import sqlite3 as bd
 
-def arquivo(lista_cupom):
-    try:
-        # Abre o arquivo de vendas em modo de leitura
-        with open('dados/bd_vendas.txt', 'w') as arquivo_vendas:
-            lista_cupom = arquivo_vendas.readlines()  # Lê todas as linhas do arquivo
-            cont=len(lista_cupom)
-            print(f'a quantidade de cupuns : : {cont}')
+def conectar_bd():
+    conn=bd.connect("valquiria_bd")
+    curs=conn.cursor()
+    return conn, curs
+
+def arquivo(cupom,data,usuario,cnpj,cpf,v_pago,empresa,carrinho):
+    #try:
+        conexao, cursor = conectar_bd()
+        cursor.execute("""
+                        create table if not exists vendas(
+                            n_cupom integer primary key,    
+                            data_venda text,
+                            valor_venda real,
+                            cpf_cliente text,
+                            cnpj_empresa text,
+                            razao_social text,
+                            operador_vendedor text)""")
         
-        # Adiciona a nova lista de cupons ao conteúdo lido
-        lista_cupom.append(str(lista_cupom) + '\n')  # Converte a lista para string e adiciona uma nova linha
+        print('tabela vendas criada')
+        cursor.execute("""
+                        insert into vendas(
+                        n_cupom, data_venda, valor_venda, cpf_cliente, cnpj_empresa, razao_social, operador_vendedor)
+                        values(?,?,?,?,?,?,?)""",(cupom, data, v_pago, cpf, cnpj, empresa, usuario) )
         
-        # Abre o arquivo de vendas em modo de escrita para salvar as alterações
-        with open('dados/bd_vendas.txt', 'w') as arquivo_vendas:
-            arquivo_vendas.writelines(lista_cupom)  # Escreve todas as linhas de volta no arquivo
-            print(lista_cupom)
+        conexao.commit()
+        print("informacoes de cupom inseridas com sucesso")
+
+        cursor.execute("""
+                        CREATE TABLE IF NOT EXISTS carrinho (
+                n_cupom INTEGER,
+                n_item INTEGER, 
+                plu_produto TEXT,  
+                ean_produto TEXT,  
+                descricao_produto TEXT, 
+                qtd_produto INTEGER, 
+                preco_unitario REAL, 
+                total_preco REAL,
+                FOREIGN KEY (n_cupom) REFERENCES vendas (n_cupom) ON DELETE CASCADE)
+        """)
+
+        print('tabela carrinho criada')
+
         
-        return True
-    
-    except FileNotFoundError:
-        return False
+        
+
+        for compra in carrinho:
+            if compra:
+                cursor.execute("""
+                            insert into carrinho(
+                            n_item , plu_produto ,  ean_produto ,  descricao_produto , qtd_produto , preco_unitario , total_preco)
+                            values(?,?,?,?,?,?,?)""",
+                            (compra[0], compra[1], compra[2], compra[3], compra[4], compra[5], compra[6]))
+                
+                conexao.commit()
+        print('Itens iseridos com sucesso')
+        cursor.close()
+        conexao.close()
+
+    #except Exception as e:
+        #print(f'erro em banco de dados {e}')
+        

@@ -1,8 +1,11 @@
+"""Projeto Valquíria
+Aplicação baseada em caixa registradora do tipo comercio do seguimento varejo alimentos"""
+
 import PySimpleGUI as sg
 import modulo_registrar as vendas
 import json
 
-##778899
+
 
 try: # Executa a abertura do BD em .txt com itens cadastrados
     with open('dados/usuarios.txt', 'r') as bd:
@@ -45,7 +48,7 @@ layout=[
     
    [sg.Frame('',[ 
        [sg.Col(col1),sg.VerticalSeparator(),sg.Col(col2)]])],
-    [sg.P(),sg.B("OK", tooltip='o:79',font=('any',10,'bold'),size=(9,1)),
+    [sg.T('VALQUIRIA.com'),sg.P(),sg.B("OK", tooltip='o:79',font=('any',10,'bold'),size=(9,1)),
         sg.B('SAIR',tooltip='Escape:27',font=('any',10,'bold'),size=(9,1),button_color='red'),
         sg.B('SUPORTE',tooltip='s:83',font=('any',10,'bold'),size=(10,1))] ,     ]
 
