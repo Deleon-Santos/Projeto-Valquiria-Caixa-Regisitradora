@@ -106,8 +106,12 @@ def sistema(usuario,data,empresa):
             sg.popup_ok('Selecione uma Opção na barra de "Menu"',font=('Any',12),no_titlebar=True)           
         elif event in ("Nova Compra"):
 
-            
-            cupom += 1           
+            count=arquivar.gerar_cupom()
+            count=int(count)
+            print (count)
+            cupom =int(cupom + count)
+            print(cupom) 
+
             window['-CUPOM-'].update(f'{cupom}')
             window['-CAIXA-'].update('   CAIXA ABERTO')
             window['-SUBTOTAL-'].update(f'R$ {valor_pagar:.2f}')
