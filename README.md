@@ -3,7 +3,8 @@
 
 ## Sistema de Cobrança em Caixa de Supermercados
 
-O projeto VALQUÍRIA é um sistema de registro do tipo 'Caixa Registradora'. Utiliza a biblioteca PySimpleGUI para criar uma interface gráfica que facilita a gestão de vendas em supermercados e estabelecimentos similares.
+O projeto VALQUÍRIA é um sistema de registro do tipo 'Caixa Registradora'. Utiliza a biblioteca PySimpleGUI para criar uma interface gráfica que facilita a gestão de vendas em supermercados e estabelecimentos similares. 
+O VALQUIRA esta conectado a um banco de dados integrado SQLite que permite o aquivamento de vendas e a visualização por meio de comando SQL em tabelas relacionadas.
 
 ## Tecnologias Usadas
 
@@ -11,7 +12,7 @@ O projeto VALQUÍRIA é um sistema de registro do tipo 'Caixa Registradora'. Uti
 - ![PySimpleGUI](https://img.shields.io/badge/PySimpleGUI-4.0+-brightgreen?style=for-the-badge&logo=pysimplegui&logoColor=white) **PySimpleGUI**: Para a criação da interface gráfica.
 - ![JSON](https://img.shields.io/badge/JSON-Data-blue?style=for-the-badge&logo=json&logoColor=white) **json**: Para manipulação de dados persistentes.
 - ![ReportLab](https://img.shields.io/badge/ReportLab-PDF-red?style=for-the-badge&logo=pdf&logoColor=white) **ReportLab**: Para geração de PDFs (se necessário implementar).
-
+![SQLite Logo](https://www.sqlite.org/images/sqlite370_banner.gif)
 
 ## Funcionalidades
 
@@ -35,6 +36,7 @@ O projeto VALQUÍRIA é um sistema de registro do tipo 'Caixa Registradora'. Uti
 ### Pagamentos
 ![App Vendas](imagem/img3.png)
 - **Processamento de Pagamentos**: Calcula o valor total a pagar e registra a venda em dinheiro, cartão ou pix.
+- **Arquivamento de vendas**: coleta dados da empresa, cliente, data e os produtos selecionados e salva em tabelas relacionadas a venda e a produtos
 
 ### Relatórios
 ![App Vendas](imagem/img4.png)
