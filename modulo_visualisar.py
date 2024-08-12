@@ -1,10 +1,11 @@
 import PySimpleGUI as sg
 import modulo_imprimir as imprimir
+import modulo_arquivar as arquivar
 
 pesquisa_cupom = []
 pesquisa = []
 
-def venda_cupom(lista_cupom, lista_dados, usuario):
+def venda_cupom(lista_dados):
     titulos1 = ["    Cupom     ", "      Data     ","    Cliente    ","  Valor R$  "]
     titulos2 = ["Item", "COD","    EAN    ","Descrição do Produto","QTD","PUni R$","Preço R$"]
 
@@ -39,15 +40,13 @@ def venda_cupom(lista_cupom, lista_dados, usuario):
 
     window = sg.Window("VENDA CUPOM", janela, finalize=True, resizable=True) 
 
-    pesquisa.clear()
     for item in lista_dados:
-        cupom = item[0]
-        data = item[1]
-        cliente = item[4]
-        valor = item[5]
+        cupom, data, cliente , valor, usuario, cnpj, razao_social = item[0],item[1],item[3],item[2],item[6],item[4],item[5]
+      
         pesquisa.append([cupom, data, cliente, valor])
         window['-TABELA1-'].update(values=pesquisa)
-
+    pesquisa.clear()
+    
     while True:
         event, values = window.read()
         if event in (sg.WIN_CLOSED, "SAIR"):
@@ -55,10 +54,10 @@ def venda_cupom(lista_cupom, lista_dados, usuario):
             break
 
         if event == "-TABELA1-":
-            selected_row_index = values["-TABELA1-"][0]  # Pega o índice da linha selecionada
+            selected_row_index = values["-TABELA1-"][0]  
             selected_row = pesquisa[selected_row_index]  # Pega os dados da linha selecionada
-            cupom = selected_row[0]  # Pega o valor do cupom da linha selecionada
-            window["-CUPOM-"].update(cupom[0])  # Atualiza o campo -CUPOM- com o valor do cupom
+            cupom = selected_row[0]  
+            window["-CUPOM-"].update(cupom[0])  
             continue
 
         if event == "PESQUISAR":
@@ -71,51 +70,42 @@ def venda_cupom(lista_cupom, lista_dados, usuario):
                     for dado in lista_dados:
                         if dado[0] == int(cupom):
                             d = dado
-                            
+                            #mostra as informações em campos especificos da janela
                             window["-CUPOM-"].update(d[0])
                             window["-DATA-"].update(d[1])
-                            window["-USUARIO-"].update(d[2])
-                            window["-CNPJ-"].update(d[3])
-                            window["-CPF-"].update(d[4])
-                            window["-VALOR-"].update(d[5])
-                            window["-EMPRESA-"].update(d[6])
-                        
+                            window["-USUARIO-"].update(d[6])
+                            window["-CNPJ-"].update(d[4])
+                            window["-CPF-"].update(d[3])
+                            window["-VALOR-"].update(d[2])
+                            window["-EMPRESA-"].update(d[5])
+                            
+                            pesquisa_cupom.clear()#limpa a lista para evitar concatenar
+                            lista_cupom=arquivar.lista_item_por_carrinho(cupom)
                             for compra in lista_cupom:
-                                if compra[0] == int(cupom):
-                                    pesquisa_cupom.clear()
-                                    pesquisa_cupom.extend(compra[1:])
-                                    window["-TABELA-"].update(values=pesquisa_cupom)
-                                    break
+                                pesquisa_cupom.append(compra[1:])
+
+                            window["-TABELA-"].update(values=pesquisa_cupom)
+                            break
                 except ValueError:
                     sg.popup_error('Cupom Invalido!', font=('Any', 12), title='ERRO')
-                except:
-                    sg.popup_error('Cupom não localizado', font=('Any', 12), title='ERRO')
+                
 
         elif event == 'IMPRIMIR':
-            if not values['-CNPJ-'] or not values["-DATA-"] or not values["-CUPOM-"] or not values["-CPF-"] or not values["-VALOR-"]:
-                sg.popup_error('Cupom Invalido!', font=('Any', 12), title='ERRO')
+            informacao='\n' #Composicao da string formatada de dados de venda
+            informacao += f"Razão Social: {razao_social}\n"
+            informacao += f"END: AV. Boa Vista n-1012 Santa Rosa/SP\n"
+            informacao += f"CNPJ: {cnpj}  IE : 07.112.888/000-00\n\n"
+            informacao += f"Data: {data}\n" 
+            informacao += f"Cliente: {cliente}\n"               
+            informacao += f"Valor: {valor}\n"
+            informacao += f"Operador: {usuario}\n"
+            informacao += f"CUPOM: {cupom}"
+            
+            gerar_pdf = imprimir.create_pdf(informacao, pesquisa_cupom,"impressora.pdf")#Chamda da funcao "PDF" com informacao da venda e dados do cupom
+            if gerar_pdf:
+                sg.popup("PDF Salvo", font=('Any', 12), title='IMPRIMIR PDF')
             else:
-                cnpj = values["-CNPJ-"]
-                data = values["-DATA-"]
-                cupom = values["-CUPOM-"]
-                cpf = values["-CPF-"]
-                valor = values["-VALOR-"]
-                informacao = f"==\n"
-                informacao += f"Razão Social: Tem De Tudo ME\n"
-                informacao += f"END: AV. Boa Vista n-1012 Santa Rosa/SP\n\n"
-                informacao += f"CNPJ: {cnpj}  IE : 07.112.888/000-00\n"
-                informacao += f"Data: {data}Cliente: {cpf}\n"
-                informacao += f"CUPOM: 000{cupom}\n"                
-                informacao += f"Valor: {valor}\n"
-                informacao += f"Operador: {usuario}\n"
-                informacao += f"==\n"
-                print(informacao)
-                
-                gerar_pdf = imprimir.create_pdf(informacao, pesquisa_cupom,"impressora.pdf")
-                if gerar_pdf:
-                    sg.popup("PDF Salvo", font=('Any', 12), title='IMPRIMIR PDF')
-                else:
-                    sg.popup_error("Erro ao imprimir", font=('Any', 12), title='ERRO')
+                sg.popup_error("Erro ao imprimir", font=('Any', 12), title='ERRO')
 
     window.close()
 

@@ -13,15 +13,11 @@ def sistema(usuario,data,empresa):
     import modulo_visualisar as visualizar
     import modulo_arquivar as arquivar
     
-
-
-    lista_cupom = []
     carrinho = []
     cupom = int(1000)
     valor_pagar = 0
     num_item = int(0)
-    lista=[]
-    
+       
     cpf="000.000.000-00"
     cnpj='45.333.0001/45'
     lista_dados=[]
@@ -92,30 +88,30 @@ def sistema(usuario,data,empresa):
     window.maximize()
     while True:
         event, values = window.read()
+        
         window['-DATA-'].update(data)
         window['-USUARIO-'].update(usuario)
-        if event in (sg.WIN_CLOSED, "Fechar"):
         
+        if event in (sg.WIN_CLOSED, "Fechar"):
             resposta=sg.popup_ok_cancel("  Se seguir com o evento,\nas configurações não salvas\nserão perdidas.",font=('Any',12))
-            if resposta=="OK":
+            if resposta=="OK":#valida se o usuario deseja sair
                 break  
             else:
                 continue
              
-        elif event in('ADICIONAR','DELETAR','PAGAR','VOLTAR'):
-            sg.popup_ok('Selecione uma Opção na barra de "Menu"',font=('Any',12),no_titlebar=True)           
-        elif event in ("Nova Compra"):
+        elif event in('ADICIONAR','DELETAR','PAGAR','VOLTAR'):#verifica e valida se o looping nova venda esta aberto
+            sg.popup_ok('Selecione uma Opção na barra de "Menu"',font=('Any',12),no_titlebar=True) 
 
-            count=arquivar.gerar_cupom()
+        elif event in ("Nova Compra"):
+            count=arquivar.gerar_cupom()#verificar e atualizar o numero do cupom 
             count=int(count)
-            print (count)
             cupom =int(cupom + count)
-            print(cupom) 
 
             window['-CUPOM-'].update(f'{cupom}')
             window['-CAIXA-'].update('   CAIXA ABERTO')
             window['-SUBTOTAL-'].update(f'R$ {valor_pagar:.2f}')
             window["-TABELA-"].update("")
+            
             cpf=sg.popup_get_text("Adicione um CPF?",size=(15,1),font=('Any',18),no_titlebar=True)
             if not cpf:
                 cpf ="000.000.000-00"
@@ -146,7 +142,7 @@ def sistema(usuario,data,empresa):
                                 valor_pagar += preco
                         produto=[ num_item , plu_pro ,  ean ,  material , qtd , preco_unitario , preco ]
                                         
-                        carrinho.append(produto)
+                        carrinho.append(produto)#atualização dos campos outputs
                         window['-TABELA-'].update(values=carrinho)
                         window['-VALORUNITARIO-'].update(f"{preco_unitario:.2f}")
                         window['-PRECO-'].update(f"{preco:.2f}")
@@ -154,7 +150,7 @@ def sistema(usuario,data,empresa):
                         window['-DESCRICAO-'].update(material)
                         window["-EAN-"].update('')
                         
-                    elif event in ('>','F1:112') :
+                    elif event in ('>','F1:112') :#uso da função pesquisa para buscar item pela descrição
                         desc,descricao=pesquisar.pesquisar(dic)
                         window['-EAN-'].update(desc)
                         window['-DESCRICAO-'].update(descricao)
@@ -167,15 +163,10 @@ def sistema(usuario,data,empresa):
 
                     elif event in ('PAGAR','p:80'):
                         v_pago=f"{valor_pagar:.2f}"
-                        # condição para conciderar o cupom com "pago"
-                        valor_pagar = pagar.pagar(valor_pagar)
-                        if valor_pagar == float(0):                           
-                            lista_dados.append([cupom, data , usuario ,  cnpj , cpf, v_pago, empresa])                           
-                            lista.append(cupom)
-                            lista.extend(carrinho)
+                        valor_pagar = pagar.pagar(valor_pagar)# condição para conciderar o cupom com "pago"
+                        
+                        if valor_pagar == float(0): #chamada das funções para aquivar e limpar os valores ja salvos                          
                             arquivar.arquivo(cupom,data,usuario,cnpj,cpf,v_pago,empresa,carrinho)
-                            lista_cupom.extend([lista.copy()])
-                            lista.clear()
                             limpar.limpar_saida(carrinho,window,num_item)                           
                             num_item=0
                             window['-CAIXA-'].update(' CAIXA FECHADO')
@@ -197,15 +188,15 @@ def sistema(usuario,data,empresa):
                             break  
                         else:
                             continue
-                        
-
-                        
-                       
+     
                 except ValueError:  # trata erro de valor não numerico
                     sg.popup_error('Erro na quantidade', title="ERROR", font=("Any", 12),no_titlebar=True)
                     continue
-        elif event == "Venda Cupom":
-            visualizar.venda_cupom(lista_cupom,lista_dados,usuario)
+
+        elif event == "Venda Cupom":#chamada da funçãao para visualizar os dados armezenados
+            lista_dados=arquivar.lista_de_vendas()
+            visualizar.venda_cupom(lista_dados)
+            lista_dados.clear()
             continue
 
         elif event in ("VOLTAR",'Escape:27'):
@@ -227,7 +218,7 @@ def sistema(usuario,data,empresa):
                 with open('dados/ajuda.txt', 'r') as legenda:
                     arquivo = legenda.read()
                     sg.popup_scrolled(arquivo, title="Ajuda")
-                # Seu código para ler o arquivo
+                
             except FileNotFoundError:
                 sg.popup_error("O arquivo 'SUPORTE' não foi encontrado.\n Verifique o caminho ou crie o arquivo.",font=('Any',12),title='ERRO',no_titlebar=True)
             continue
