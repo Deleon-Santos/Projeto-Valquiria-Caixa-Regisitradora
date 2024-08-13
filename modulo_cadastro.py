@@ -4,10 +4,10 @@ import json
 carrinho=[]
 
 def novo_item():
-    titulos=[' cod ','     ean     ',"               Descrição           "," preço "]
+    titulos=[' Cod ','     EAN     ',"               Descrição           "," Preço R$ "]
     layout = [
         [sg.Frame('',[
-            [sg.T("Descrição:", size=(43, 1)),sg.T("EAN:", size=(23, 1)),sg.T("Preço R$:", size=(10, 1)),
+            [sg.T("Descrição:", size=(44, 1)),sg.T("EAN:", size=(25, 1)),sg.T("Preço R$:", size=(10, 1)),
                 sg.P(),sg.B("SAIR", size=(6, 1),button_color='red')],
             [sg.InputText(background_color='White', key="-PRODUTO-", size=(25, 1), font=("Any", 17)),sg.P(),
                 sg.InputText(background_color='White', key="-EAN-", size=(13, 1), font=("Any", 17)),sg.P(),
@@ -34,7 +34,8 @@ def novo_item():
                     sg.popup_error('Preencha os campos necessarios!',font=('Any',12),title='ERRO CADASTRO')
                 
                 preco_material, descricao_material, ean_material =str (values["-PRECO-"]), values["-PRODUTO-"], int(values['-EAN-'])
-                preco_material = float(preco_material.replace(',','.'))
+                descricao_material=descricao_material.title()
+                preco_material = float(preco_material.replace(',','.').replace(' ','0'))
                 ean_material=str(ean_material) 
                 codigo_material = str(len(dic) + 101)  # conta os itens e adiciona "101"      
                 carrinho.append([codigo_material, ean_material, descricao_material, preco_material])

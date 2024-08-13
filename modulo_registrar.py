@@ -12,7 +12,8 @@ def sistema(usuario,data,empresa):
     import modulo_adicionar as adicionar
     import modulo_visualisar as visualizar
     import modulo_arquivar as arquivar
-    
+    import modulo_cpf
+
     carrinho = []
     cupom = int(1000)
     valor_pagar = 0
@@ -87,10 +88,9 @@ def sistema(usuario,data,empresa):
     window = sg.Window("NOVO PEDIDO", layout,size=(800,800), resizable=True,finalize=True)
     window.maximize()
     while True:
-        event, values = window.read()
-        
         window['-DATA-'].update(data)
         window['-USUARIO-'].update(usuario)
+        event, values = window.read()
         
         if event in (sg.WIN_CLOSED, "Fechar"):
             resposta=sg.popup_ok_cancel("  Se seguir com o evento,\nas configurações não salvas\nserão perdidas.",font=('Any',12))
@@ -112,10 +112,8 @@ def sistema(usuario,data,empresa):
             window['-SUBTOTAL-'].update(f'R$ {valor_pagar:.2f}')
             window["-TABELA-"].update("")
             
-            cpf=sg.popup_get_text("Adicione um CPF?",size=(15,1),font=('Any',18),no_titlebar=True)
-            if not cpf:
-                cpf ="000.000.000-00"
-
+            cpf=modulo_cpf.cpf() #metodo para tratar o numero de cpf
+            
             while True: #  Dentro deste bloco de eventos serão registrados apenas os botoes (OK,DELETE,PAGAR,VOLTAR)
                 try:
                     event, values = window.read()
