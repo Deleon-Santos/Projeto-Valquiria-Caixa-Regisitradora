@@ -190,7 +190,9 @@ def sistema(usuario,data,empresa):
                 except ValueError:  # trata erro de valor não numerico
                     sg.popup_error('Erro na quantidade', title="ERROR", font=("Any", 12),no_titlebar=True)
                     continue
-
+                except Exception as e:
+                    
+                    break
         elif event == "Venda Cupom":#chamada da funçãao para visualizar os dados armezenados
             lista_dados=arquivar.lista_de_vendas()
             visualizar.venda_cupom(lista_dados)

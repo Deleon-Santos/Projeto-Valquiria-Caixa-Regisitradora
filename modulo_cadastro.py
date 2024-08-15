@@ -15,7 +15,7 @@ def novo_item():
                 sg.B("CADASTRAR", size=(12, 1)),],
             [sg.Table(values=carrinho, headings=titulos, max_col_width=10, auto_size_columns=True,
                 display_row_numbers=False, justification="center",text_color="black",font=("Any",11),background_color="lightyellow",
-                num_rows=10, key="-TABELA-", row_height=20)],
+                num_rows=10, key="-TABELA-", row_height=25)],
                 ])],
     ]
     

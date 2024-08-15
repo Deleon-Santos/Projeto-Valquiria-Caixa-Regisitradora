@@ -23,7 +23,7 @@ def gerar_cupom():
 
 def lista_de_vendas():
     conexao, cursor = conectar_bd()
-    print('n_cupom data_venda       valor_venda           cpf_cliente             cnpj_empresa                  razao_social      operador_vendedor')
+    
     cursor.execute("""
         select n_cupom, data_venda, valor_venda, cpf_cliente, cnpj_empresa, razao_social, operador_vendedor 
         from vendas

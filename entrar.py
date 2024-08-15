@@ -27,7 +27,7 @@ sg.LOOK_AND_FEEL_TABLE['MyCreatedTheme'] = {
 sg.theme('MyCreatedTheme') # Prsonaliza a interface grafica com um tema especifico
 
 lista_operadores=['Administrador','Operador do Turno 1','Operador do Turno 2']
-lista_empresas=['TEM DE TUDO ME']
+lista_empresas=['Tem De Tudo ME']
 
 col1=[
     [sg.Image(filename="imagem/imagem_login.png",size=(392,267))],]
@@ -60,22 +60,29 @@ while True:
         break
 
     if event =='OK' or event =='o:79':      
-        print(event)
+        
         usuario,senha,data,empresa = values['-USUARIO-'],values['-SENHA-'],str(values['-DATA-']),values['-EMPRESA-']
         
         if not usuario or not senha or not data or not empresa :
             sg.popup_error("Usuario, Senha ou Data\nnão devem ser nulos",font=('Any',12))
             continue
         else:
-            for user in dados_usuario:
-                if user['nome']==usuario  and user['senha']== senha:
-                    window.close()
-                    
-                    vendas.sistema(usuario,data,empresa)
-                    continue
-            sg.popup_error('Inserir Usuario e Senha para entrar',font=('Any',12),no_titlebar=True)       
-            continue
-    
+            try:
+                autenticado = False  # Variável para controlar a autenticação
+                for user in dados_usuario:
+                    if user['nome'] == usuario and user['senha'] == senha:
+                        window.close()
+                        vendas.sistema(usuario, data, empresa)
+                        autenticado = True
+                        break
+                
+                if not autenticado:
+                    sg.popup_error('Usuário ou Senha Incorretos', font=('Any', 12), no_titlebar=True)
+
+            except Exception as e:
+                sg.popup(f"Erro inesperado:\n {str(e)}", font=('Any', 12), no_titlebar=True)
+                print(e)
+                
     elif event in ('SUPORTE','s:83'):
         try:
             with open('dados/usuarios.txt', 'r') as legenda:# Leitura das informações de suporte ao usuario
@@ -83,8 +90,7 @@ while True:
                 sg.popup_scrolled(arquivo, title="AJUDA")
         except FileNotFoundError:
             sg.popup("O arquivo 'comanda.txt' não foi encontrado.\n  Verifique o caminho ou crie o arquivo.",font=('Any',12),no_titlebar=True)
-        continue 
-    else:
-        print(event)
+   
+        
                     
 window.close()

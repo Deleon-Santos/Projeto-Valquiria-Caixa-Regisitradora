@@ -93,14 +93,15 @@ def venda_cupom(lista_dados):
         elif event == 'IMPRIMIR':
             informacao='\n' #Composicao da string formatada de dados de venda
             informacao += f"Razão Social: {razao_social}\n"
-            informacao += f"END: AV. Boa Vista n-1012 Santa Rosa/SP\n"
+            informacao += f"End: AV. Boa Vista n-1012 Santa Rosa/SP\n"
             informacao += f"CNPJ: {cnpj}  IE : 07.112.888/000-00\n\n"
             informacao += f"Data: {data}\n" 
             informacao += f"Cliente: {cliente}\n"               
-            informacao += f"Valor: {valor}\n"
-            informacao += f"Operador: {usuario}\n"
-            informacao += f"CUPOM: {cupom}"
             
+            informacao += f"Operador: {usuario}\n"
+            informacao += f"Cupom R$: {cupom}\n"
+            informacao += f"Valor: {valor}"
+
             gerar_pdf = imprimir.create_pdf(informacao, pesquisa_cupom,"impressora.pdf")#Chamda da funcao "PDF" com informacao da venda e dados do cupom
             if gerar_pdf:
                 sg.popup("PDF Salvo", font=('Any', 12), title='IMPRIMIR PDF')
