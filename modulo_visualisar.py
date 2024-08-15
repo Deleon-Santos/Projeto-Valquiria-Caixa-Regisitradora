@@ -41,7 +41,7 @@ def venda_cupom(lista_dados):
     window = sg.Window("VENDA CUPOM", janela, finalize=True, resizable=True) 
 
     for item in lista_dados:
-        cupom, data, cliente , valor, usuario, cnpj, razao_social = item[0],item[1],item[3],item[2],item[6],item[4],item[5]
+        cupom, data, cliente , valor, usuario, cnpj, razao_social = item[0],item[1],item[3],(f"{float(item[2]):.2f}"),item[6],item[4],item[5]
       
         pesquisa.append([cupom, data, cliente, valor])
         window['-TABELA1-'].update(values=pesquisa)
@@ -67,16 +67,18 @@ def venda_cupom(lista_dados):
                 continue
             else:
                 try:
+                    d=False
                     for dado in lista_dados:
                         if dado[0] == int(cupom):
                             d = dado
+                            
                             #mostra as informações em campos especificos da janela
                             window["-CUPOM-"].update(d[0])
                             window["-DATA-"].update(d[1])
                             window["-USUARIO-"].update(d[6])
                             window["-CNPJ-"].update(d[4])
                             window["-CPF-"].update(d[3])
-                            window["-VALOR-"].update(d[2])
+                            window["-VALOR-"].update(f"{float(d[2]):.2f}")#formatação para apresentar os vlores com 2 digitos apos a vigula
                             window["-EMPRESA-"].update(d[5])
                             
                             pesquisa_cupom.clear()#limpa a lista para evitar concatenar
@@ -86,6 +88,8 @@ def venda_cupom(lista_dados):
 
                             window["-TABELA-"].update(values=pesquisa_cupom)
                             break
+                    if not d:
+                        sg.popup_error('Cupom Não Localizado', font=('Any', 12), no_titlebar=True)
                 except ValueError:
                     sg.popup_error('Cupom Invalido!', font=('Any', 12), title='ERRO')
                 

@@ -138,7 +138,7 @@ def sistema(usuario,data,empresa):
                                 preco_unitario=item["preco"]
                                 preco = item['preco'] * qtd
                                 valor_pagar += preco
-                        produto=[ num_item , plu_pro ,  ean ,  material , qtd , preco_unitario , preco ]
+                        produto=[ num_item , plu_pro ,  ean ,  material , qtd , (f"{float(preco_unitario):.2f}") , (f"{float(preco):.2f}") ]
                                         
                         carrinho.append(produto)#atualização dos campos outputs
                         window['-TABELA-'].update(values=carrinho)

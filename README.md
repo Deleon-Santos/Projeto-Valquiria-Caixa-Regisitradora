@@ -22,25 +22,25 @@ O VALQUIRA esta conectado a um banco de dados integrado SQLite que permite o aqu
 
 ### Registro de Vendas
 ![App Vendas](imagem/img2.png)
-- **Adicionar Itens ao Carrinho**: Permite adicionar produtos ao carrinho de compras com base no código EAN.
+- **Adicionar Itens ao Carrinho**: Permite adicionar produtos ao carrinho de compras com base no código e EAN.
 - **Remover Itens do Carrinho**: Permite remover produtos já adicionados ao carrinho.
 - **Atualização de Preços e Totais**: Calcula automaticamente os preços unitários e totais dos itens no carrinho.
 
 ### Consulta de Produtos
-- **Pesquisa de Produtos**: Permite buscar produtos no banco de dados pelo código ou descrição.
+- **Pesquisa de Produtos**: Permite buscar produtos no banco de dados pelo código, descrição ou ean.
 
 ### Cadastro de Produtos
 ![App Vendas](imagem/img5.png)
-- **Adicionar Novos Produtos**: Permite o cadastro de novos produtos no sistema.
+- **Adicionar Novos Produtos**: Permite o cadastro de ean, descrição e preço de novos produtos no sistema.
 
 ### Pagamentos
 ![App Vendas](imagem/img3.png)
 - **Processamento de Pagamentos**: Calcula o valor total a pagar e registra a venda em dinheiro, cartão ou pix.
-- **Arquivamento de vendas**: coleta dados da empresa, cliente, data e os produtos selecionados e salva em tabelas relacionadas a venda e a produtos
+- **Banco de dados SQLite**: coleta dados da empresa, cliente, Usuario logado, data e os produtos selecionados e efetua o registro nas tabelas relacionadas a venda e a produtos
 
 ### Relatórios
 ![App Vendas](imagem/img4.png)
-- **Visualização de Vendas Realizadas**: Exibe um histórico das vendas efetuadas a partir do numero do cupom.
+- **Visualização de Vendas Realizadas**: Exibe o registro de todas as vendas salvas no bd SQLite a partir do numero do cupom.
 
 ### Geração de PDFs
 - **Impressão de Compras em PDF**: Gera um recibo da compra em formato PDF para impressão .
@@ -54,13 +54,20 @@ O VALQUIRA esta conectado a um banco de dados integrado SQLite que permite o aqu
     |   ├── ajuda.txt
     ├── modulo_registra.py
     │   ├── modulo_pagar.py
+            ├── modilo_arquivar.py
+                ├── SQLite
     │   ├── modulo_remover.py
     ├── ├── modulo_pesquisar.py
+            ├── bd.txt
     │   ├── modulo_limpar.py
     │   ├── modulo_adicionar.py
+            ├── bd.txt
     ├── modulo_visualisar.py
     │   ├── modulo_imprimir.py
+            ├── SQLite
+            ├── pdf
     ├── modulo_cadastro.py
+        ├── bd.txt
     │
     └── imagem
         └── imagem_venda.png
@@ -68,12 +75,12 @@ O VALQUIRA esta conectado a um banco de dados integrado SQLite que permite o aqu
 ## Instalação
 - **Download**: Faça o download de todos os modulos em uma pasta e execute com o editor da sua preferencia(obs: Tenha python 3 instalado)
 - **Dependecias**: Crie uma pasta "dados" e cole os aquivos "bd.txt" e "ajuda.txt".
-- **Imagens**: Crie uma pasta "imagem" e cole as "imagens" usadas no sistema.
+- **Bilbliotecas**: instale as bibliotecas reportlab e PySimpleGUI.
 
 ## Desenvolvedor
 - **Deleon Santos**: Este é um projeto autoral para fins academico e segue conforme aprendo novas tecnologias ou maneiras de resolver problemas.
 
 ## Versão
-- **v2.1.1**
+- **v2.1.7**
 
 
