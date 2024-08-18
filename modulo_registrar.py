@@ -138,7 +138,7 @@ def sistema(usuario,data,empresa):
                                 preco_unitario=item["preco"]
                                 preco = item['preco'] * qtd
                                 valor_pagar += preco
-                        produto=[ num_item , plu_pro ,  ean ,  material , qtd , (f"{float(preco_unitario):.2f}") , (f"{float(preco):.2f}") ]
+                        produto=[ num_item , plu_pro ,  ean ,  material , qtd , preco_unitario , preco ]
                                         
                         carrinho.append(produto)#atualização dos campos outputs
                         window['-TABELA-'].update(values=carrinho)
@@ -178,6 +178,7 @@ def sistema(usuario,data,empresa):
                         limpar.limpar_saida(carrinho,window,num_item)
                         valor_pagar = 0
                         cupom -= 1
+                        window['-CAIXA-'].update('CAIXA FECHADO')
                         break
 
                     elif event == (sg.WIN_CLOSED):
