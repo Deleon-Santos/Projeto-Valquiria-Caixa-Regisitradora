@@ -1,68 +1,68 @@
 [
     {
         "cod": "101",
-        "ean": "7890000000101",
-        "item": "Acucar refinado Caravela pt 1kg",
+        "ean": "7896894900013",
+        "item": "Acucar Refinado Caravela pt 1kg",
         "preco": 2.9
     },
     {
         "cod": "102",
-        "ean": "7890000000102",
-        "item": "Cafe Melita extra forte 1kg",
+        "ean": "7891020106927",
+        "item": "Cafe Melita Extra Forte 1kg",
         "preco": 16.9
     },
     {
         "cod": "103",
-        "ean": "7890000000103",
-        "item": "Leite integral Parmalate 1lt",
+        "ean": "7896034610017",
+        "item": "Leite Integral Parmalate 1lt",
         "preco": 5.9
     },
     {
         "cod": "104",
-        "ean": "7890000000104",
-        "item": "Arroz Solito premio polido 5kg",
+        "ean": "7896062699848",
+        "item": "Arroz Solito Premio Polido 5kg",
         "preco": 15.9
     },
     {
         "cod": "105",
-        "ean": "7890000000105",
-        "item": "Feijao carioca Kicaldo pt 1kg",
+        "ean": "7897136400155",
+        "item": "Feijao Carioca Kicaldo pt 1kg",
         "preco": 6.9
     },
     {
         "cod": "106",
-        "ean": "7890000000106",
-        "item": "Macarrao spaguete Adria 500g",
+        "ean": "7896205788040",
+        "item": "Macarrao Spaguete Adria 500g",
         "preco": 3.9
     },
     {
         "cod": "107",
-        "ean": "7890000000107",
+        "ean": "7891095003389",
         "item": "Farinha de mandioca Yoki 500g",
         "preco": 4.9
     },
     {
         "cod": "108",
-        "ean": "7890000000115",
-        "item": "Farinha de trigo Dona benta 1kg",
+        "ean": "7896005205860",
+        "item": "Farinha de Trigo Dona Benta 1kg",
         "preco": 3.9
     },
     {
         "cod": "109",
-        "ean": "7890000000115",
-        "item": "Achocolatado Toddy mais 500g",
+        "ean": "7894321711317",
+        "item": "Achocolatado Toddy Mais 500g",
         "preco": 5.9
     },
     {
         "cod": "110",
-        "ean": "7890000000115",
-        "item": "Oleo de soja Liza garrafa 900ml",
+        "ean": "7896036090244",
+        "item": "Oleo de Soja Liza Garrafa 900ml",
         "preco": 5.9
     },
     {
         "cod": "111",
-        "ean": "7890000000115",
-        "item": "Biscoito recheado Bono 350g",
+        "ean": "7891000376843",
+        "item": "Biscoito Recheado Bono 350g",
         "preco": 3.9
     },
     {

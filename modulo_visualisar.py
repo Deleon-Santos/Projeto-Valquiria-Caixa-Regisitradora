@@ -90,6 +90,7 @@ def venda_cupom(lista_dados):
                             break
                     if not d:
                         sg.popup_error('Cupom Não Localizado', font=('Any', 12), no_titlebar=True)
+                        window["-TABELA-"].update('')
                 except ValueError:
                     sg.popup_error('Cupom Invalido!', font=('Any', 12), title='ERRO')
                 
