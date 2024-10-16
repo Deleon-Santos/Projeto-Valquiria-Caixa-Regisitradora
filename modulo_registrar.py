@@ -76,7 +76,7 @@ def sistema(usuario,data,empresa):
         
                 [sg.Menu(menu_layout,font=('Any',12))],           
                 [sg.Col(frame1),sg.Col(frame2)],
-                [sg.P(),sg.Text("VALQUIRA.com linkedin.com/in/deleon-santos-1b835a290"),sg.P()]]
+                [sg.P(),sg.Text("VALQUIRA.com") ,sg.P(),sg.Text("linkedin.com/in/deleon-santos-1b835a290"),sg.P()]]
 
     #====================================================================================================================================
     try:
@@ -85,7 +85,7 @@ def sistema(usuario,data,empresa):
     except FileNotFoundError:
         sg.popup_error("O arquivo 'comanda.txt' não foi encontrado.\n Verifique o caminho ou crie o arquivo.",font=('Any',12),title='ERRO DE CARREGAMENTO')
 
-    window = sg.Window("NOVO PEDIDO", layout,size=(800,800), resizable=True,finalize=True)
+    window = sg.Window("NOVO PEDIDO", layout,size=(800,800), resizable=True,finalize=True, no_titlebar=False)
     window.maximize()
     while True:
         window['-DATA-'].update(data)
@@ -210,10 +210,12 @@ def sistema(usuario,data,empresa):
             continue
 
         elif event == 'Novo Item':
-            cadastrar.novo_item()
-            with open('dados/bd.txt', 'r') as adic: # Atualiza o Dic sempre que um novo item e cadastrado
-                dic = json.load(adic)
-
+            if usuario=="Administrador":
+                cadastrar.novo_item()
+                with open('dados/bd.txt', 'r') as adic: # Atualiza o Dic sempre que um novo item e cadastrado
+                    dic = json.load(adic)
+            else:
+                sg.popup("Seu usuario não tem permissão para cadastra Item",font=('Any',12),title='ERRO',no_titlebar=True)
         elif event == "Ajuda":
             try:
                 with open('dados/ajuda.txt', 'r') as legenda:
@@ -225,3 +227,7 @@ def sistema(usuario,data,empresa):
             continue
 
     window.close()
+
+
+"""usuario,data,empresa="Administrador",'2024-03-21 17:41:22',"Tem De Tudo ME"
+sistema(usuario, data, empresa)"""

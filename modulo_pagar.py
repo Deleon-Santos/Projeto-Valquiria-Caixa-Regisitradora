@@ -16,31 +16,29 @@ def pagar(valor_pagar):
     col2=[[sg.Image(filename="imagem/imagem_login.png",size=(340,240))]]
 
     layout = [
-        [sg.T("Forma de pagamento", font=("Any", 12))],
+        [sg.T("Forma de pagamento", font=("Any", 12)),sg.P(),sg.B("VOLTAR", font=("Any", 13),size=(14, 1))],
         [sg.DD(default_value="Pix",values=condicao_pagamento,size=(21,1),font=('any',22),key='-CONDICAO-'),
-        sg.P(),sg.B("PAGAR", font=("Any", 13),size=(14, 1)),],#sg.B("SAIR",  button_color="red",font=("Any", 13),size=(14, 1))
+        sg.P(),sg.B("PAGAR", font=("Any", 13),size=(14, 1))],#sg.B("SAIR",  button_color="red",font=("Any", 13),size=(14, 1))
         [sg.Col(col2),sg.Col(frame6)],
         ]
 
-    window = sg.Window("PAGAMENTO", layout, finalize=True)
+    window_pagamento = sg.Window("PAGAMENTO", layout, finalize=True,resizable=True)
 
     while True:
-        event, values = window.read()
+        event, values = window_pagamento.read()
+        if event in (sg.WIN_CLOSED,"VOLTAR"):
+            #sg.popup("Continuar Comprando ",font=('Any',12),title='CONTINUAR')
+            window_pagamento.close()
+            break
         pago = valor_pagar
         troco = 0
-        
-        if event in (sg.WIN_CLOSED,"SAIR"):
-            sg.popup("Continuar Comprando ",font=('Any',12),title='CONTINUAR')
-            
-            break
-            
         if event == 'PAGAR' and values['-CONDICAO-'] in ('Cartão á Vista', 'Cartão á Prazo', 'Pix'):  # para cartão e pix o valor e descontado itegralmente
             if( (valor_pagar  > 0), None):  # somente se o subtotal existir e for maior que "0"
                 valor_pagar = 0
-                window["valor"].update(f"R$ {valor_pagar:.2f}")
-                window["recebido"].update(f"R$ {pago:.2f}")
+                window_pagamento["valor"].update(f"R$ {valor_pagar:.2f}")
+                window_pagamento["recebido"].update(f"R$ {pago:.2f}")
                 sg.popup("Pagamento Autorizado", font=("Any", 12),title='ORDEM DE PAGAMENTO')
-                window.close()
+                #window_pagamento.close()
                 return valor_pagar
                 
             else:
@@ -59,11 +57,11 @@ def pagar(valor_pagar):
                     else: # desconta o subtotal e retorna o troco
                         troco = dinheiro - valor_pagar
                         valor_pagar = 0
-                        window["valor"].update(f"R$ {valor_pagar:.2f}")
-                        window["recebido"].update(f"R$ {dinheiro:.2f}")
-                        window["R$"].update(f"R$ {troco:.2f}")
+                        window_pagamento["valor"].update(f"R$ {valor_pagar:.2f}")
+                        window_pagamento["recebido"].update(f"R$ {dinheiro:.2f}")
+                        window_pagamento["R$"].update(f"R$ {troco:.2f}")
                         sg.popup("Pagamento Autorizado",font=('Any',12),title='ORDEM DE PAGAMENTO')  
-                        window.close()
+                        #window_pagamento.close()
                         return valor_pagar
                 else:
                     sg.popup("Informe o valor recebido",font=('Any',12),title='ORDEM DE PAGAMENTO')
@@ -74,5 +72,6 @@ def pagar(valor_pagar):
 
         else:
             sg.popup_error('Condição de pagamento!',font=('Any',12),title='ORDEM DE PAGAMENTO')
-        window.close()
+    
+    window_pagamento.close()
 

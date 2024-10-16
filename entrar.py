@@ -52,7 +52,7 @@ layout=[
         sg.B('SAIR',tooltip='Escape:27',font=('any',10,'bold'),size=(9,1),button_color='red'),
         sg.B('SUPORTE',tooltip='s:83',font=('any',10,'bold'),size=(10,1))] ,     ]
 
-window = sg.Window("LOGIN VENDAS", layout,size=(740,365),finalize=True,return_keyboard_events=True,)
+window = sg.Window("LOGIN VENDAS", layout,size=(740,365),finalize=True,return_keyboard_events=True,no_titlebar=False,titlebar_icon="img5.ico")
  
 while True:
     event, values = window.read()
